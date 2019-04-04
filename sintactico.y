@@ -94,8 +94,8 @@
 %token <texto>decrease
 %token <texto>increase
 
-%type <Node> START
-%type <Node> INICIO
+%type <Node> START 
+%type <Node> START2
 %type <Node> BODY
 %type <Node> DECLARATION
 %type <Node> ASSIGNATION
@@ -134,23 +134,21 @@
  * Reglas Gramaticales *
  ***********************/
 
-START: INICIO { root = $1; }
+START: START2 { root = $1; }
 ;
 
-INICIO: INICIO BODY 
-      { 
-        node nod = new node(@1.first_line, @1.first_column,"cuerpo","cuerpo");  
-        nod->add(*$1); 
-        nod->add(*$2); 
-        $$ = nod;
-      }
-      BODY {$$ = $1;}
+START2: START2 BODY
+      | BODY {$$ = $1;}
 ;
 
 BODY: DECLARATION {$$ = $1;}
       | ASSIGNATION {$$ = $1;}
       | UPDATE {$$ = $1;}
-      
+      | PRINT {$$ = $1;}
+      | SHOW {$$ = $1;}
+      | IF {$$ = $1;}
+      | FOR {$$ = $1;}
+      | WHILE {$$ = $1;}
 ;
 
 ASSIGNATION: iden ASSIGN2 semicolon 
