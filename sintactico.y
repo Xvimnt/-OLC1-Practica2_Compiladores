@@ -137,7 +137,12 @@
 START: START2 { root = $1; }
 ;
 
-START2: START2 BODY
+START2: START2 BODY 
+      {
+        $$ = new node(@1.first_line, @1.first_column,"cuerpo","cuerpo"); 
+        $$->add(*$1);
+        $$->add(*$2);
+      }
       | BODY {$$ = $1;}
 ;
 
