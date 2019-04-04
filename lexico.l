@@ -38,61 +38,59 @@ String "\""[^"\""]*"\""
  /*********************
   * Reglas y Acciones *
  **********************/
-INITIAL
-{
 	//Declaraciones para los comentarios
-	">>" {  BEGIN SIMPLE_COMMENT; }
-	"<-" {  BEGIN MULTI_COMMENT; }
+	<INITIAL> ">>" {  BEGIN SIMPLE_COMMENT; }
+	<INITIAL> "<-" {  BEGIN MULTI_COMMENT; }
 	//Declaraciones de palabras reservadas
-	"int"  	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tint);}
-	"string"   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tstring);}
-	"bool" 	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tbool);}
-	"char" 	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tchar);}
-	"double"   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tdouble);}
-	"imprimir" {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(timprimir);}
-	"show"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tshow);}
-	"si"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tsi);}
-	"sino"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tsino);}
-	"para"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tpara);}
-	"repetir"  {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(trepetir);}
+	<INITIAL> "int"  	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tint);}
+	<INITIAL> "string"   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tstring);}
+	<INITIAL> "bool" 	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tbool);}
+	<INITIAL> "char" 	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tchar);}
+	<INITIAL> "double"   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tdouble);}
+	<INITIAL> "imprimir" {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(timprimir);}
+	<INITIAL> "show"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tshow);}
+	<INITIAL> "si"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tsi);}
+	<INITIAL> "sino"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tsino);}
+	<INITIAL> "para"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tpara);}
+	<INITIAL> "repetir"  {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(trepetir);}
 	//Reconoce expresiones regulares
-	{number}   {yylval.real=atof(yytext); return(number);}
-	{boolean}  {yylval.condicion=atof(yytext); return(boolean);}
-	{String}   {yylval.texto=atof(yytext); return(String);}
-	{caracter} {yylval.letra=atof(yytext); return(caracter);}
-	{integer}  {yylval.numero=atof(yytext); return(integer);}
-	{iden}     {yylval.texto=atof(yytext); return(iden);}
+	<INITIAL> {number}   {yylval.real=atof(yytext); return(number);}
+	<INITIAL> {boolean}  {yylval.condicion=atof(yytext); return(boolean);}
+	<INITIAL> {String}   {yylval.texto=atof(yytext); return(String);}
+	<INITIAL> {caracter} {yylval.letra=atof(yytext); return(caracter);}
+	<INITIAL> {integer}  {yylval.numero=atof(yytext); return(integer);}
+	<INITIAL> {iden}     {yylval.texto=atof(yytext); return(iden);}
 	//Reconoce Tokens del lenguaje
-	"(" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext); return(openPar);}
-	")" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closePar);}
-	"[" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(openB);}
-	"]" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closeB);}
-	"{" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(openCB);}
-	"}" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closeCB);}
-	"," 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(comma);}
-	"=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(equal);}
-	"==" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(doubleEqual);}
-	"!=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(different);}
-	">" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(greaterThan);}
-	">=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(greaterThanEqual);}
-	"<" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(lessThan);}
-	"<=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(lessThanEqual);}
-	"||" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(or);}
-	"&&" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(and);}
-	"!" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(not);}
-	"+" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(plus);}
-	"++" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(increase);}
-	"-" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(minus);}
-	"--" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(decrement);}
-	"*" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(by);}
-	"/" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(divided);}
-	"^" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(power);}
+	<INITIAL> "(" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext); return(openPar);}
+	<INITIAL> ")" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closePar);}
+	<INITIAL> "[" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(openB);}
+	<INITIAL> "]" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closeB);}
+	<INITIAL> "{" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(openCB);}
+	<INITIAL> "}" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closeCB);}
+	<INITIAL> "," 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(comma);}
+	<INITIAL> "=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(equal);}
+	<INITIAL> "==" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(doubleEqual);}
+	<INITIAL> "!=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(different);}
+	<INITIAL> ">" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(greaterThan);}
+	<INITIAL> ">=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(greaterThanEqual);}
+	<INITIAL> "<" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(lessThan);}
+	<INITIAL> "<=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(lessThanEqual);}
+	<INITIAL> "||" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(or);}
+	<INITIAL> "&&" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(and);}
+	<INITIAL> "!" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(not);}
+	<INITIAL> "+" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(plus);}
+	<INITIAL> "++" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(increase);}
+	<INITIAL> "-" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(minus);}
+	<INITIAL> "--" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(decrement);}
+	<INITIAL> "*" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(by);}
+	<INITIAL> "/" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(divided);}
+	<INITIAL> "^" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(power);}
 	//Aqui se manejan los espacios encontrados
-	"\n" 	 	 {linea++; columna = 0; anterior = 0;}
-	[\t\r\f] 	 {}
-	[[:blank:]]	 {columna++;}
+	<INITIAL> "\n" 	 	 {linea++; columna = 0; anterior = 0;}
+	<INITIAL> [\t\r\f] 	 {}
+	<INITIAL> [[:blank:]]	 {columna++;}
 	//Aqui se manejan los errores lexicos
-		.	 	 {
+	<INITIAL>	.{
 					columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
 
 					/*  
@@ -102,14 +100,10 @@ INITIAL
 
 					std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
 				}
-}
 
-<MULTI_COMMENT> "->" { BEGIN INITIAL; }
-<MUTI_COMMENT>"\n" {linea++;};
-<MUTI_COMMENT>.;
-<MUTI_COMMENT><<EOF>> { yyerror("unclosed comment"); }
-<SIMPLE_COMMENT>"\n" { linea++; columna = 0; BEGIN INITIAL; };
-<SIMPLE_COMMENT>.;
+	<MULTI_COMMENT> "->" { BEGIN INITIAL; }
+	<MULTI_COMMENT> "\n" {linea++; columna = 0; anterior=0;}
+	<SIMPLE_COMMENT> "\n" { linea++; columna = 0; anterior = 0; BEGIN INITIAL; }
 %%
 /*********************
  * Codigo de Usuario *

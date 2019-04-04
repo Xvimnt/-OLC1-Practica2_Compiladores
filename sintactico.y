@@ -51,11 +51,23 @@
 
 %start START;
 
-%token <texto> number
-%token <texto> boolean
-%token <texto> String
-%token <texto> caracter
-%token <texto> integer
+%token <texto>tint
+%token <texto>tstring
+%token <texto>tbool
+%token <texto>tchar
+%token <texto>tdouble
+%token <texto>timprimir
+%token <texto>tshow
+%token <texto>tsi
+%token <texto>tsino
+%token <texto>tpara
+%token <texto>trepetir
+%token <texto>iden
+%token <texto>number
+%token <texto>boolean
+%token <texto>String
+%token <texto>caracter
+%token <texto>integer
 %token <texto>openPar
 %token <texto>closePar
 %token <texto>comma
@@ -72,11 +84,20 @@
 %token <texto>lessThanEqual
 %token <texto>doubleEqual
 %token <texto>different
+%token <texto>or
+%token <texto>and
+%token <texto>openB
+%token <texto>closeB
 %token <texto>openCB
 %token <texto>closeCB
 %token <texto>semicolon
+%token <texto>decrease
+%token <texto>increase
 
 %type <Node> START
+%type <Node> INICIO
+%type <Node> BODY
+%type <Node> DECLARATION
 %type <Node> ASSIGNATION
 %type <Node> ASSIGN2
 %type <Node> DATATYPE
@@ -113,14 +134,15 @@
  * Reglas Gramaticales *
  ***********************/
 
-START : INICIO { root = $1; }
+START: INICIO { root = $1; }
 ;
 
 INICIO: INICIO BODY 
       { 
-        $$ = new node(@1.first_line, @1.first_column,"cuerpo","cuerpo");  
-        $$->add(*$1); 
-        $$->add(*$2); 
+        node nod = new node(@1.first_line, @1.first_column,"cuerpo","cuerpo");  
+        nod->add(*$1); 
+        nod->add(*$2); 
+        $$ = nod;
       }
       BODY {$$ = $1;}
 ;
@@ -297,8 +319,8 @@ UPDATE:ESINGLE increase{ $$ = new node(@1.first_line, @1.first_column,"increase"
 ;
 
 ESINGLE:NATIVE { $$ = $1; }
-  |VARIABLE {
-     $$ = nullptr; //aqui se va a manejar a variable xd tiene que devolvler el valor
+  |iden{
+    $$ = new node(@1.first_line, @1.first_column,"identificador",$1); 
   }
 ;
 
