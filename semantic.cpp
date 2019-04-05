@@ -67,6 +67,542 @@ Resultado semantic::recorrer(node *raiz)
         r.valor = raiz->valor;
     }
     break;
+    case IGUALACION:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case INT:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() == op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        case DOUBLE:
+        {
+            switch (op2.tipo)
+            {
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() == op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        case STRING:
+        {
+            switch (op2.tipo)
+            {
+            case STRING:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor == op2.valor);
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        case CHAR:
+        {
+            switch (op2.tipo)
+            {
+            case CHAR:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() == op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        case BOOL:
+        {
+            switch (op2.tipo)
+            {
+            case BOOL:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == op2.valor.compare("true", Qt::CaseInsensitive));
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        }
+    }
+    break;
+    case DIFERENCIACION:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case INT:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() != op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        case DOUBLE:
+        {
+            switch (op2.tipo)
+            {
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() != op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        case STRING:
+        {
+            switch (op2.tipo)
+            {
+            case STRING:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor != op2.valor);
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        case CHAR:
+        {
+            switch (op2.tipo)
+            {
+            case CHAR:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() != op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        case BOOL:
+        {
+            switch (op2.tipo)
+            {
+            case BOOL:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) != op2.valor.compare("true", Qt::CaseInsensitive));
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        }
+    }
+    break;
+    case MENORQUE:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case INT:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() < op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() < op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        case DOUBLE:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() < op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() < op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        default:
+        {
+            /*Aqui debe ir el código para reportar el error de tipos*/
+        }
+        break;
+        }
+    }
+    break;
+    case AND:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case BOOL:
+        {
+            switch (op2.tipo)
+            {
+            case BOOL:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 && op2.valor.compare("true", Qt::CaseInsensitive) == 0);
+                r.valor = QString::number(result);
+            }
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        default:
+        {
+            /*Aqui debe ir el código para reportar el error de tipos*/
+        }
+        break;
+        }
+    }
+    break;
+    case OR:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case BOOL:
+        {
+            switch (op2.tipo)
+            {
+            case BOOL:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 || op2.valor.compare("true", Qt::CaseInsensitive) == 0);
+                r.valor = QString::number(result);
+            }
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        default:
+        {
+            /*Aqui debe ir el código para reportar el error de tipos*/
+        }
+        break;
+        }
+    }
+    break;
+    case MAYORQUE:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case INT:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() > op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() > op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        case DOUBLE:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() > op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() > op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        default:
+        {
+            /*Aqui debe ir el código para reportar el error de tipos*/
+        }
+        break;
+        }
+    }
+    break;
+    case MENOROIGUAL:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case INT:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() <= op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() <= op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        case DOUBLE:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() <= op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() <= op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        default:
+        {
+            /*Aqui debe ir el código para reportar el error de tipos*/
+        }
+        break;
+        }
+    }
+    break;
+    case MAYOROIGUAL:
+    {
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
+        switch (op1.tipo)
+        {
+        case INT:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toInt() >= op2.valor.toInt());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() >= op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            }
+        }
+        break;
+        case DOUBLE:
+        {
+            switch (op2.tipo)
+            {
+            case INT:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() >= op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            case DOUBLE:
+            {
+                r.tipo = BOOL;
+                bool result = (op1.valor.toDouble() >= op2.valor.toDouble());
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                /*Aqui debe ir el código para reportar el error de tipos*/
+            }
+            break;
+            }
+        }
+        break;
+        default:
+        {
+            /*Aqui debe ir el código para reportar el error de tipos*/
+        }
+        break;
+        }
+    }
+    break;
     case SUMA:
     {
         node iz = raiz->hijos.at(0);
@@ -383,8 +919,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-                /*Aqui debe ir el código para reportar el error de tipos*/
-
+            /*Aqui debe ir el código para reportar el error de tipos*/
         }
         break;
         case CHAR:
@@ -411,7 +946,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() - op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -481,7 +1016,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toInt() * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -539,8 +1074,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-                /*Aqui debe ir el código para reportar el error de tipos*/
-
+            /*Aqui debe ir el código para reportar el error de tipos*/
         }
         break;
         case CHAR:
@@ -574,7 +1108,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() * op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -593,7 +1127,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toInt() * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             case CHAR:
             {
                 r.tipo = INT;
@@ -658,7 +1192,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -716,8 +1250,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-                /*Aqui debe ir el código para reportar el error de tipos*/
-
+            /*Aqui debe ir el código para reportar el error de tipos*/
         }
         break;
         case CHAR:
@@ -751,7 +1284,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -770,7 +1303,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             case CHAR:
             {
                 r.tipo = DOUBLE;
@@ -828,7 +1361,7 @@ Resultado semantic::recorrer(node *raiz)
                 int result = pow(op1.valor.toInt(), op2.valor.toInt());
                 r.valor = QString::number(result);
             }
-                break;
+            break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -892,13 +1425,6 @@ Resultado semantic::recorrer(node *raiz)
         {
             switch (op2.tipo)
             {
-            case INT:
-            {
-                r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
-                r.valor = QString::number(result);
-            }
-            break;
             case CHAR:
             {
                 r.tipo = INT;
@@ -906,20 +1432,6 @@ Resultado semantic::recorrer(node *raiz)
                 r.valor = QString::number(result);
             }
             break;
-            case BOOL:
-            {
-                r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
-                r.valor = QString::number(result);
-            }
-            break;
-            case DOUBLE:
-            {
-                r.tipo = DOUBLE;
-                double result = pow(op1.valor.toDouble(), op2.valor.toDouble());
-                r.valor = QString::number(result);
-            }
-                break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -932,31 +1444,10 @@ Resultado semantic::recorrer(node *raiz)
         {
             switch (op2.tipo)
             {
-            case INT:
-            {
-                r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
-                r.valor = QString::number(result);
-            }
-                break;
-            case CHAR:
-            {
-                r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
-                r.valor = QString::number(result);
-            }
-            break;
             case BOOL:
             {
-                r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
-                r.valor = QString::number(result);
-            }
-            break;
-            case DOUBLE:
-            {
-                r.tipo = DOUBLE;
-                double result = pow(op1.valor.toDouble(), op2.valor.toDouble());
+                r.tipo = BOOL;
+                int result = (op1.valor == op2.valor);
                 r.valor = QString::number(result);
             }
             break;
@@ -984,7 +1475,7 @@ Resultado semantic::recorrer(node *raiz)
             result++;
             r.valor = QString::number(result);
         }
-            break;
+        break;
         case CHAR:
         {
             r.tipo = INT;
@@ -992,7 +1483,7 @@ Resultado semantic::recorrer(node *raiz)
             result++;
             r.valor = QString::number(result);
         }
-            break;
+        break;
         case DOUBLE:
         {
             r.tipo = DOUBLE;
@@ -1022,7 +1513,7 @@ Resultado semantic::recorrer(node *raiz)
             result--;
             r.valor = QString::number(result);
         }
-            break;
+        break;
         case CHAR:
         {
             r.tipo = INT;
@@ -1030,7 +1521,7 @@ Resultado semantic::recorrer(node *raiz)
             result--;
             r.valor = QString::number(result);
         }
-            break;
+        break;
         case DOUBLE:
         {
             r.tipo = DOUBLE;

@@ -45,7 +45,9 @@ HEADERS += \
     resultado.h \
     scanner.h \
     secondpractice.h \
-    semantic.h
+    semantic.h \
+    lexico.l \
+    sintactico.y
    
 
 FORMS += \
