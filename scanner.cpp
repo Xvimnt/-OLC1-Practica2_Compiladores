@@ -468,11 +468,10 @@ char *yytext;
 /*****************
  * Declaraciones *
  ****************/ 
-#line 12 "lexico.l"
+#line 13 "lexico.l"
 	#include <stdio.h>
 	#include <stdlib.h>
-	#include "sintactico.tab.h"	
-	#include "parser.h"
+        #include "parser.h"
 	#include <QString>
 	#include "node.h"
 	int yylex();
@@ -481,9 +480,9 @@ char *yytext;
 	int columna = 1;
 	int anterior = 0;
 	node *root;
-#line 485 "scanner.cpp"
+#line 484 "scanner.cpp"
 
-#line 487 "scanner.cpp"
+#line 486 "scanner.cpp"
 
 #define INITIAL 0
 #define MULTI_COMMENT 1
@@ -772,7 +771,7 @@ YY_DECL
 	<MULTI_COMMENT> "->" { BEGIN INITIAL; }
 	<MULTI_COMMENT> "\n" {linea++; columna = 0; anterior=0;}
 	<SIMPLE_COMMENT> "\n" { linea++; columna = 0; anterior = 0; BEGIN INITIAL; }
-#line 776 "scanner.cpp"
+#line 775 "scanner.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -844,7 +843,7 @@ YY_RULE_SETUP
 #line 108 "lexico.l"
 ECHO;
 	YY_BREAK
-#line 848 "scanner.cpp"
+#line 847 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(MULTI_COMMENT):
 case YY_STATE_EOF(SIMPLE_COMMENT):
