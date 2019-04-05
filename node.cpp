@@ -51,8 +51,5 @@ int node::getTipo()
     if(this->tipo=="print"){return 22;}
     if(this->tipo=="show"){return 23;}
     if(this->tipo=="if"){return 24;}
-
-    if(this->tipo=="operacion"){return 11;}
-    if(this->tipo=="lexp"){return 12;}
     return 0;
 }

@@ -27,18 +27,32 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         secondpractice.cpp \
-    ../../../Downloads/Ejemplo/node.cpp \
-    ../../../Downloads/Ejemplo/plotter.cpp
+    main.cpp \
+    node.cpp \
+    parser.cpp \
+    plotter.cpp \
+    resultado.cpp \
+    scanner.cpp \
+    secondpractice.cpp \
+    semantic.cpp
+  
 
 HEADERS += \
         secondpractice.h \
-    ../../../Downloads/Ejemplo/lexico.l \
-    ../../../Downloads/Ejemplo/node.h \
-    ../../../Downloads/Ejemplo/plotter.h \
-    ../../../Downloads/Ejemplo/sintactico.y
+    lexico.l \
+    node.h \
+    parser.h \
+    plotter.h \
+    resultado.h \
+    scanner.h \
+    secondpractice.h \
+    semantic.h \
+    sintactico.y
+   
 
 FORMS += \
-        secondpractice.ui
+        secondpractice.ui \
+    secondpractice.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -48,4 +62,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 DISTFILES += \
     scanner.l \
     parser.y \
-    ../../../Downloads/Ejemplo/generador.bat
+    compilar.sh \
+    OLC1_Practica2.pro.user \
+    README.md
+   
+
+SUBDIRS += \
+    OLC1_Practica2.pro
