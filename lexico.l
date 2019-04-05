@@ -4,6 +4,7 @@
 %option outfile="scanner.cpp"
 %option noyywrap
 %option nounput
+%option interactive
 
 /*****************
  * Declaraciones *
@@ -11,8 +12,7 @@
 %{
 	#include <stdio.h>
 	#include <stdlib.h>
-	#include "sintactico.tab.h"	
-	#include "parser.h"
+        #include "parser.h"
 	#include <QString>
 	#include "node.h"
 	int yylex();

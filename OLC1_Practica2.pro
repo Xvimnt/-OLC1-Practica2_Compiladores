@@ -39,15 +39,13 @@ SOURCES += \
 
 HEADERS += \
         secondpractice.h \
-    lexico.l \
     node.h \
     parser.h \
     plotter.h \
     resultado.h \
     scanner.h \
     secondpractice.h \
-    semantic.h \
-    sintactico.y
+    semantic.h
    
 
 FORMS += \

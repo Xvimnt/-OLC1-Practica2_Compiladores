@@ -1,5 +1,5 @@
-#ifndef S  SEMANTIC_H
-#define S  SEMANTIC_H
+#ifndef SEMANTIC_H
+#define SEMANTIC_H
 #include <qstring.h>
 #include <resultado.h>
 #include "node.h"
@@ -13,4 +13,4 @@ public:
     QString resultado;
 };
 
-#endif // SSEMANTIC_H
+#endif //SEMANTIC_H

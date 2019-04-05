@@ -105,6 +105,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toInt() + op2.valor.toInt();
                 r.valor = QString::number(result);
             }
+            break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -150,7 +151,7 @@ Resultado semantic::recorrer(node *raiz)
                 r.valor = op1.valor + op2.valor;
             }
             break;
-                break;
+
             case CHAR:
             {
                 r.tipo = DOUBLE;
@@ -158,7 +159,7 @@ Resultado semantic::recorrer(node *raiz)
                 r.valor = QString::number(result);
             }
             break;
-                break;
+
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -270,7 +271,7 @@ Resultado semantic::recorrer(node *raiz)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.toBool() || op2.valor.toBool());
+                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 || op2.valor.compare("true", Qt::CaseInsensitive) == 0);
                 r.valor = QString::number(result);
             }
             break;
@@ -324,6 +325,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toInt() - op2.valor.toInt();
                 r.valor = QString::number(result);
             }
+            break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -380,14 +382,9 @@ Resultado semantic::recorrer(node *raiz)
         break;
         case STRING:
         {
-            switch (op2.tipo)
-            {
-            default:
-            {
+
                 /*Aqui debe ir el código para reportar el error de tipos*/
-            }
-            break;
-            }
+
         }
         break;
         case CHAR:
@@ -414,6 +411,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() - op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
+                break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -483,6 +481,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toInt() * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
+                break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -539,14 +538,9 @@ Resultado semantic::recorrer(node *raiz)
         break;
         case STRING:
         {
-            switch (op2.tipo)
-            {
-            default:
-            {
+
                 /*Aqui debe ir el código para reportar el error de tipos*/
-            }
-            break;
-            }
+
         }
         break;
         case CHAR:
@@ -580,6 +574,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() * op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
+                break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -598,6 +593,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toInt() * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
+                break;
             case CHAR:
             {
                 r.tipo = INT;
@@ -615,7 +611,7 @@ Resultado semantic::recorrer(node *raiz)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.toBool() && op2.valor.toBool());
+                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 && op2.valor.compare("true", Qt::CaseInsensitive) == 0);
                 r.valor = QString::number(result);
             }
             break;
@@ -662,6 +658,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
+                break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -718,14 +715,9 @@ Resultado semantic::recorrer(node *raiz)
         break;
         case STRING:
         {
-            switch (op2.tipo)
-            {
-            default:
-            {
+
                 /*Aqui debe ir el código para reportar el error de tipos*/
-            }
-            break;
-            }
+
         }
         break;
         case CHAR:
@@ -759,6 +751,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
+                break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -777,6 +770,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = op1.valor.toDouble() / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
+                break;
             case CHAR:
             {
                 r.tipo = DOUBLE;
@@ -834,6 +828,7 @@ Resultado semantic::recorrer(node *raiz)
                 int result = pow(op1.valor.toInt(), op2.valor.toInt());
                 r.valor = QString::number(result);
             }
+                break;
             case BOOL:
             {
                 r.tipo = INT;
@@ -924,6 +919,7 @@ Resultado semantic::recorrer(node *raiz)
                 double result = pow(op1.valor.toDouble(), op2.valor.toDouble());
                 r.valor = QString::number(result);
             }
+                break;
             default:
             {
                 /*Aqui debe ir el código para reportar el error de tipos*/
@@ -942,6 +938,7 @@ Resultado semantic::recorrer(node *raiz)
                 int result = pow(op1.valor.toInt(), op2.valor.toInt());
                 r.valor = QString::number(result);
             }
+                break;
             case CHAR:
             {
                 r.tipo = INT;
@@ -983,19 +980,24 @@ Resultado semantic::recorrer(node *raiz)
         case INT:
         {
             r.tipo = INT;
-            int result = op1.valor.toInt()++;
+            int result = op1.valor.toInt();
+            result++;
             r.valor = QString::number(result);
         }
+            break;
         case CHAR:
         {
             r.tipo = INT;
-            int result = op1.valor.toInt()++;
+            int result = op1.valor.toInt();
+            result++;
             r.valor = QString::number(result);
         }
+            break;
         case DOUBLE:
         {
             r.tipo = DOUBLE;
-            double result = op1.valor.toDouble()++;
+            double result = op1.valor.toDouble();
+            result++;
             r.valor = QString::number(result);
         }
         break;
@@ -1016,19 +1018,24 @@ Resultado semantic::recorrer(node *raiz)
         case INT:
         {
             r.tipo = INT;
-            int result = op1.valor.toInt()--;
+            int result = op1.valor.toInt();
+            result--;
             r.valor = QString::number(result);
         }
+            break;
         case CHAR:
         {
             r.tipo = INT;
-            int result = op1.valor.toInt()--;
+            int result = op1.valor.toInt();
+            result--;
             r.valor = QString::number(result);
         }
+            break;
         case DOUBLE:
         {
             r.tipo = DOUBLE;
-            double result = op1.valor.toDouble()--;
+            double result = op1.valor.toDouble();
+            result--;
             r.valor = QString::number(result);
         }
         break;
