@@ -4,7 +4,7 @@
 %option outfile="scanner.cpp"
 %option noyywrap
 %option nounput
-%option interactive
+%option nounistd 
 
 /*****************
  * Declaraciones *
