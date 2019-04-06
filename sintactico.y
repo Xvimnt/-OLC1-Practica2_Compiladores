@@ -165,9 +165,9 @@ DECLARATION2: OBJECTS semicolon
               {
                 $$ = $1;
               }
-              | tarreglo ARRAY
+              | tarreglo iden ARRAY
               {
-                $$ = $2;
+                $$ = $3;
               }
 ;
 
@@ -223,7 +223,7 @@ ASSIGN: equal E { $$ = new node(@1.first_line, @1.first_column,"igual",$1); $$->
       | { $$ = nullptr; }
 ;
 
-ARRAY: iden openB E closeB ARRAY2 ARRAYASIGN
+ARRAY: openB E closeB ARRAY2 ARRAYASIGN
     {
       if($4 == nullptr)
       {
@@ -377,7 +377,7 @@ UPDATE:ESINGLE increase{ $$ = new node(@1.first_line, @1.first_column,"increase"
 
 ESINGLE:NATIVE { $$ = $1; }
   |iden INDEX{
-    if($2!=nullptr)
+    if($2==nullptr)
     {
         $$ = new node(@1.first_line, @1.first_column,"identificador",$1);
     }
@@ -399,7 +399,6 @@ INDEX: openB E closeB
 E: E plus E{node *nod = new node(@1.first_line, @1.first_column,"suma",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E minus E{node *nod = new node(@1.first_line, @1.first_column,"resta",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E by E{node *nod = new node(@1.first_line, @1.first_column,"multi",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E openPar E closePar{node *nod = new node(@1.first_line, @1.first_column,"multi",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E slash E{node *nod = new node(@1.first_line, @1.first_column,"div",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E power E{node *nod = new node(@1.first_line, @1.first_column,"potencia",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E doubleEqual E{node *nod = new node(@1.first_line, @1.first_column,"igualacion",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}

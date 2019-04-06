@@ -31,7 +31,8 @@ SOURCES += \
     resultado.cpp \
     semantic.cpp \
     parser.cpp \
-    scanner.cpp 
+    scanner.cpp \ 
+    var.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     semantic.h \
     sintactico.y \
     parser.h \
-    scanner.h 
+    scanner.h \ 
+    var.h
   
 
 FORMS += \

@@ -136,6 +136,20 @@ std::string getErrors(){
     std::string result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
     result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
     result += "</tr></thead></table></div>";
+    /*
+                                <div class="table100-body js-pscroll">
+                                    <table>
+                                        <tbody>
+                                            <tr class="row100 body">
+                                                <td class="cell100 column1">Virtual Cycle</td>
+                                                <td class="cell100 column2">Gym</td>
+                                                <td class="cell100 column3">8:00 AM - 9:00 AM</td>
+                                                <td class="cell100 column4">Randy Porter</td>
+                                                <td class="cell100 column5">20</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>*/
+    return result;
 }
 
 void MainWindow::on_actionErrores_triggered()
@@ -153,21 +167,7 @@ void MainWindow::on_actionErrores_triggered()
     index += "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\">";
     index += "</head>\n<body>\n<div class=\"limiter\">\n<div class=\"container-table100\">\n<div class=\"wrap-table100\">";
     index += "<div class=\"table100 ver3 m-b-110\">\n<div class=\"table100-head\">";
-    index += getErrors();
-                                    /*
-
-                                <div class="table100-body js-pscroll">
-                                    <table>
-                                        <tbody>
-                                            <tr class="row100 body">
-                                                <td class="cell100 column1">Virtual Cycle</td>
-                                                <td class="cell100 column2">Gym</td>
-                                                <td class="cell100 column3">8:00 AM - 9:00 AM</td>
-                                                <td class="cell100 column4">Randy Porter</td>
-                                                <td class="cell100 column5">20</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>*/
+    index += getErrors();                             
     index += "\n</div>\n</div>\n</div>\n</div>\n</div>";
     index += "<script src=\"vendor/jquery/jquery-3.2.1.min.js\"></script>";
     index += "<script src=\"vendor/bootstrap/js/popper.js\"></script>";

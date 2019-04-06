@@ -10,7 +10,7 @@
     #include "qlist.h"
     #include <list>
     int yylex();
-    std::list<std::string> errores;
+    std::list<QString> errores;
 	void yyerror(const char *s);
 	int linea=0;
 	int columna = 1;
@@ -91,6 +91,7 @@ INITIAL
     "\n" 	 	 {linea++; columna = 0; anterior = 0;}
     .   {
             columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
+            errores.push_back(linea + "$" + columna + "$" + yytext + "$" + "Error Lexico" );
             std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
         }
 }

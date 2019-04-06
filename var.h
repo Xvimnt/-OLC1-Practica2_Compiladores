@@ -4,8 +4,11 @@
 
 class var
 {
+private:
+
 public:
     var();
+
 };
 
 #endif // VAR_H
