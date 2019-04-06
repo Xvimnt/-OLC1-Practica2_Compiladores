@@ -63,7 +63,6 @@ void graficador:: generarImagen()
 
     graficar();
     QString grafoDOT = this->grafo;
-    //QString path = "C:\\Users\\erick\\Documents\\Graficas\\qt\\";
     QString path = fi.absolutePath() +"/";
     QFile qFile(path+"grafo.txt");
     if(qFile.open(QIODevice::WriteOnly))

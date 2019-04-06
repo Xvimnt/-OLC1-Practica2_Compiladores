@@ -23,6 +23,7 @@ enum Choice
     INCREASE = 19,
     DECREASE = 20,
     RESERVED = 21,
+    ASIGNACION = 22
 };
 
 semantic::semantic()
@@ -65,6 +66,16 @@ Resultado semantic::recorrer(node *raiz)
     {
         r.tipo = CHAR;
         r.valor = raiz->valor;
+    }
+    break;
+    case ASIGNACION:
+    {
+        //Este es un identificador
+        node iz = raiz->hijos.at(0);
+        Resultado op1 = recorrer(&iz);
+        //Este es un signo igual
+        node der = raiz->hijos.at(1);
+        Resultado op2 = recorrer(&der);
     }
     break;
     case IGUALACION:

@@ -53,40 +53,41 @@ extern int yydebug;
     timprimir = 263,
     tshow = 264,
     tsi = 265,
-    tsino = 266,
-    tpara = 267,
-    trepetir = 268,
-    iden = 269,
-    number = 270,
-    boolean = 271,
-    String = 272,
-    caracter = 273,
-    integer = 274,
-    openPar = 275,
-    closePar = 276,
-    comma = 277,
-    plus = 278,
-    minus = 279,
-    by = 280,
-    slash = 281,
-    power = 282,
-    not = 283,
-    equal = 284,
-    greaterThan = 285,
-    lessThan = 286,
-    greaterThanEqual = 287,
-    lessThanEqual = 288,
-    doubleEqual = 289,
-    different = 290,
-    or = 291,
-    and = 292,
-    openB = 293,
-    closeB = 294,
-    openCB = 295,
-    closeCB = 296,
-    semicolon = 297,
-    decrease = 298,
-    increase = 299
+    tarreglo = 266,
+    tsino = 267,
+    tpara = 268,
+    trepetir = 269,
+    iden = 270,
+    number = 271,
+    boolean = 272,
+    String = 273,
+    caracter = 274,
+    integer = 275,
+    openPar = 276,
+    closePar = 277,
+    comma = 278,
+    plus = 279,
+    minus = 280,
+    by = 281,
+    slash = 282,
+    power = 283,
+    tnot = 284,
+    equal = 285,
+    greaterThan = 286,
+    lessThan = 287,
+    greaterThanEqual = 288,
+    lessThanEqual = 289,
+    doubleEqual = 290,
+    different = 291,
+    tor = 292,
+    tand = 293,
+    openB = 294,
+    closeB = 295,
+    openCB = 296,
+    closeCB = 297,
+    semicolon = 298,
+    decrease = 299,
+    increase = 300
   };
 #endif
 
@@ -95,12 +96,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 47 "sintactico.y" /* yacc.c:1909  */
+#line 24 "sintactico.y" /* yacc.c:1909  */
 
-  char texto [256];
-  node *Node;
+  char TEXT [256];
+  class node *Node;
 
-#line 104 "parser.h" /* yacc.c:1909  */
+#line 105 "parser.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

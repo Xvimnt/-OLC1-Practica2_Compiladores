@@ -48,7 +48,7 @@ int node::getTipo()
     if(this->tipo=="increase"){return 19;}
     if(this->tipo=="decrease"){return 20;}
     if(this->tipo=="reservada"){return 21;}
-    if(this->tipo=="print"){return 22;}
+    if(this->tipo=="asignacion"){return 22;}
     if(this->tipo=="show"){return 23;}
     if(this->tipo=="if"){return 24;}
     return 0;

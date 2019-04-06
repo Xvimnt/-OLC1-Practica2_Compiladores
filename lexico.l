@@ -1,26 +1,28 @@
 %option case-insensitive
 %option yylineno
-%option header-file="scanner.h"
-%option outfile="scanner.cpp"
-%option noyywrap
-%option nounput
-
-/*****************
- * Declaraciones *
- ****************/ 
 %{
-	#include <stdio.h>
-	#include <stdlib.h>
+    #include <cstdlib>
     #include "parser.h"
-	#include <QString>
-	#include "node.h"
-	int yylex();
+    #include <QString>
+    #include <stdio.h>
+    #include <iostream>
+    #include <node.h>
+    #include "qlist.h"
+    #include <list>
+    int yylex();
+    std::list<std::string> errores;
 	void yyerror(const char *s);
 	int linea=0;
 	int columna = 1;
 	int anterior = 0;
 	node *root;
 %}
+
+%option noyywrap
+%option nounput
+%option header-file= "scanner.h"
+%option outfile="scanner.cpp"
+
 digit [0-9]
 integer {digit}+
 number {digit}+("."{digit}+)
@@ -34,79 +36,69 @@ String "\""[^"\""]*"\""
 %x MULTI_COMMENT SIMPLE_COMMENT
 
 %%
- /*********************
-  * Reglas y Acciones *
- **********************/
-	//Declaraciones para los comentarios
-	<INITIAL> ">>" {  BEGIN SIMPLE_COMMENT; }
-	<INITIAL> "<-" {  BEGIN MULTI_COMMENT; }
-	//Declaraciones de palabras reservadas
-	<INITIAL> "int"  	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tint);}
-	<INITIAL> "string"   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tstring);}
-	<INITIAL> "bool" 	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tbool);}
-	<INITIAL> "char" 	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tchar);}
-	<INITIAL> "double"   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tdouble);}
-	<INITIAL> "imprimir" {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(timprimir);}
-	<INITIAL> "show"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tshow);}
-	<INITIAL> "si"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tsi);}
-	<INITIAL> "sino"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tsino);}
-	<INITIAL> "para"	   {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(tpara);}
-	<INITIAL> "repetir"  {columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(trepetir);}
-	//Reconoce expresiones regulares
-	<INITIAL> {number}   {yylval.real=atof(yytext); return(number);}
-	<INITIAL> {boolean}  {yylval.condicion=atof(yytext); return(boolean);}
-	<INITIAL> {String}   {yylval.texto=atof(yytext); return(String);}
-	<INITIAL> {caracter} {yylval.letra=atof(yytext); return(caracter);}
-	<INITIAL> {integer}  {yylval.numero=atof(yytext); return(integer);}
-	<INITIAL> {iden}     {yylval.texto=atof(yytext); return(iden);}
-	//Reconoce Tokens del lenguaje
-	<INITIAL> "(" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext); return(openPar);}
-	<INITIAL> ")" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closePar);}
-	<INITIAL> "[" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(openB);}
-	<INITIAL> "]" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closeB);}
-	<INITIAL> "{" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(openCB);}
-	<INITIAL> "}" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(closeCB);}
-	<INITIAL> "," 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(comma);}
-	<INITIAL> "=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(equal);}
-	<INITIAL> "==" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(doubleEqual);}
-	<INITIAL> "!=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(different);}
-	<INITIAL> ">" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(greaterThan);}
-	<INITIAL> ">=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(greaterThanEqual);}
-	<INITIAL> "<" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(lessThan);}
-	<INITIAL> "<=" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(lessThanEqual);}
-	<INITIAL> "||" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(or);}
-	<INITIAL> "&&" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(and);}
-	<INITIAL> "!" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(not);}
-	<INITIAL> "+" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(plus);}
-	<INITIAL> "++" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(increase);}
-	<INITIAL> "-" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(minus);}
-	<INITIAL> "--" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(decrement);}
-	<INITIAL> "*" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(by);}
-	<INITIAL> "/" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(divided);}
-	<INITIAL> "^" 	{columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return(power);}
-	//Aqui se manejan los espacios encontrados
-	<INITIAL> "\n" 	 	 {linea++; columna = 0; anterior = 0;}
-	<INITIAL> [\t\r\f] 	 {}
-	<INITIAL> [[:blank:]]	 {columna++;}
-	//Aqui se manejan los errores lexicos
-	<INITIAL>	.{
-					columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
+INITIAL
+{
+    ">>" {  BEGIN SIMPLE_COMMENT; }
+    "<-" {  BEGIN MULTI_COMMENT; }
+    "int"  	   {std::cout<< "reconocido " << yytext << std::endl; columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tint;}
+    "string"   {std::cout<< "reconocido " << yytext << std::endl; columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tstring;}
+    "bool" 	   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tbool;}
+    "char" 	   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tchar;}
+    "double"   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tdouble;}
+    "imprimir" {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return timprimir;}
+    "show"	   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tshow;}
+    "si"	   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tsi;}
+    "sino"	   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tsino;}
+    "para"	   {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tpara;}
+    "repetir"  {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return trepetir;}
+    "arreglo"  {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tarreglo;}
+    "(" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return openPar;}
+    ")" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return closePar;}
+    "[" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return openB;}
+    "]" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return closeB;}
+    "{" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return openCB;}
+    "}" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return closeCB;}
+    "," 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return comma;}
+    ";" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return semicolon;}
+    "=" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return equal;}
+    "==" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return doubleEqual;}
+    "!=" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return different;}
+    ">" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return greaterThan;}
+    ">=" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return greaterThanEqual;}
+    "<" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return lessThan;}
+    "<=" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return lessThanEqual;}
+    "||" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tor;}
+    "&&" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tand;}
+    "!" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tnot;}
+    "+" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return plus;}
+    "++" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return increase;}
+    "-" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return minus;}
+    "--" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return decrease;}
+    "*" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return by;}
+    "/" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return slash;}
+    "^" 	{std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return power;}
 
-					/*  
-						errorT *nuevoE = new errorT("Lexico",yytext,linea, columna);
-						listaErrores->append(*nuevoE);
-					*/
+        {number}   {std::cout<< "reconocido " << yytext << std::endl; return(number);}
+        {boolean}  {std::cout<< "reconocido " << yytext << std::endl; return(boolean);}
+        {String}   {std::cout<< "reconocido " << yytext << std::endl; return(String);}
+        {caracter} {std::cout<< "reconocido " << yytext << std::endl; return(caracter);}
+        {integer}  {std::cout<< "reconocido " << yytext << std::endl; return(integer);}
+        {iden}     {std::cout<< "reconocido " << yytext << std::endl; return(iden);}
 
-					std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
-				}
 
-	<MULTI_COMMENT> "->" { BEGIN INITIAL; }
-	<MULTI_COMMENT> "\n" {linea++; columna = 0; anterior=0;}
-	<SIMPLE_COMMENT> "\n" { linea++; columna = 0; anterior = 0; BEGIN INITIAL; }
+    "\t" 	 {strcpy(yylval.TEXT , yytext); columna = 26;}
+    [[:blank:]]	 {columna++;}
+    "\n" 	 	 {linea++; columna = 0; anterior = 0;}
+    .   {
+            columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
+            std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
+        }
+}
+
+    <MULTI_COMMENT>"->" { BEGIN INITIAL; }
+    <MULTI_COMMENT>"\n" {linea++;}
+    <MULTI_COMMENT>.;
+    <MULTI_COMMENT><<EOF>> { yyerror("unclosed comment"); }
+    <SIMPLE_COMMENT>"\n" { linea++; columna = 0; BEGIN INITIAL; }
+    <SIMPLE_COMMENT>.;
 %%
-/*********************
- * Codigo de Usuario *
-*********************/
-
-
-

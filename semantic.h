@@ -4,10 +4,14 @@
 #include <resultado.h>
 #include "node.h"
 #include <math.h>
+#include <map>
 
 class semantic
 {
+
 public:
+    std::list<std::string> errores;
+    std::map<std::string, std::string> variables;
     semantic();
     Resultado recorrer( node *raiz);
     QString resultado;

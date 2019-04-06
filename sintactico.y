@@ -1,43 +1,20 @@
 %{
-/********************** 
- * Declaraciones en C *
- **********************/
-  #include "scanner.h"
-  #include "node.h"
-  #include "qdebug.h"
-  #include <iostream>
-  #include <stdio.h>
-  #include <stdlib.h>
-  #include <math.h>
-  #include <QtGui/QLineEdit>
-  #include <QString>
-  #include "string.h"
-  #include <map>
-  #include <variant>
-  using namespace std
+#include "scanner.h"//se importa el header del analisis sintactico
+#include "node.h"
+#include "qdebug.h"
+#include <iostream>
+#include <map>
+extern int yylineno; //linea actual donde se encuentra el parser (analisis lexico) lo maneja BISON
+extern int columna; //columna actual donde se encuentra el parser (analisis lexico) lo maneja BISON
+extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
+extern node *root; // Raiz del arbol
 
-  extern int yylex(void);
-  extern char *yytext;
-  extern int linea;
-  extern int columna;
-  extern node *root;
-
-  QLineEdit *expresion;
-  void yyerror(char *errorString);
-  void inicializa(QLineEdit *lineEdit);
-  std::map<std::string, 
-  std:variant<char*, int, float, char, bool>> variables; 
-
-  int yyerror(const char* msj)
-  {
+int yyerror(const char* msj)
+{
     std::cout << msj << " " << yytext << std::endl;
     return 0;
-  }
-
+}
 %}
-/*************************
-  Declaraciones de Bison *
- *************************/
 %defines "parser.h"
 %output "parser.cpp"
 %error-verbose
@@ -45,65 +22,65 @@
 
 %union
 {
-  char texto [256];
-  node *Node;
+  char TEXT [256];
+  class node *Node;
 }
 
 %start START;
 
-%token <texto>tint
-%token <texto>tstring
-%token <texto>tbool
-%token <texto>tchar
-%token <texto>tdouble
-%token <texto>timprimir
-%token <texto>tshow
-%token <texto>tsi
-%token <texto>tsino
-%token <texto>tpara
-%token <texto>trepetir
-%token <texto>iden
-%token <texto>number
-%token <texto>boolean
-%token <texto>String
-%token <texto>caracter
-%token <texto>integer
-%token <texto>openPar
-%token <texto>closePar
-%token <texto>comma
-%token <texto>plus
-%token <texto>minus
-%token <texto>by
-%token <texto>slash
-%token <texto>power
-%token <texto>not
-%token <texto>equal
-%token <texto>greaterThan
-%token <texto>lessThan
-%token <texto>greaterThanEqual
-%token <texto>lessThanEqual
-%token <texto>doubleEqual
-%token <texto>different
-%token <texto>or
-%token <texto>and
-%token <texto>openB
-%token <texto>closeB
-%token <texto>openCB
-%token <texto>closeCB
-%token <texto>semicolon
-%token <texto>decrease
-%token <texto>increase
+%token <TEXT>tint
+%token <TEXT>tstring
+%token <TEXT>tbool
+%token <TEXT>tchar
+%token <TEXT>tdouble
+%token <TEXT>timprimir
+%token <TEXT>tshow
+%token <TEXT>tsi tarreglo
+%token <TEXT>tsino
+%token <TEXT>tpara
+%token <TEXT>trepetir
+%token <TEXT>iden
+%token <TEXT>number
+%token <TEXT>boolean
+%token <TEXT>String
+%token <TEXT>caracter
+%token <TEXT>integer
+%token <TEXT>openPar
+%token <TEXT>closePar
+%token <TEXT>comma
+%token <TEXT>plus
+%token <TEXT>minus
+%token <TEXT>by
+%token <TEXT>slash
+%token <TEXT>power
+%token <TEXT>tnot
+%token <TEXT>equal
+%token <TEXT>greaterThan
+%token <TEXT>lessThan
+%token <TEXT>greaterThanEqual
+%token <TEXT>lessThanEqual
+%token <TEXT>doubleEqual
+%token <TEXT>different
+%token <TEXT>tor
+%token <TEXT>tand
+%token <TEXT>openB
+%token <TEXT>closeB
+%token <TEXT>openCB
+%token <TEXT>closeCB
+%token <TEXT>semicolon
+%token <TEXT>decrease
+%token <TEXT>increase
 
 %type <Node> START 
 %type <Node> START2
 %type <Node> BODY
-%type <Node> DECLARATION
+%type <Node> DECLARATION DECLARATION2
 %type <Node> ASSIGNATION
-%type <Node> ASSIGN2
+%type <Node> ASSIGN2 INDEX
 %type <Node> DATATYPE
 %type <Node> OBJECTS
 %type <Node> ASSIGN  
-%type <Node> ARRAY  
+%type <Node> ARRAY ARRAY2 ARRAY3
 %type <Node> ARRAYASIGN  
 %type <Node> ARRAYASIGN2   
 %type <Node> ARRAYASIGN3   
@@ -114,36 +91,35 @@
 %type <Node> SHOW   
 %type <Node> IF   
 %type <Node> ELSE   
-%type <Node> FOR   
+%type <Node> FOR
 %type <Node> WHILE   
 %type <Node> VARMANAGMENT   
 %type <Node> UPDATE   
 %type <Node> ESINGLE   
 %type <Node> E   
 
-%left or
-%left and
-%left not
+%left tor
+%left tand
+%left tnot
 %left doubleEqual different lessThan lessThanEqual greaterThan greaterThanEqual
 %left plus minus
 %left by slash
 %left power
 
 %%
-/***********************
- * Reglas Gramaticales *
- ***********************/
-
 START: START2 { root = $1; }
 ;
 
 START2: START2 BODY 
       {
-        $$ = new node(@1.first_line, @1.first_column,"cuerpo","cuerpo"); 
-        $$->add(*$1);
+        $$ = $1;
         $$->add(*$2);
       }
-      | BODY {$$ = $1;}
+      | BODY
+      {
+        $$ = new node(@1.first_line, @1.first_column,"cuerpo","cuerpo");
+        $$->add(*$1);
+      }
 ;
 
 BODY: DECLARATION {$$ = $1;}
@@ -159,36 +135,40 @@ BODY: DECLARATION {$$ = $1;}
 ASSIGNATION: iden ASSIGN2 semicolon 
         { 
           $$ = new node(@1.first_line, @1.first_column,"asignacion","asignacion"); 
-          $$->add( new node(@1.first_line, @1.first_column,"identificador",$1)); 
-          $$->add(*$2); 
+          node *res = new node(@1.first_line, @1.first_column,"identificador",$1);
+          $$->add(*res);
+          $$->add(*$2);
         }
 ;
 
-ASSIGN2: equal E { 
-          $$ = new node(@1.first_line, @1.first_column,"igual",$1);  
-          $$->add(*$2); 
+ASSIGN2: equal E
+        {
+          $$ = new node(@1.first_line, @1.first_column,"igual",$1);
+          $$->add(*$2);
         }
-       | openB E closeB equal E 
+       | openB E closeB ASSIGN2
         { 
-          $$ = new node(@1.first_line, @1.first_column,"indice",$2); 
-          node *temp =  new node(@1.first_line, @1.first_column,"igual",$1);
-          temp->add(*$5); 
-          $$->add(*$2); 
-          $$->add(temp); 
-        }
-       | equal openB E closeB { 
-          $$ = new node(@1.first_line, @1.first_column,"igual",$1);  
-          //aqui devolver el valor del indice
-          $$->add(*$3); 
+          $$ = new node(@1.first_line, @1.first_column,"indice",$2->valor);
+          $$->add(*$4);
         }
 ;
 
-DECLARATION:	DATATYPE OBJECTS semicolon 
-        { 
-          $$ = new node(@1.first_line, @1.first_column,"declaracion","declaracion"); 
-          $$->add(*$1); 
-          $$->add(*$2); 
+DECLARATION: DATATYPE DECLARATION2
+        {
+          $$ = new node(@1.first_line, @1.first_column,"declaracion","declaracion");
+          $$->add(*$1);
+          $$->add(*$2);
         }
+;
+
+DECLARATION2: OBJECTS semicolon
+              {
+                $$ = $1;
+              }
+              | tarreglo ARRAY
+              {
+                $$ = $2;
+              }
 ;
 
 DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
@@ -200,42 +180,113 @@ DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
 
 OBJECTS: OBJECTS comma iden ASSIGN 
         { 
-          $$ = new node(@1.first_line, @1.first_column,"asignacion","asignacion"); 
-          node *nod = new node(@1.first_line, @1.first_column,"asignacion",$3); nod->add(*$4);
-          $$->add(*$1); 
-          $$->add(nod); 
+          $$ = $1;
+          node *nod;
+          if($4 == nullptr)
+          {
+              nod = new node(@1.first_line, @1.first_column,"declaracion","declaracion");
+              node *res = new node(@1.first_line, @1.first_column,"id",$3);
+              nod->add(*res);
+          }
+          else
+          {
+              nod = new node(@1.first_line, @1.first_column,"asignacion","asignacion");
+              node *res = new node(@1.first_line, @1.first_column,"id",$3);
+              nod->add(*res);
+              nod->add(*$4);
+          }
+          $$->add(*nod);
         }
       | iden ASSIGN 
       { 
-        $$ = new node(@1.first_line, @1.first_column,"asignacion","asignacion"); 
-        $$->add(*$2); 
-        $$->add(new node(@1.first_line, @1.first_column,"id",$1)); 
+        $$ = new node(@1.first_line, @1.first_column,"asignaciones","asignaciones");
+        node *nod;
+        if($2 == nullptr)
+        {
+            nod = new node(@1.first_line, @1.first_column,"declaracion","declaracion");
+            node *res = new node(@1.first_line, @1.first_column,"id",$1);
+            nod->add(*res);
+        }
+        else
+        {
+            nod = new node(@1.first_line, @1.first_column,"asignacion","asignacion");
+            node *res = new node(@1.first_line, @1.first_column,"id",$1);
+            nod->add(*res);
+            nod->add(*$2);
+        }
+        $$->add(*nod);
       }
 ;
 
 ASSIGN: equal E { $$ = new node(@1.first_line, @1.first_column,"igual",$1); $$->add(*$2); }
       | ARRAY { $$ = $1; }
-      | { $$ = new node(); }
+      | { $$ = nullptr; }
 ;
 
-ARRAY: ARRAY openB E closeB ARRAYASIGN
-      { 
-        $$ = new node(@1.first_line, @1.first_column,"asignacion","asignacion"); 
-        $$->add(*$1); 
-        node nod = new node(@1.first_line, @1.first_column,"asignacionAIndex","asignacionAIndex");
-        nod->add(*$3);
-        nod->add(*$5);
-        $$->add(*nod);
-      }
-    | openB E closeB ARRAYASIGN
+ARRAY: openB E closeB ARRAY2 ARRAYASIGN
     {
-      $$ = new node(@1.first_line, @1.first_column,"asignacionAIndex","asignacionAIndex");
-      $$->add(*$2);
-      $$->add(*$4);
+      if($4 == nullptr)
+      {
+          $$ = new node(@1.first_line, @1.first_column,"dimensiones","dimensiones");
+          node *nod = new node(@1.first_line, @1.first_column,"nueva dimension","nueva dimension");
+          nod->add(*$2);
+          $$->add(*nod);
+      }
+      else
+      {
+          $$ = $4;
+          node *nod = new node(@1.first_line, @1.first_column,"nueva dimension","nueva dimension");
+          nod->add(*$2);
+          $$->add(*nod);
+      }
+      if($5 == nullptr)
+      {
+          node *nod = $$;
+          $$ = new node(@1.first_line, @1.first_column,"Declaracion de Arreglo","Declaracion de Arreglo");
+          $$->add(*nod);
+      }
+      else
+      {
+          node *nod = $$;
+          $$ = new node(@1.first_line, @1.first_column,"Asignacion de Arreglo","Asignacion de Arreglo");
+          $$->add(*nod);
+          $$->add(*$5);
+      }
     }
 ;
 
+ARRAY2: openB E closeB ARRAY3
+      {
+        if($4 == nullptr)
+        {
+            $$ = new node(@1.first_line, @1.first_column,"dimensiones","dimensiones");
+            node *nod = new node(@1.first_line, @1.first_column,"nueva dimension","nueva dimension");
+            nod->add(*$2);
+            $$->add(*nod);
+        }
+        else
+        {
+            $$ = $4;
+            node *nod = new node(@1.first_line, @1.first_column,"nueva dimension","nueva dimension");
+            nod->add(*$2);
+            $$->add(*nod);
+        }
+      }
+      | {$$ = nullptr;}
+;
+
+ARRAY3:openB E closeB
+      {
+        $$ = new node(@1.first_line, @1.first_column,"dimensiones","dimensiones");
+        node *nod = new node(@1.first_line, @1.first_column,"nueva dimension","nueva dimension");
+        nod->add(*$2);
+        $$->add(*nod);
+      }
+      | {$$ = nullptr;}
+;
+
 ARRAYASIGN: openCB ARRAYASIGN2 closeCB { $$ = $2; }
+            | { $$ = nullptr; }
 ;
 
 ARRAYASIGN2: ARRAYASIGN3 { $$ = $1; }
@@ -244,11 +295,11 @@ ARRAYASIGN2: ARRAYASIGN3 { $$ = $1; }
 
 ARRAYASIGN3: openCB ARRAYLIST closeCB comma openCB ARRAYLIST closeCB ARRAYASIGN4
       { 
-        $$ = new node(@1.first_line, @1.first_column,"array","array"); 
-        $$->add(*$2); 
-        $$->add(*$6); 
-        if($8 != nullptr)
-          $$->add(*$8); 
+            $$ = new node(@1.first_line, @1.first_column,"Asignaciones","Asignaciones");
+            $$->add(*$2);
+            $$->add(*$6);
+            if($8 != nullptr)
+              $$->add(*$8);
       }
 ;
 
@@ -258,11 +309,14 @@ ARRAYASIGN4: comma openCB ARRAYLIST closeCB {$$ = $3;}
 
 ARRAYLIST: ARRAYLIST comma E 
         {
-            $$= new node(@2.first_line, @2.first_column,"lista","lista");
-            $$->add(*$1);
+            $$= $1;
             $$->add(*$3);
         }
-        | E {$$=$1;}
+        | E
+        {
+            $$= new node(@1.first_line, @1.first_column,"lista","lista");
+            $$->add(*$1);
+        }
 ;
 
 NATIVE: integer { $$ = new node(@1.first_line, @1.first_column,"int",$1);}
@@ -278,10 +332,10 @@ PRINT: timprimir openPar E closePar semicolon  {node *nod = new node(@1.first_li
 SHOW: tshow openPar E comma E closePar semicolon {node *nod = new node(@1.first_line, @1.first_column,"show",$1); nod->add(*$3); nod->add(*$5); $$=nod;}
 ;
 
-IF: tsi openPar E closePar openCB BODY closeCB ELSE 
+IF: tsi openPar E closePar openCB START2 closeCB ELSE
 {
   node *nod = new node(@1.first_line, @1.first_column,"if",$3->valor);
-  if(*$3->valor == "true")
+  if($3->valor == "true")
   {
     nod->add(*$6);
   }
@@ -295,18 +349,18 @@ IF: tsi openPar E closePar openCB BODY closeCB ELSE
 ;
 
 ELSE: tsino IF {$$ = $2;}
-    | tsino openCB BODY closeCB {$$ = $3;}
+    | tsino openCB START2 closeCB {$$ = $3;}
     | {$$ = nullptr;}
 ;
 
-FOR: tpara openPar VARMANAGMENT semicolon E semicolon UPDATE closePar openCB BODY closeCB {
-  node *nod = new node(@1.first_line, @1.first_column,"for","for"); 
-  nod->add(*$3); nod->add(*$5); nod->add(*$7); nod->add(*$10);
+FOR: tpara openPar VARMANAGMENT E semicolon UPDATE closePar openCB START2 closeCB {
+  node *nod = new node(@1.first_line, @1.first_column,"for","for");
+  nod->add(*$3); nod->add(*$4); nod->add(*$6); nod->add(*$9);
   $$=nod;
 }
 ;
 
-WHILE: trepetir openPar E closePar openCB BODY closeCB{
+WHILE: trepetir openPar E closePar openCB START2 closeCB{
   node *nod = new node(@1.first_line, @1.first_column,"while","while"); 
   nod->add(*$3); nod->add(*$6);
   $$=nod;
@@ -322,9 +376,24 @@ UPDATE:ESINGLE increase{ $$ = new node(@1.first_line, @1.first_column,"increase"
 ;
 
 ESINGLE:NATIVE { $$ = $1; }
-  |iden{
-    $$ = new node(@1.first_line, @1.first_column,"identificador",$1); 
+  |iden INDEX{
+    if($2!=nullptr)
+    {
+        $$ = new node(@1.first_line, @1.first_column,"identificador",$1);
+    }
+    else
+    {
+        $$ = new node(@1.first_line, @1.first_column,"arregloIndex",$1);
+        //Devolver el valor del index
+    }
   }
+;
+
+INDEX: openB E closeB
+        {
+           $$=$2;
+        }
+        | {$$=nullptr;}
 ;
 
 E: E plus E{node *nod = new node(@1.first_line, @1.first_column,"suma",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
@@ -338,37 +407,12 @@ E: E plus E{node *nod = new node(@1.first_line, @1.first_column,"suma",$2);  nod
   |E greaterThan E{node *nod = new node(@1.first_line, @1.first_column,"mayque",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E lessThanEqual E{node *nod = new node(@1.first_line, @1.first_column,"menoig",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E greaterThanEqual E{node *nod = new node(@1.first_line, @1.first_column,"mayoig",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E or E{node *nod = new node(@1.first_line, @1.first_column,"or",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E and E{node *nod = new node(@1.first_line, @1.first_column,"and",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |not E{ $$ = new node(@1.first_line, @1.first_column,$1,$1); $$->add(*$2);}
+  |E tor E{node *nod = new node(@1.first_line, @1.first_column,"tor",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E tand E{node *nod = new node(@1.first_line, @1.first_column,"tand",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |tnot E{ $$ = new node(@1.first_line, @1.first_column,$1,$1); $$->add(*$2);}
   |ESINGLE{ $$ = $1; }
   |openPar E closePar{ $$ = $2; }
   |minus E { $$ = new node(@1.first_line, @1.first_column,$1,$1); $$->add(*$2);}
 ;
 
 %%
-/**********************
- * Codigo C Adicional *
- **********************/
-void yyerror(char *errorString)
-{
-	printf("Error sintactico %s \n",errorString);
-}
-
-void inicializa(QLineEdit *lineEdit){
-	expresion = lineEdit;
-}
-
-int main(int argc,char **argv)
-{
-	
-	if (argc>1)
-		yyin=fopen(argv[1],"rt");
-	else
-		//yyin=stdin;
-		yyin=fopen("entrada.txt","rt");
-		
-
-	yyparse();
-	return 0;
-}
