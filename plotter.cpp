@@ -43,7 +43,7 @@ void graficador::recorrerAST(QString padre, node *hijo)
     {
         node node = hijo->hijos[x];
         QString nombreHijo = "node" +  QString::number(contador);//  this->contador;
-        grafo += nombreHijo + "[label=\"" + escapar("[" +node.tipo +"," + QString::number(node.tipo_)+ "("+ QString::number(node.linea)+","+ QString::number(node.columna)+")"+node.valor)  + "\"];\n";
+        grafo += nombreHijo + "[label=\"" + escapar("[" +node.tipo +"," + QString::number(node.tipo_)+ "("+ QString::number(node.linea)+","+ QString::number(node.columna)+")"+node.valor + "]")  + ";\n";
         grafo += padre + "->" + nombreHijo + ";\n";
         contador++;
         recorrerAST(nombreHijo, &node);

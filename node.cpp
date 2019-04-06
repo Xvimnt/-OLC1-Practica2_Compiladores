@@ -51,5 +51,6 @@ int node::getTipo()
     if(this->tipo=="asignacion"){return 22;}
     if(this->tipo=="show"){return 23;}
     if(this->tipo=="if"){return 24;}
+    if(this->tipo=="id"){return 25;}
     return 0;
 }

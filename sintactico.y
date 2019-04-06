@@ -399,6 +399,7 @@ INDEX: openB E closeB
 E: E plus E{node *nod = new node(@1.first_line, @1.first_column,"suma",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E minus E{node *nod = new node(@1.first_line, @1.first_column,"resta",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E by E{node *nod = new node(@1.first_line, @1.first_column,"multi",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E openPar E closePar{node *nod = new node(@1.first_line, @1.first_column,"multi",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E slash E{node *nod = new node(@1.first_line, @1.first_column,"div",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E power E{node *nod = new node(@1.first_line, @1.first_column,"potencia",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
   |E doubleEqual E{node *nod = new node(@1.first_line, @1.first_column,"igualacion",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
