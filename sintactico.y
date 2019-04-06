@@ -135,7 +135,7 @@ BODY: DECLARATION {$$ = $1;}
 ASSIGNATION: iden ASSIGN2 semicolon 
         { 
           $$ = new node(@1.first_line, @1.first_column,"asignacion","asignacion"); 
-          node *res = new node(@1.first_line, @1.first_column,"identificador",$1);
+          node *res = new node(@1.first_line, @1.first_column,"id",$1);
           $$->add(*res);
           $$->add(*$2);
         }
@@ -171,11 +171,11 @@ DECLARATION2: OBJECTS semicolon
               }
 ;
 
-DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
-        | tbool { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
-        | tstring { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
-        | tdouble { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
-        | tchar{ $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
+DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
+        | tbool { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);std::cout << "Native: " << $1 << std::endl;}
+        | tstring { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);std::cout << "Native: " << $1 << std::endl;}
+        | tdouble { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);std::cout << "Native: " << $1 << std::endl;}
+        | tchar{ $$ = new node(@1.first_line, @1.first_column,"reservada",$1);std::cout << "Native: " << $1 << std::endl;}
 ;
 
 OBJECTS: OBJECTS comma iden ASSIGN 
@@ -379,7 +379,7 @@ ESINGLE:NATIVE { $$ = $1; }
   |iden INDEX{
     if($2==nullptr)
     {
-        $$ = new node(@1.first_line, @1.first_column,"identificador",$1);
+        $$ = new node(@1.first_line, @1.first_column,"id",$1);
     }
     else
     {
