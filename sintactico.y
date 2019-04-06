@@ -223,7 +223,7 @@ ASSIGN: equal E { $$ = new node(@1.first_line, @1.first_column,"igual",$1); $$->
       | { $$ = nullptr; }
 ;
 
-ARRAY: openB E closeB ARRAY2 ARRAYASIGN
+ARRAY: iden openB E closeB ARRAY2 ARRAYASIGN
     {
       if($4 == nullptr)
       {

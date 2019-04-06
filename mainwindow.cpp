@@ -118,12 +118,13 @@ void MainWindow::on_actionAST_triggered()
 {
     if(correcto)
     {
-        /*Instanciamos nuestro interprete y le enviamos nuestro arbol para ejecutarse.*/
+        /*Instanciamos nuestro interprete y le enviamos nuestro arbol para ejecutarse.
         semantic * interprete = new semantic();
-        interprete->recorrer(root);
+        interprete->recorrer(root);*/
         /*Instanciamos un graficador y graficamos*/
         graficador *graf = new graficador(root);
         graf->generarImagen();
+        QMessageBox::information(0, "Exito", "Arbol Generado Correctamente");
     }
     else
     {
