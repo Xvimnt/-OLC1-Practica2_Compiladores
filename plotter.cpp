@@ -61,14 +61,7 @@ void graficador:: generarImagen()
         QTextStream out(&qFile); out << grafoDOT;
         qFile.close();
     }
-    //"dot -Tjpg " + fileName + " -o " + fileName.Replace(".txt", ".jpg")
     QString cadenaComando = "dot -Tjpg " + path + "grafo.txt -o " + path+"grafo.jpg ";
-    std::cout << cadenaComando.toStdString() << "\n" << endl;
-
     system(cadenaComando.toUtf8().constData());
-/*    std::ofstream myfile;
-    myfile.open ("grafo.txt",std::ios_base::app);
-    myfile << grafoDOT.toStdString();
-    myfile.close();
-*/
+
 }

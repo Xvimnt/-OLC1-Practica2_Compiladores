@@ -42,7 +42,7 @@
         <attribute name="title">
          <string>Consola</string>
         </attribute>
-        <widget class="QTextEdit" name="textEdit_2">
+        <widget class="QTextEdit" name="txtOutput">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -57,7 +57,7 @@
         <attribute name="title">
          <string>Variables</string>
         </attribute>
-        <widget class="QTableWidget" name="tableWidget">
+        <widget class="QTableWidget" name="tbVar">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -66,6 +66,13 @@
            <height>161</height>
           </rect>
          </property>
+         <property name="columnCount">
+          <number>4</number>
+         </property>
+         <column/>
+         <column/>
+         <column/>
+         <column/>
         </widget>
        </widget>
       </widget>
@@ -79,7 +86,7 @@
      <x>0</x>
      <y>0</y>
      <width>680</width>
-     <height>22</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">

@@ -95,6 +95,7 @@ void MainWindow::on_actionGuardar_Como_triggered()
 }
 
 void MainWindow::showVariables(std::map<QString, var*> variables){
+
     std::map<QString, var*>::iterator it;
 
     for ( it = variables.begin(); it != variables.end(); it++ )
