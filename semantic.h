@@ -12,7 +12,7 @@ class semantic
 
 public:
     std::list<var> errores;
-    std::map<std::string, var> variables;
+    std::map<std::string, var*> variables;
     semantic();
     Resultado recorrer( node *raiz);
     QString resultado;

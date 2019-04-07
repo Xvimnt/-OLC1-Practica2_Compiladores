@@ -8,10 +8,12 @@ extern int yylineno; //linea actual donde se encuentra el parser (analisis lexic
 extern int columna; //columna actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
 extern node *root; // Raiz del arbol
+extern Qlist<error> errores;
 
 int yyerror(const char* msj)
 {
     std::cout << msj << " " << yytext << std::endl;
+    errores.append(new error(yytext,"Error Sintactico", yylineno, columna) );
     return 0;
 }
 %}
@@ -135,7 +137,7 @@ BODY: DECLARATION {$$ = $1;}
 ASSIGNATION: iden ASSIGN2 semicolon 
         { 
           $$ = new node(yylineno, columna,"asignacion","asignacion"); 
-          node *res = new node(yylineno, columna,"id",$1);
+          node *res = new node(yylineno, columna,"id",yytext);
           $$->add(*res);
           $$->add(*$2);
         }
@@ -379,12 +381,11 @@ ESINGLE:NATIVE { $$ = $1; }
   |iden INDEX{
     if($2==nullptr)
     {
-        $$ = new node(yylineno, columna,"id",$1);
+        $$ = new node(yylineno, columna,"id",yytext);
     }
     else
     {
         $$ = new node(yylineno, columna,"arregloIndex",$1);
-        //Devolver el valor del index
     }
   }
 ;
