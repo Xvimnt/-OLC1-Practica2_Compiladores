@@ -4,14 +4,16 @@
 #include <resultado.h>
 #include "node.h"
 #include "var.h"
+#include "error.h"
 #include <math.h>
 #include <map>
+#include "QList"
 
 class semantic
 {
 
 public:
-    std::list<var> errores;
+    QList<error*> errores;
     std::map<std::string, var*> variables;
     semantic();
     Resultado recorrer( node *raiz);

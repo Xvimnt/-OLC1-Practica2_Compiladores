@@ -99,7 +99,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -117,7 +117,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -136,7 +136,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -155,7 +155,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -174,7 +174,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -204,7 +204,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -222,7 +222,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -241,7 +241,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -260,7 +260,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -279,7 +279,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -315,7 +315,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -339,7 +339,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -347,7 +347,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -373,14 +373,14 @@ Resultado semantic::recorrer(node *raiz)
             }
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -406,14 +406,14 @@ Resultado semantic::recorrer(node *raiz)
             }
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -446,7 +446,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -470,7 +470,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -478,7 +478,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -511,7 +511,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -535,7 +535,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -543,7 +543,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -576,7 +576,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -600,7 +600,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -608,7 +608,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -662,7 +662,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -709,7 +709,7 @@ Resultado semantic::recorrer(node *raiz)
 
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -745,7 +745,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -791,7 +791,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -831,7 +831,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -882,7 +882,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -921,7 +921,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -930,7 +930,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         case CHAR:
@@ -960,7 +960,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -986,7 +986,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1037,7 +1037,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -1076,7 +1076,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1085,7 +1085,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         case CHAR:
@@ -1122,7 +1122,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1162,7 +1162,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1213,7 +1213,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -1252,7 +1252,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1261,7 +1261,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         case CHAR:
@@ -1298,7 +1298,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1331,7 +1331,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1382,7 +1382,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             }
         }
@@ -1421,7 +1421,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1429,7 +1429,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         case STRING:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         case CHAR:
@@ -1445,7 +1445,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1464,7 +1464,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                /*Aqui debe ir el código para reportar el error de tipos*/
+                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
             }
             break;
             }
@@ -1505,7 +1505,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
@@ -1543,7 +1543,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            /*Aqui debe ir el código para reportar el error de tipos*/
+            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
         }
         break;
         }
