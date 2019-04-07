@@ -24,7 +24,7 @@ enum Choice
     DECREASE = 20,
     RESERVED = 21,
     ASIGNACION = 22,
-    IDEN = 25
+    IDEN = 25 BODY = 26;
 };
 
 semantic::semantic()
@@ -32,60 +32,60 @@ semantic::semantic()
     resultado = "";
 }
 
-Resultado semantic::recorrer(node *raiz)
+Resultado semantic::recorrer(node *node_)
 {
     Resultado r = Resultado();
-    r.linea = raiz->linea; // Nos servirán para una posible reporte de error de tipos.
-    r.columna = raiz->columna;
-    switch (raiz->tipo_)
+    r.linea = node_->linea; // Nos servirán para una posible reporte de error de tipos.
+    r.columna = node_->columna;
+    switch (node_->tipo_)
     {
     case INT:
     {
         r.tipo = INT;
-        r.valor = raiz->valor;
+        r.valor = node_->valor;
     }
     break;
     case BOOL:
     {
         r.tipo = BOOL;
-        r.valor = raiz->valor;
+        r.valor = node_->valor;
     }
     break;
     case DOUBLE:
     {
         r.tipo = DOUBLE;
-        r.valor = raiz->valor;
+        r.valor = node_->valor;
     }
     break;
     case STRING:
     {
         r.tipo = STRING;
-        r.valor = raiz->valor;
+        r.valor = node_->valor;
     }
     break;
     case CHAR:
     {
         r.tipo = CHAR;
-        r.valor = raiz->valor;
+        r.valor = node_->valor;
     }
     break;
     case ASIGNACION:
     {
         //Este es un identificador
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
         //Este es un E u otro id
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         //asignando variables
-        variables[iz.valor] = new var(der.valor,der.tipo);
+        variables[iz.valor] = new var(der.valor, der.tipo);
     }
     break;
     case IGUALACION:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -102,7 +102,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -120,7 +120,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -139,7 +139,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -158,7 +158,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -177,7 +177,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -188,9 +188,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case DIFERENCIACION:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -207,7 +207,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -225,7 +225,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -244,7 +244,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -263,7 +263,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -282,7 +282,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -293,9 +293,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case MENORQUE:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -318,7 +318,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -342,7 +342,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -350,7 +350,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -358,9 +358,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case AND:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -376,14 +376,14 @@ Resultado semantic::recorrer(node *raiz)
             }
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -391,9 +391,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case OR:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -409,14 +409,14 @@ Resultado semantic::recorrer(node *raiz)
             }
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -424,9 +424,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case MAYORQUE:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -449,7 +449,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -473,7 +473,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -481,7 +481,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -489,9 +489,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case MENOROIGUAL:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -514,7 +514,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -538,7 +538,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -546,7 +546,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -554,9 +554,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case MAYOROIGUAL:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -579,7 +579,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -603,7 +603,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -611,7 +611,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -619,9 +619,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case SUMA:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -665,7 +665,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -712,7 +712,7 @@ Resultado semantic::recorrer(node *raiz)
 
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -748,7 +748,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -794,7 +794,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -834,7 +834,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -845,9 +845,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case RESTA:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -885,7 +885,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -924,7 +924,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -933,7 +933,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         case CHAR:
@@ -963,7 +963,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -989,7 +989,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1000,9 +1000,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case MULTI:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -1040,7 +1040,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -1079,7 +1079,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1088,7 +1088,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         case CHAR:
@@ -1125,7 +1125,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1165,7 +1165,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1176,9 +1176,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case DIV:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -1216,7 +1216,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -1255,7 +1255,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1264,7 +1264,7 @@ Resultado semantic::recorrer(node *raiz)
         case STRING:
         {
 
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         case CHAR:
@@ -1301,7 +1301,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1334,7 +1334,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1345,9 +1345,9 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case POTENCIA:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        node der = raiz->hijos.at(1);
+        node der = node_->hijos.at(1);
         Resultado op2 = recorrer(&der);
         switch (op1.tipo)
         {
@@ -1385,7 +1385,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             }
         }
@@ -1424,7 +1424,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1432,7 +1432,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         case STRING:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         case CHAR:
@@ -1448,7 +1448,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1467,7 +1467,7 @@ Resultado semantic::recorrer(node *raiz)
             break;
             default:
             {
-                errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
             }
             break;
             }
@@ -1478,7 +1478,7 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case INCREASE:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
         switch (op1.tipo)
         {
@@ -1508,7 +1508,7 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
@@ -1516,7 +1516,7 @@ Resultado semantic::recorrer(node *raiz)
     break;
     case DECREASE:
     {
-        node iz = raiz->hijos.at(0);
+        node iz = node_->hijos.at(0);
         Resultado op1 = recorrer(&iz);
         switch (op1.tipo)
         {
@@ -1546,12 +1546,22 @@ Resultado semantic::recorrer(node *raiz)
         break;
         default:
         {
-            errores.append(new error(r.valor,"Error Semantico", r.linea, r.columna,"operacion invaida") );
+            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
         }
         break;
         }
     }
     break;
+    default:
+    {
+        //Como aquí hay una lista de operaciones, hacemos un for
+        r.tipo = node_->tipo_;
+        for (int x = 0; x < raiz->hijos.size(); x++)
+        {
+            node nodo = raiz->hijos.at(x);
+            recorrer(&nodo);
+        }
+    }
     }
     return r;
 }
