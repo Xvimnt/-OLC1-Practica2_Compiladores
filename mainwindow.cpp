@@ -1,18 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <qfiledialog.h>
-#include <qstring.h>
-#include <qmessagebox.h>
-#include <qtextstream.h>
-#include <semantic.h>  // Nuestro parser
-#include <parser.h>  // Nuestro parser
-#include <scanner.h>  // Nuestro scanner
-#include <plotter.h> // Graficador
-#include <node.h> //Nuestra clase nodo
-#include <QDesktopServices>
-#include <QFile>
-#include <QFileInfo>
-#include "error.h"
 
 static QString path;
 extern node *root;
@@ -92,6 +79,18 @@ void MainWindow::on_actionGuardar_Como_triggered()
     saveAs();
 }
 
+void MainWindow::showVariables(std::map<QString, var*> variables){
+    std::map<QString, var*>::iterator it;
+
+    for ( it = variables.begin(); it != variables.end(); it++ )
+    {
+        std::cout << it->first.toStdString()  // string (key)
+                  << ':'
+                  << it->second->getValue().toStdString()   // string's value
+                  << std::endl ;
+    }
+}
+
 void MainWindow::on_actionCompilar_triggered()
 {
         QString programa = ui->txtInput->toPlainText();
@@ -105,6 +104,14 @@ void MainWindow::on_actionCompilar_triggered()
 
         if(yyparse()==0 || errores.count() == 0) // Si nos da un número negativo, signifca error.
         {
+            //Iniciando el analiziz semantico
+            semantic * interprete = new semantic();
+            interprete->recorrer(root);
+
+            //prueba para imprimir variables
+            std::cout << "-----imprimiendo todas las variables-----" << std::endl;
+            showVariables(interprete->variables);
+
             QMessageBox::information(this, "Exito", "Entrada Correcta");
             correcto = true;
         }
@@ -119,9 +126,6 @@ void MainWindow::on_actionAST_triggered()
 {
     if(correcto)
     {
-        /*Instanciamos nuestro interprete y le enviamos nuestro arbol para ejecutarse.
-        semantic * interprete = new semantic();
-        interprete->recorrer(root);*/
         /*Instanciamos un graficador y graficamos*/
         graficador *graf = new graficador(root);
         graf->generarImagen();

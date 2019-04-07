@@ -397,7 +397,7 @@ INDEX: openB E closeB
 ;
 
 ID: iden {
-  $$ = new node(yylineno, columna,"identificador",$1);
+  $$ = new node(yylineno, columna,"identificador",yytext);
 }
 ;
 

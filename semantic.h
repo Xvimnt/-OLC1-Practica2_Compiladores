@@ -14,7 +14,7 @@ class semantic
 
 public:
     QList<error*> errores;
-    std::map<std::string, var*> variables;
+    std::map<QString, var*> variables;
     semantic();
     Resultado recorrer( node *raiz);
     QString resultado;

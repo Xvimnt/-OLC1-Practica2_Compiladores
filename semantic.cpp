@@ -23,7 +23,8 @@ enum Choice
     INCREASE = 19,
     DECREASE = 20,
     RESERVED = 21,
-    ASIGNACION = 22
+    ASIGNACION = 22,
+    IDEN = 25
 };
 
 semantic::semantic()
@@ -73,9 +74,11 @@ Resultado semantic::recorrer(node *raiz)
         //Este es un identificador
         node iz = raiz->hijos.at(0);
         Resultado op1 = recorrer(&iz);
-        //Este es un signo igual
+        //Este es un E u otro id
         node der = raiz->hijos.at(1);
         Resultado op2 = recorrer(&der);
+        //asignando variables
+        variables[iz.valor] = new var(der.valor,der.tipo);
     }
     break;
     case IGUALACION:
