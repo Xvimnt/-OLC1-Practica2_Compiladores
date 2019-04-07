@@ -171,11 +171,11 @@ DECLARATION2: OBJECTS semicolon
               }
 ;
 
-DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
-        | tbool { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
-        | tstring { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
-        | tdouble { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
-        | tchar{ $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
+DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
+        | tbool { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
+        | tstring { $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
+        | tdouble { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); }
+        | tchar{ $$ = new node(@1.first_line, @1.first_column,"reservada",$1);}
 ;
 
 OBJECTS: OBJECTS comma iden ASSIGN 
@@ -319,11 +319,11 @@ ARRAYLIST: ARRAYLIST comma E
         }
 ;
 
-NATIVE: integer { $$ = new node(@1.first_line, @1.first_column,"int",$1);}
-    | caracter { $$ = new node(@1.first_line, @1.first_column,"char",$1);}
-    | String  { $$ = new node(@1.first_line, @1.first_column,"string",$1);}
-    | boolean { $$ = new node(@1.first_line, @1.first_column,"bool",$1);}
-    | number { $$ = new node(@1.first_line, @1.first_column,"double",$1);}
+NATIVE: integer { $$ = new node(@1.first_line, @1.first_column,"int",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
+    | caracter { $$ = new node(@1.first_line, @1.first_column,"char",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
+    | String  { $$ = new node(@1.first_line, @1.first_column,"string",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
+    | boolean { $$ = new node(@1.first_line, @1.first_column,"bool",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
+    | number { $$ = new node(@1.first_line, @1.first_column,"double",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
 ;
 
 PRINT: timprimir openPar E closePar semicolon  {node *nod = new node(@1.first_line, @1.first_column,"print",$1); nod->add(*$3); $$=nod;}
