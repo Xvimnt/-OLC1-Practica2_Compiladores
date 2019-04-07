@@ -319,11 +319,11 @@ ARRAYLIST: ARRAYLIST comma E
         }
 ;
 
-NATIVE: integer { $$ = new node(yylineno, columna,"int",$1); std::cout << "Native: " << yytext << " en la columna " << columna << std::endl;}
-    | caracter { $$ = new node(yylineno, columna,"char",$1); std::cout << "Native: " << yytext<< " en la linea " << yylineno << std::endl;}
-    | String  { $$ = new node(yylineno, columna,"string",$1); std::cout << "Native: " << yytext << " en la linea " << yylineno << std::endl;}
-    | boolean { $$ = new node(yylineno, columna,"bool",$1); std::cout << "Native: " << yytext << " en la linea " << yylineno << std::endl;}
-    | number { $$ = new node(yylineno, columna,"double",$1); std::cout << "Native: " << yytext<< " en la linea " << yylineno << std::endl;}
+NATIVE: integer { $$ = new node(yylineno, columna,"int",yytext);}
+    | caracter { $$ = new node(yylineno, columna,"char",yytext);}
+    | String  { $$ = new node(yylineno, columna,"string",yytext);}
+    | boolean { $$ = new node(yylineno, columna,"bool",yytext);}
+    | number { $$ = new node(yylineno, columna,"double",yytext);}
 ;
 
 PRINT: timprimir openPar E closePar semicolon  {node *nod = new node(yylineno, columna,"print",$1); nod->add(*$3); $$=nod;}

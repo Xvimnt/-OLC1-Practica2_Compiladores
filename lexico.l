@@ -8,9 +8,9 @@
     #include <iostream>
     #include <node.h>
     #include "qlist.h"
-    #include <list>
+
     int yylex();
-    std::list<QString> errores;
+    Qlist<error> errores;
 	void yyerror(const char *s);
 	int linea=0;
 	int columna = 1;
@@ -91,7 +91,7 @@ INITIAL
     "\n" 	 	 {linea++; columna = 0; anterior = 0;}
     .   {
             columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
-            //errores.push_back(linea + "$" + columna + "$" + yytext + "$" + "Error Lexico" );
+            errores.append(new error(yytext,"Error Lexico", yyline, columna) );
             std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
         }
 }

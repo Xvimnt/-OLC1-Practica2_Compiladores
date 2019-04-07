@@ -4,3 +4,11 @@ error::error()
 {
 
 }
+
+error::error(QString value,QString type, int row,int col)
+{
+    this->value = value;
+    this->type = type;
+    this->row = row;
+    this->col = col;
+}
