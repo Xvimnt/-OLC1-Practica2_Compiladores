@@ -96,7 +96,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 24 "sintactico.y" /* yacc.c:1909  */
+#line 27 "sintactico.y" /* yacc.c:1909  */
 
   char TEXT [256];
   class node *Node;

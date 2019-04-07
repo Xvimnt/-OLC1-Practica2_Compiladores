@@ -627,17 +627,18 @@ char *yytext;
     #include <iostream>
     #include <node.h>
     #include "qlist.h"
-    #include <list>
+    #include "error.h"
+
     int yylex();
-    std::list<std::string> errores;
+    QList<error*> errores;
 	void yyerror(const char *s);
 	int linea=0;
 	int columna = 1;
 	int anterior = 0;
 	node *root;
-#line 639 "scanner.cpp"
+#line 640 "scanner.cpp"
 
-#line 641 "scanner.cpp"
+#line 642 "scanner.cpp"
 
 #define INITIAL 0
 #define MULTI_COMMENT 1
@@ -854,9 +855,9 @@ YY_DECL
 		}
 
 	{
-#line 38 "lexico.l"
+#line 39 "lexico.l"
 
-#line 860 "scanner.cpp"
+#line 861 "scanner.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -925,298 +926,299 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 39 "lexico.l"
+#line 40 "lexico.l"
 
 	YY_BREAK
 
 case 2:
 YY_RULE_SETUP
-#line 41 "lexico.l"
+#line 42 "lexico.l"
 {  BEGIN SIMPLE_COMMENT; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 42 "lexico.l"
+#line 43 "lexico.l"
 {  BEGIN MULTI_COMMENT; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 43 "lexico.l"
+#line 44 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tint;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 44 "lexico.l"
+#line 45 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tstring;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 45 "lexico.l"
+#line 46 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tbool;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 46 "lexico.l"
+#line 47 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tchar;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 47 "lexico.l"
+#line 48 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tdouble;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 48 "lexico.l"
+#line 49 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return timprimir;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 49 "lexico.l"
+#line 50 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tshow;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 50 "lexico.l"
+#line 51 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tsi;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 51 "lexico.l"
+#line 52 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tsino;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 52 "lexico.l"
+#line 53 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tpara;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 53 "lexico.l"
+#line 54 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return trepetir;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 54 "lexico.l"
+#line 55 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tarreglo;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 55 "lexico.l"
+#line 56 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return openPar;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 56 "lexico.l"
+#line 57 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return closePar;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 57 "lexico.l"
+#line 58 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return openB;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 58 "lexico.l"
+#line 59 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return closeB;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 59 "lexico.l"
+#line 60 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return openCB;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 60 "lexico.l"
+#line 61 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return closeCB;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 61 "lexico.l"
+#line 62 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return comma;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 62 "lexico.l"
+#line 63 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return semicolon;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 63 "lexico.l"
+#line 64 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return equal;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 64 "lexico.l"
+#line 65 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return doubleEqual;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 65 "lexico.l"
+#line 66 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return different;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 66 "lexico.l"
+#line 67 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return greaterThan;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 67 "lexico.l"
+#line 68 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return greaterThanEqual;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 68 "lexico.l"
+#line 69 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return lessThan;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 69 "lexico.l"
+#line 70 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return lessThanEqual;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 70 "lexico.l"
+#line 71 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tor;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 71 "lexico.l"
+#line 72 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tand;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 72 "lexico.l"
+#line 73 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return tnot;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 73 "lexico.l"
+#line 74 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return plus;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 74 "lexico.l"
+#line 75 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return increase;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 75 "lexico.l"
+#line 76 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return minus;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 76 "lexico.l"
+#line 77 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return decrease;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 77 "lexico.l"
+#line 78 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return by;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 78 "lexico.l"
+#line 79 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return slash;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 79 "lexico.l"
+#line 80 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl;columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);return power;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 81 "lexico.l"
+#line 82 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; return(number);}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 82 "lexico.l"
+#line 83 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; return(boolean);}
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 83 "lexico.l"
+#line 84 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; return(String);}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 84 "lexico.l"
+#line 85 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; return(caracter);}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 85 "lexico.l"
+#line 86 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; return(integer);}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 86 "lexico.l"
+#line 87 "lexico.l"
 {std::cout<< "reconocido " << yytext << std::endl; return(iden);}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 89 "lexico.l"
+#line 90 "lexico.l"
 {strcpy(yylval.TEXT , yytext); columna = 26;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 90 "lexico.l"
+#line 91 "lexico.l"
 {columna++;}
 	YY_BREAK
 case 49:
 /* rule 49 can match eol */
 YY_RULE_SETUP
-#line 91 "lexico.l"
+#line 92 "lexico.l"
 {linea++; columna = 0; anterior = 0;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 92 "lexico.l"
+#line 93 "lexico.l"
 {
             columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
+            errores.append(new error(yytext,"Error Lexico", yylineno, columna) );
             std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
         }
 	YY_BREAK
 
 case 51:
 YY_RULE_SETUP
-#line 98 "lexico.l"
+#line 100 "lexico.l"
 { BEGIN INITIAL; }
 	YY_BREAK
 case 52:
 /* rule 52 can match eol */
 YY_RULE_SETUP
-#line 99 "lexico.l"
+#line 101 "lexico.l"
 {linea++;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 100 "lexico.l"
+#line 102 "lexico.l"
 
 	YY_BREAK
 case YY_STATE_EOF(MULTI_COMMENT):
-#line 101 "lexico.l"
+#line 103 "lexico.l"
 { yyerror("unclosed comment"); }
 	YY_BREAK
 case 54:
 /* rule 54 can match eol */
 YY_RULE_SETUP
-#line 102 "lexico.l"
+#line 104 "lexico.l"
 { linea++; columna = 0; BEGIN INITIAL; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 103 "lexico.l"
+#line 105 "lexico.l"
 
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 104 "lexico.l"
+#line 106 "lexico.l"
 ECHO;
 	YY_BREAK
-#line 1220 "scanner.cpp"
+#line 1222 "scanner.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SIMPLE_COMMENT):
 	yyterminate();
@@ -2193,6 +2195,6 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 104 "lexico.l"
+#line 106 "lexico.l"
 
 

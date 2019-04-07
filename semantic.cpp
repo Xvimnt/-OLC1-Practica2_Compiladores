@@ -1,4 +1,5 @@
 #include "semantic.h"
+#include <iostream>
 
 enum Choice
 {
@@ -309,6 +310,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toInt() < op2.valor.toInt());
                 r.valor = QString::number(result);
             }
+            break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -333,6 +335,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toDouble() < op2.valor.toDouble());
                 r.valor = QString::number(result);
             }
+            break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -374,6 +377,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 && op2.valor.compare("true", Qt::CaseInsensitive) == 0);
                 r.valor = QString::number(result);
             }
+            break;
             default:
             {
                 errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
@@ -407,6 +411,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 || op2.valor.compare("true", Qt::CaseInsensitive) == 0);
                 r.valor = QString::number(result);
             }
+            break;
             default:
             {
                 errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
@@ -440,6 +445,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toInt() > op2.valor.toInt());
                 r.valor = QString::number(result);
             }
+                break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -464,6 +470,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toDouble() > op2.valor.toDouble());
                 r.valor = QString::number(result);
             }
+                break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -505,6 +512,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toInt() <= op2.valor.toInt());
                 r.valor = QString::number(result);
             }
+                break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -529,6 +537,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toDouble() <= op2.valor.toDouble());
                 r.valor = QString::number(result);
             }
+                break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -570,6 +579,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toInt() >= op2.valor.toInt());
                 r.valor = QString::number(result);
             }
+                break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
@@ -594,6 +604,7 @@ Resultado semantic::recorrer(node *node_)
                 bool result = (op1.valor.toDouble() >= op2.valor.toDouble());
                 r.valor = QString::number(result);
             }
+                break;
             case DOUBLE:
             {
                 r.tipo = BOOL;
