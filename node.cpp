@@ -7,7 +7,7 @@ node::node()
     valor = "";
     linea = 0;
     columna = 0;
-    hijos =  QList<node>();
+    hijos =  QList<node*>();
 }
 
 node::node(int l, int c, QString t, QString v)
@@ -17,12 +17,12 @@ node::node(int l, int c, QString t, QString v)
     tipo = t;
     valor = v;
     tipo_ = getTipo();
-    hijos = QList<node>();
+    hijos = QList<node*>();
 }
 
-void node::add(node nd)
+void node::add(node *n)
 {
-    this->hijos.append(nd);
+    this->hijos.append(n);
 }
 
 int node::getTipo()

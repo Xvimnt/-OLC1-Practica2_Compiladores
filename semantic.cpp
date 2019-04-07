@@ -73,21 +73,21 @@ Resultado semantic::recorrer(node *node_)
     case ASIGNACION:
     {
         //Este es un identificador
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
         //Este es un E u otro id
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         //asignando variables
         variables[iz.valor] = new var(der.valor, der.tipo);
     }
     break;
     case IGUALACION:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -189,10 +189,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case DIFERENCIACION:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -294,10 +294,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MENORQUE:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -361,10 +361,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case AND:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case BOOL:
@@ -395,10 +395,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case OR:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case BOOL:
@@ -429,10 +429,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MAYORQUE:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -496,10 +496,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MENOROIGUAL:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -563,10 +563,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MAYOROIGUAL:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -630,10 +630,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case SUMA:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -856,10 +856,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case RESTA:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -1011,10 +1011,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MULTI:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -1187,10 +1187,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case DIV:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -1356,10 +1356,10 @@ Resultado semantic::recorrer(node *node_)
     break;
     case POTENCIA:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
-        node der = node_->hijos.at(1);
-        Resultado op2 = recorrer(&der);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
+        node *der = node_->hijos.at(1);
+        Resultado op2 = recorrer(der);
         switch (op1.tipo)
         {
         case INT:
@@ -1489,8 +1489,8 @@ Resultado semantic::recorrer(node *node_)
     break;
     case INCREASE:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
         switch (op1.tipo)
         {
         case INT:
@@ -1527,8 +1527,8 @@ Resultado semantic::recorrer(node *node_)
     break;
     case DECREASE:
     {
-        node iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(&iz);
+        node *iz = node_->hijos.at(0);
+        Resultado op1 = recorrer(iz);
         switch (op1.tipo)
         {
         case INT:
@@ -1569,8 +1569,8 @@ Resultado semantic::recorrer(node *node_)
         r.tipo = node_->tipo_;
         for (int x = 0; x < node_->hijos.size(); x++)
         {
-            node nodo = node_->hijos.at(x);
-            recorrer(&nodo);
+            node *nodo = node_->hijos.at(x);
+            recorrer(nodo);
         }
     }
     }

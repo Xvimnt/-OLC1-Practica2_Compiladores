@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <QtWidgets>
-#include <node.h>
+#include <node->h>
 graficador::graficador()
 {
     this->contador = 0;
@@ -32,9 +32,9 @@ void graficador::recorrerAST(QString padre, node *hijo)
     int x = 0;
     for (x = 0 ; x < hijo->hijos.count() ; x++)
     {
-        node node = hijo->hijos[x];
+        node *node = hijo->hijos[x];
         QString nombreHijo = "node" +  QString::number(contador);//  this->contador;
-        grafo += nombreHijo + "[label=\"" + escapar("[" +node.tipo +"," + QString::number(node.tipo_)+ "("+ QString::number(node.linea)+","+ QString::number(node.columna)+")" + "," + node.valor + "]") + "\"];\n";
+        grafo += nombreHijo + "[label=\"" + escapar("[" +node->tipo +"," + QString::number(node->tipo_)+ "("+ QString::number(node->linea)+","+ QString::number(node->columna)+")" + "," + node->valor + "]") + "\"];\n";
         grafo += padre + "->" + nombreHijo + ";\n";
         contador++;
         recorrerAST(nombreHijo, &node);
