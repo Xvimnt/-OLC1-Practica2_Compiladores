@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <QtWidgets>
-#include <node->h>
+#include "node.h"
 graficador::graficador()
 {
     this->contador = 0;
