@@ -91,7 +91,7 @@ INITIAL
     "\n" 	 	 {linea++; columna = 0; anterior = 0;}
     .   {
             columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
-            errores.push_back(linea + "$" + columna + "$" + yytext + "$" + "Error Lexico" );
+            //errores.push_back(linea + "$" + columna + "$" + yytext + "$" + "Error Lexico" );
             std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
         }
 }

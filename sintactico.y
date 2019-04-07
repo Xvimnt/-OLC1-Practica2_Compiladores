@@ -117,7 +117,7 @@ START2: START2 BODY
       }
       | BODY
       {
-        $$ = new node(yylineno, @1.first_column,"cuerpo","cuerpo");
+        $$ = new node(yylineno, columna,"cuerpo","cuerpo");
         $$->add(*$1);
       }
 ;
@@ -134,8 +134,8 @@ BODY: DECLARATION {$$ = $1;}
 
 ASSIGNATION: iden ASSIGN2 semicolon 
         { 
-          $$ = new node(yylineno, @1.first_column,"asignacion","asignacion"); 
-          node *res = new node(yylineno, @1.first_column,"id",$1);
+          $$ = new node(yylineno, columna,"asignacion","asignacion"); 
+          node *res = new node(yylineno, columna,"id",$1);
           $$->add(*res);
           $$->add(*$2);
         }
@@ -143,19 +143,19 @@ ASSIGNATION: iden ASSIGN2 semicolon
 
 ASSIGN2: equal E
         {
-          $$ = new node(yylineno, @1.first_column,"igual",$1);
+          $$ = new node(yylineno, columna,"igual",$1);
           $$->add(*$2);
         }
        | openB E closeB ASSIGN2
         { 
-          $$ = new node(yylineno, @1.first_column,"indice",$2->valor);
+          $$ = new node(yylineno, columna,"indice",$2->valor);
           $$->add(*$4);
         }
 ;
 
 DECLARATION: DATATYPE DECLARATION2
         {
-          $$ = new node(yylineno, @1.first_column,"declaracion","declaracion");
+          $$ = new node(yylineno, columna,"declaracion","declaracion");
           $$->add(*$1);
           $$->add(*$2);
         }
@@ -171,11 +171,11 @@ DECLARATION2: OBJECTS semicolon
               }
 ;
 
-DATATYPE: tint { $$ = new node(yylineno, @1.first_column,"reservada",$1);}
-        | tbool { $$ = new node(yylineno, @1.first_column,"reservada",$1);}
-        | tstring { $$ = new node(yylineno, @1.first_column,"reservada",$1);}
-        | tdouble { $$ = new node(yylineno, @1.first_column,"reservada",$1); }
-        | tchar{ $$ = new node(yylineno, @1.first_column,"reservada",$1);}
+DATATYPE: tint { $$ = new node(yylineno, columna,"reservada",$1);}
+        | tbool { $$ = new node(yylineno, columna,"reservada",$1);}
+        | tstring { $$ = new node(yylineno, columna,"reservada",$1);}
+        | tdouble { $$ = new node(yylineno, columna,"reservada",$1); }
+        | tchar{ $$ = new node(yylineno, columna,"reservada",$1);}
 ;
 
 OBJECTS: OBJECTS comma iden ASSIGN 
@@ -184,14 +184,14 @@ OBJECTS: OBJECTS comma iden ASSIGN
           node *nod;
           if($4 == nullptr)
           {
-              nod = new node(yylineno, @1.first_column,"declaracion","declaracion");
-              node *res = new node(yylineno, @1.first_column,"id",$3);
+              nod = new node(yylineno, columna,"declaracion","declaracion");
+              node *res = new node(yylineno, columna,"id",$3);
               nod->add(*res);
           }
           else
           {
-              nod = new node(yylineno, @1.first_column,"asignacion","asignacion");
-              node *res = new node(yylineno, @1.first_column,"id",$3);
+              nod = new node(yylineno, columna,"asignacion","asignacion");
+              node *res = new node(yylineno, columna,"id",$3);
               nod->add(*res);
               nod->add(*$4);
           }
@@ -199,18 +199,18 @@ OBJECTS: OBJECTS comma iden ASSIGN
         }
       | iden ASSIGN 
       { 
-        $$ = new node(yylineno, @1.first_column,"asignaciones","asignaciones");
+        $$ = new node(yylineno, columna,"asignaciones","asignaciones");
         node *nod;
         if($2 == nullptr)
         {
-            nod = new node(yylineno, @1.first_column,"declaracion","declaracion");
-            node *res = new node(yylineno, @1.first_column,"id",$1);
+            nod = new node(yylineno, columna,"declaracion","declaracion");
+            node *res = new node(yylineno, columna,"id",$1);
             nod->add(*res);
         }
         else
         {
-            nod = new node(yylineno, @1.first_column,"asignacion","asignacion");
-            node *res = new node(yylineno, @1.first_column,"id",$1);
+            nod = new node(yylineno, columna,"asignacion","asignacion");
+            node *res = new node(yylineno, columna,"id",$1);
             nod->add(*res);
             nod->add(*$2);
         }
@@ -218,7 +218,7 @@ OBJECTS: OBJECTS comma iden ASSIGN
       }
 ;
 
-ASSIGN: equal E { $$ = new node(yylineno, @1.first_column,"igual",$1); $$->add(*$2); }
+ASSIGN: equal E { $$ = new node(yylineno, columna,"igual",$1); $$->add(*$2); }
       | ARRAY { $$ = $1; }
       | { $$ = nullptr; }
 ;
@@ -227,28 +227,28 @@ ARRAY: openB E closeB ARRAY2 ARRAYASIGN
     {
       if($4 == nullptr)
       {
-          $$ = new node(yylineno, @1.first_column,"dimensiones","dimensiones");
-          node *nod = new node(yylineno, @1.first_column,"nueva dimension","nueva dimension");
+          $$ = new node(yylineno, columna,"dimensiones","dimensiones");
+          node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
           nod->add(*$2);
           $$->add(*nod);
       }
       else
       {
           $$ = $4;
-          node *nod = new node(yylineno, @1.first_column,"nueva dimension","nueva dimension");
+          node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
           nod->add(*$2);
           $$->add(*nod);
       }
       if($5 == nullptr)
       {
           node *nod = $$;
-          $$ = new node(yylineno, @1.first_column,"Declaracion de Arreglo","Declaracion de Arreglo");
+          $$ = new node(yylineno, columna,"Declaracion de Arreglo","Declaracion de Arreglo");
           $$->add(*nod);
       }
       else
       {
           node *nod = $$;
-          $$ = new node(yylineno, @1.first_column,"Asignacion de Arreglo","Asignacion de Arreglo");
+          $$ = new node(yylineno, columna,"Asignacion de Arreglo","Asignacion de Arreglo");
           $$->add(*nod);
           $$->add(*$5);
       }
@@ -259,15 +259,15 @@ ARRAY2: openB E closeB ARRAY3
       {
         if($4 == nullptr)
         {
-            $$ = new node(yylineno, @1.first_column,"dimensiones","dimensiones");
-            node *nod = new node(yylineno, @1.first_column,"nueva dimension","nueva dimension");
+            $$ = new node(yylineno, columna,"dimensiones","dimensiones");
+            node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
             nod->add(*$2);
             $$->add(*nod);
         }
         else
         {
             $$ = $4;
-            node *nod = new node(yylineno, @1.first_column,"nueva dimension","nueva dimension");
+            node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
             nod->add(*$2);
             $$->add(*nod);
         }
@@ -277,8 +277,8 @@ ARRAY2: openB E closeB ARRAY3
 
 ARRAY3:openB E closeB
       {
-        $$ = new node(yylineno, @1.first_column,"dimensiones","dimensiones");
-        node *nod = new node(yylineno, @1.first_column,"nueva dimension","nueva dimension");
+        $$ = new node(yylineno, columna,"dimensiones","dimensiones");
+        node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
         nod->add(*$2);
         $$->add(*nod);
       }
@@ -295,7 +295,7 @@ ARRAYASIGN2: ARRAYASIGN3 { $$ = $1; }
 
 ARRAYASIGN3: openCB ARRAYLIST closeCB comma openCB ARRAYLIST closeCB ARRAYASIGN4
       { 
-            $$ = new node(yylineno, @1.first_column,"Asignaciones","Asignaciones");
+            $$ = new node(yylineno, columna,"Asignaciones","Asignaciones");
             $$->add(*$2);
             $$->add(*$6);
             if($8 != nullptr)
@@ -314,27 +314,27 @@ ARRAYLIST: ARRAYLIST comma E
         }
         | E
         {
-            $$= new node(yylineno, @1.first_column,"lista","lista");
+            $$= new node(yylineno, columna,"lista","lista");
             $$->add(*$1);
         }
 ;
 
-NATIVE: integer { $$ = new node(yylineno, @1.first_column,"int",$1); std::cout << "Native: " << $2 << " en la columna " << columna << std::endl;}
-    | caracter { $$ = new node(yylineno, @1.first_column,"char",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
-    | String  { $$ = new node(yylineno, @1.first_column,"string",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
-    | boolean { $$ = new node(yylineno, @1.first_column,"bool",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
-    | number { $$ = new node(yylineno, @1.first_column,"double",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
+NATIVE: integer { $$ = new node(yylineno, columna,"int",$1); std::cout << "Native: " << yytext << " en la columna " << columna << std::endl;}
+    | caracter { $$ = new node(yylineno, columna,"char",$1); std::cout << "Native: " << yytext<< " en la linea " << yylineno << std::endl;}
+    | String  { $$ = new node(yylineno, columna,"string",$1); std::cout << "Native: " << yytext << " en la linea " << yylineno << std::endl;}
+    | boolean { $$ = new node(yylineno, columna,"bool",$1); std::cout << "Native: " << yytext << " en la linea " << yylineno << std::endl;}
+    | number { $$ = new node(yylineno, columna,"double",$1); std::cout << "Native: " << yytext<< " en la linea " << yylineno << std::endl;}
 ;
 
-PRINT: timprimir openPar E closePar semicolon  {node *nod = new node(yylineno, @1.first_column,"print",$1); nod->add(*$3); $$=nod;}
+PRINT: timprimir openPar E closePar semicolon  {node *nod = new node(yylineno, columna,"print",$1); nod->add(*$3); $$=nod;}
 ;
 
-SHOW: tshow openPar E comma E closePar semicolon {node *nod = new node(yylineno, @1.first_column,"show",$1); nod->add(*$3); nod->add(*$5); $$=nod;}
+SHOW: tshow openPar E comma E closePar semicolon {node *nod = new node(yylineno, columna,"show",$1); nod->add(*$3); nod->add(*$5); $$=nod;}
 ;
 
 IF: tsi openPar E closePar openCB START2 closeCB ELSE
 {
-  node *nod = new node(yylineno, @1.first_column,"if",$3->valor);
+  node *nod = new node(yylineno, columna,"if",$3->valor);
   if($3->valor == "true")
   {
     nod->add(*$6);
@@ -354,14 +354,14 @@ ELSE: tsino IF {$$ = $2;}
 ;
 
 FOR: tpara openPar VARMANAGMENT E semicolon UPDATE closePar openCB START2 closeCB {
-  node *nod = new node(yylineno, @1.first_column,"for","for");
+  node *nod = new node(yylineno, columna,"for","for");
   nod->add(*$3); nod->add(*$4); nod->add(*$6); nod->add(*$9);
   $$=nod;
 }
 ;
 
 WHILE: trepetir openPar E closePar openCB START2 closeCB{
-  node *nod = new node(yylineno, @1.first_column,"while","while"); 
+  node *nod = new node(yylineno, columna,"while","while"); 
   nod->add(*$3); nod->add(*$6);
   $$=nod;
 }
@@ -371,19 +371,19 @@ VARMANAGMENT: DECLARATION { $$ = $1; }
             | ASSIGNATION { $$ = $1; }
 ;
 
-UPDATE:ESINGLE increase{ $$ = new node(yylineno, @1.first_column,"increase",$2); $$->add(*$1);}
-      |ESINGLE decrease{ $$ = new node(yylineno, @1.first_column,"decrease",$2); $$->add(*$1);}
+UPDATE:ESINGLE increase{ $$ = new node(yylineno, columna,"increase",$2); $$->add(*$1);}
+      |ESINGLE decrease{ $$ = new node(yylineno, columna,"decrease",$2); $$->add(*$1);}
 ;
 
 ESINGLE:NATIVE { $$ = $1; }
   |iden INDEX{
     if($2==nullptr)
     {
-        $$ = new node(yylineno, @1.first_column,"id",$1);
+        $$ = new node(yylineno, columna,"id",$1);
     }
     else
     {
-        $$ = new node(yylineno, @1.first_column,"arregloIndex",$1);
+        $$ = new node(yylineno, columna,"arregloIndex",$1);
         //Devolver el valor del index
     }
   }
@@ -396,23 +396,23 @@ INDEX: openB E closeB
         | {$$=nullptr;}
 ;
 
-E: E plus E{node *nod = new node(yylineno, @1.first_column,"suma",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E minus E{node *nod = new node(yylineno, @1.first_column,"resta",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E by E{node *nod = new node(yylineno, @1.first_column,"multi",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E slash E{node *nod = new node(yylineno, @1.first_column,"div",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E power E{node *nod = new node(yylineno, @1.first_column,"potencia",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E doubleEqual E{node *nod = new node(yylineno, @1.first_column,"igualacion",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E different E{node *nod = new node(yylineno, @1.first_column,"dif",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E lessThan E{node *nod = new node(yylineno, @1.first_column,"menque",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E greaterThan E{node *nod = new node(yylineno, @1.first_column,"mayque",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E lessThanEqual E{node *nod = new node(yylineno, @1.first_column,"menoig",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E greaterThanEqual E{node *nod = new node(yylineno, @1.first_column,"mayoig",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E tor E{node *nod = new node(yylineno, @1.first_column,"tor",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |E tand E{node *nod = new node(yylineno, @1.first_column,"tand",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
-  |tnot E{ $$ = new node(yylineno, @1.first_column,$1,$1); $$->add(*$2);}
+E: E plus E{node *nod = new node(yylineno, columna,"suma",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E minus E{node *nod = new node(yylineno, columna,"resta",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E by E{node *nod = new node(yylineno, columna,"multi",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E slash E{node *nod = new node(yylineno, columna,"div",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E power E{node *nod = new node(yylineno, columna,"potencia",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E doubleEqual E{node *nod = new node(yylineno, columna,"igualacion",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E different E{node *nod = new node(yylineno, columna,"dif",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E lessThan E{node *nod = new node(yylineno, columna,"menque",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E greaterThan E{node *nod = new node(yylineno, columna,"mayque",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E lessThanEqual E{node *nod = new node(yylineno, columna,"menoig",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E greaterThanEqual E{node *nod = new node(yylineno, columna,"mayoig",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E tor E{node *nod = new node(yylineno, columna,"tor",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |E tand E{node *nod = new node(yylineno, columna,"tand",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
+  |tnot E{ $$ = new node(yylineno, columna,$1,$1); $$->add(*$2);}
   |ESINGLE{ $$ = $1; }
   |openPar E closePar{ $$ = $2; }
-  |minus E { $$ = new node(yylineno, @1.first_column,$1,$1); $$->add(*$2);}
+  |minus E { $$ = new node(yylineno, columna,$1,$1); $$->add(*$2);}
 ;
 
 %%
