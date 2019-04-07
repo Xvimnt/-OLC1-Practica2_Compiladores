@@ -11,7 +11,7 @@ class semantic
 {
 
 public:
-    std::list<std::string> errores;
+    std::list<var> errores;
     std::map<std::string, var> variables;
     semantic();
     Resultado recorrer( node *raiz);
