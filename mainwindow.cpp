@@ -103,7 +103,7 @@ void MainWindow::on_actionCompilar_triggered()
             columna = 0;
             yylineno = 0;
 
-        if(yyparse()==0 || errores.count() != 0) // Si nos da un número negativo, signifca error.
+        if(yyparse()==0 || errores.count() == 0) // Si nos da un número negativo, signifca error.
         {
             QMessageBox::information(this, "Exito", "Entrada Correcta");
             correcto = true;

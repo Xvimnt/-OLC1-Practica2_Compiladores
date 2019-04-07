@@ -99,7 +99,7 @@ int yyerror(const char* msj)
 %type <Node> VARMANAGMENT   
 %type <Node> UPDATE   
 %type <Node> ESINGLE   
-%type <Node> E   
+%type <Node> E ID
 
 %left tor
 %left tand
@@ -135,20 +135,17 @@ BODY: DECLARATION {$$ = $1;}
       | WHILE {$$ = $1;}
 ;
 
-ASSIGNATION: iden ASSIGN2 semicolon 
+ASSIGNATION: ID ASSIGN2 semicolon 
         { 
           $$ = new node(yylineno, columna,"asignacion","asignacion"); 
-          std::cout << "añadiendo identificador " << yytext << " ,otros tipos: " << $2->valor << " " << $3;
-          node *res = new node(yylineno, columna,"id",yytext);
-          $$->add(*res);
+          $$->add(*$1);
           $$->add(*$2);
         }
 ;
 
 ASSIGN2: equal E
         {
-          $$ = new node(yylineno, columna,"igual",$1);
-          $$->add(*$2);
+          $$= $2;
         }
        | openB E closeB ASSIGN2
         { 
@@ -169,9 +166,11 @@ DECLARATION2: OBJECTS semicolon
               {
                 $$ = $1;
               }
-              | tarreglo iden ARRAY
+              | tarreglo ID ARRAY
               {
-                $$ = $3;
+                $$ = new node(yylineno, columna,"arreglo","arreglo");
+                $$->add(*$2);
+                $$->add(*$3);
               }
 ;
 
@@ -182,47 +181,43 @@ DATATYPE: tint { $$ = new node(yylineno, columna,"reservada",$1);}
         | tchar{ $$ = new node(yylineno, columna,"reservada",$1);}
 ;
 
-OBJECTS: OBJECTS comma iden ASSIGN 
+OBJECTS: OBJECTS comma ID ASSIGN 
         { 
           $$ = $1;
           node *nod;
           if($4 == nullptr)
           {
               nod = new node(yylineno, columna,"declaracion","declaracion");
-              node *res = new node(yylineno, columna,"id",$3);
-              nod->add(*res);
+              nod->add(*$3);
           }
           else
           {
               nod = new node(yylineno, columna,"asignacion","asignacion");
-              node *res = new node(yylineno, columna,"id",$3);
-              nod->add(*res);
+              nod->add(*$3);
               nod->add(*$4);
           }
           $$->add(*nod);
         }
-      | iden ASSIGN 
+      | ID ASSIGN 
       { 
         $$ = new node(yylineno, columna,"asignaciones","asignaciones");
         node *nod;
         if($2 == nullptr)
         {
             nod = new node(yylineno, columna,"declaracion","declaracion");
-            node *res = new node(yylineno, columna,"id",yytext);
-            nod->add(*res);
+            nod->add(*$1);
         }
         else
         {
             nod = new node(yylineno, columna,"asignacion","asignacion");
-            node *res = new node(yylineno, columna,"id",yytext);
-            nod->add(*res);
+            nod->add(*$1);
             nod->add(*$2);
         }
         $$->add(*nod);
       }
 ;
 
-ASSIGN: equal E { $$ = new node(yylineno, columna,"igual",$1); $$->add(*$2); }
+ASSIGN: equal E { $$ = $2; }
       | ARRAY { $$ = $1; }
       | { $$ = nullptr; }
 ;
@@ -380,15 +375,16 @@ UPDATE:ESINGLE increase{ $$ = new node(yylineno, columna,"increase",$2); $$->add
 ;
 
 ESINGLE:NATIVE { $$ = $1; }
-  |iden INDEX{
+  |ID INDEX{
     if($2==nullptr)
     {
-        $$ = new node(yylineno, columna,"id",yytext);
+        $$ = $1;
     }
     else
     {
         $$ = new node(yylineno, columna,"arregloIndex",yytext);
-        //Devolver el valor del index
+        $$->add(*$1);
+        $$->add(*$2);
     }
   }
 ;
@@ -398,6 +394,11 @@ INDEX: openB E closeB
            $$=$2;
         }
         | {$$=nullptr;}
+;
+
+ID: iden {
+  $$ = new node(yylineno, columna,"identificador",$1);
+}
 ;
 
 E: E plus E{node *nod = new node(yylineno, columna,"suma",$2);  nod->add(*$1); nod->add(*$3); $$=nod;}
