@@ -171,7 +171,7 @@ DECLARATION2: OBJECTS semicolon
               }
 ;
 
-DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
+DATATYPE: tint { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << " en la linea " << yylineno << std::endl;}
         | tbool { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
         | tstring { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
         | tdouble { $$ = new node(@1.first_line, @1.first_column,"reservada",$1); std::cout << "Native: " << $1 << std::endl;}
