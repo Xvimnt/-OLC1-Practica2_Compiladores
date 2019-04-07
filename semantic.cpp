@@ -24,7 +24,7 @@ enum Choice
     DECREASE = 20,
     RESERVED = 21,
     ASIGNACION = 22,
-    IDEN = 25 BODY = 26;
+    IDEN = 25
 };
 
 semantic::semantic()
@@ -1556,9 +1556,9 @@ Resultado semantic::recorrer(node *node_)
     {
         //Como aquí hay una lista de operaciones, hacemos un for
         r.tipo = node_->tipo_;
-        for (int x = 0; x < raiz->hijos.size(); x++)
+        for (int x = 0; x < node_->hijos.size(); x++)
         {
-            node nodo = raiz->hijos.at(x);
+            node nodo = node_->hijos.at(x);
             recorrer(&nodo);
         }
     }

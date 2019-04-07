@@ -52,6 +52,5 @@ int node::getTipo()
     if(this->tipo=="show"){return 23;}
     if(this->tipo=="if"){return 24;}
     if(this->tipo=="identificador"){return 25;}
-    if(this->tipo=="cuerpo"){return 26;}
     return 0;
 }
