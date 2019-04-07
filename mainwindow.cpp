@@ -12,14 +12,15 @@
 #include <QDesktopServices>
 #include <QFile>
 #include <QFileInfo>
+#include "error.h"
 
-QString path;
+static QString path;
 extern node *root;
-bool correcto;
+static bool correcto;
 extern int linea; // Linea del token
 extern int columna; // Columna de los tokens
 extern int yylineno;
-extern std::list<std::string> errores;
+extern QList<error*> errores;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -40,7 +41,7 @@ void MainWindow::on_actionAbrir_triggered()
 
     QFile file(path);
     if(!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::information(0, "error", file.errorString());
+        QMessageBox::information(this, "error", file.errorString());
     }
 
     QTextStream in(&file);
@@ -60,12 +61,12 @@ void MainWindow::on_actionGuardar_triggered()
         QFile file(path);
         if(!file.open(QIODevice::WriteOnly))
         {
-            QMessageBox::information(0,"error",file.errorString());
+            QMessageBox::information(this,"error",file.errorString());
         }
         QTextStream out(&file);
         out << ui->txtInput->toPlainText() << endl;
         file.close();
-        QMessageBox::information(0, "Guardar", "Guardado Exitosamente");
+        QMessageBox::information(this, "Guardar", "Guardado Exitosamente");
     }
 }
 
@@ -77,13 +78,13 @@ void MainWindow::saveAs()
     QFile file(path + ".fi");
     if(!file.open(QIODevice::WriteOnly))
     {
-        QMessageBox::information(0,"error",file.errorString());
+        QMessageBox::information(this,"error",file.errorString());
     }
 
     QTextStream out(&file);
     out << ui->txtInput->toPlainText() << endl;
     file.close();
-    QMessageBox::information(0, "Guardar", "Guardado Exitosamente");
+    QMessageBox::information(this, "Guardar", "Guardado Exitosamente");
 }
 
 void MainWindow::on_actionGuardar_Como_triggered()
@@ -102,14 +103,14 @@ void MainWindow::on_actionCompilar_triggered()
             columna = 0;
             yylineno = 0;
 
-        if(yyparse()==0) // Si nos da un número negativo, signifca error.
+        if(yyparse()==0 || errores.count() != 0) // Si nos da un número negativo, signifca error.
         {
-            QMessageBox::information(0, "Exito", "Entrada Correcta");
+            QMessageBox::information(this, "Exito", "Entrada Correcta");
             correcto = true;
         }
         else
         {
-            QMessageBox::information(0,"Error","Error en la fase de analisis");
+            QMessageBox::information(this,"Error","Error en la fase de analisis");
             correcto = false;
         }
 }
@@ -124,11 +125,11 @@ void MainWindow::on_actionAST_triggered()
         /*Instanciamos un graficador y graficamos*/
         graficador *graf = new graficador(root);
         graf->generarImagen();
-        QMessageBox::information(0, "Exito", "Arbol Generado Correctamente");
+        QMessageBox::information(this, "Exito", "Arbol Generado Correctamente");
     }
     else
     {
-        QMessageBox::information(0,"Error","Su entrada ha sido incorrecta, o no se ha analizado");
+        QMessageBox::information(this,"Error","Su entrada ha sido incorrecta, o no se ha analizado");
     }
 }
 
@@ -154,6 +155,11 @@ std::string getErrors(){
 
 void MainWindow::on_actionErrores_triggered()
 {
+    if(correcto)
+    {
+        QMessageBox::information(this,"Error","Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
+        return;
+    }
     std::string index;
     index = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<title>Table V04</title>\n<meta charset=\"UTF-8\">";
     index += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";

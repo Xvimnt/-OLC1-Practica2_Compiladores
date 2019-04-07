@@ -4,6 +4,7 @@
 #include "qdebug.h"
 #include <iostream>
 #include <map>
+#include "error.h"
 extern int yylineno; //linea actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern int columna; //columna actual donde se encuentra el parser (analisis lexico) lo maneja BISON
 extern char *yytext; //lexema actual donde esta el parser (analisis lexico) lo maneja BISON
@@ -137,8 +138,8 @@ BODY: DECLARATION {$$ = $1;}
 ASSIGNATION: iden ASSIGN2 semicolon 
         { 
           $$ = new node(yylineno, columna,"asignacion","asignacion"); 
-          std::cout << "añadiendo identificador " << $1 << " ,otros tipos: " << $2->valor << " " << $3;
-          node *res = new node(yylineno, columna,"id",$1);
+          std::cout << "añadiendo identificador " << yytext << " ,otros tipos: " << $2->valor << " " << $3;
+          node *res = new node(yylineno, columna,"id",yytext);
           $$->add(*res);
           $$->add(*$2);
         }
@@ -207,13 +208,13 @@ OBJECTS: OBJECTS comma iden ASSIGN
         if($2 == nullptr)
         {
             nod = new node(yylineno, columna,"declaracion","declaracion");
-            node *res = new node(yylineno, columna,"id",$1);
+            node *res = new node(yylineno, columna,"id",yytext);
             nod->add(*res);
         }
         else
         {
             nod = new node(yylineno, columna,"asignacion","asignacion");
-            node *res = new node(yylineno, columna,"id",$1);
+            node *res = new node(yylineno, columna,"id",yytext);
             nod->add(*res);
             nod->add(*$2);
         }
@@ -382,11 +383,11 @@ ESINGLE:NATIVE { $$ = $1; }
   |iden INDEX{
     if($2==nullptr)
     {
-        $$ = new node(yylineno, columna,"id",$1);
+        $$ = new node(yylineno, columna,"id",yytext);
     }
     else
     {
-        $$ = new node(yylineno, columna,"arregloIndex",$1);
+        $$ = new node(yylineno, columna,"arregloIndex",yytext);
         //Devolver el valor del index
     }
   }
@@ -415,7 +416,7 @@ E: E plus E{node *nod = new node(yylineno, columna,"suma",$2);  nod->add(*$1); n
   |tnot E{ $$ = new node(yylineno, columna,$1,$1); $$->add(*$2);}
   |ESINGLE{ $$ = $1; }
   |openPar E closePar{ $$ = $2; }
-  |minus E { $$ = new node(yylineno, columna,$1,$1); $$->add(*$2);}
+  |minus E { $$ = new node(yylineno, columna,"minus",$1); $$->add(*$2);}
 ;
 
 %%
