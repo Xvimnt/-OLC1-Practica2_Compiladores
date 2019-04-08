@@ -43,8 +43,8 @@ int node::getTipo()
     if(this->tipo=="mayque"){return 14;}
     if(this->tipo=="menoig"){return 15;}
     if(this->tipo=="mayoig"){return 16;}
-    if(this->tipo=="or"){return 17;}
-    if(this->tipo=="and"){return 18;}
+    if(this->tipo=="tor"){return 17;}
+    if(this->tipo=="tand"){return 18;}
     if(this->tipo=="increase"){return 19;}
     if(this->tipo=="decrease"){return 20;}
     if(this->tipo=="reservada"){return 21;}

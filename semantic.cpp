@@ -44,7 +44,7 @@ Resultado semantic::recorrer(node *node_)
     {
     case IDEN:
     {
-        if (variables.find(node_->valor) == m.end())
+        if (variables.find(node_->valor) == variables.end())
         {
                 errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "Variable no inicializada"));
         }
