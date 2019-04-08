@@ -108,11 +108,11 @@ Resultado semantic::recorrer(node *node_)
     break;
     case IGUALACION:
     {
-        qDebug() << "comparando igualacion que con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando igualacion que con: " << op1.valor << " y " << op2.valor;
         switch (op1.tipo)
         {
         case INT:
@@ -214,11 +214,12 @@ Resultado semantic::recorrer(node *node_)
     break;
     case DIFERENCIACION:
     {
-        qDebug() << "comparando diff que con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando diferenciacion con: " << op1.valor << " y " << op2.valor;
+
         switch (op1.tipo)
         {
         case INT:
@@ -320,11 +321,12 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MENORQUE:
     {
-        qDebug() << "comparando menor que con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando menor que con: " << op1.valor << " y " << op2.valor;
+
         switch (op1.tipo)
         {
         case INT:
@@ -427,6 +429,8 @@ Resultado semantic::recorrer(node *node_)
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando or con: " << op1.valor << " y " << op2.valor;
+
         switch (op1.tipo)
         {
         case BOOL:
@@ -525,11 +529,12 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MENOROIGUAL:
     {
-        qDebug() << "comparando menor que igual con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando menor que igual con: " << op1.valor << " y " << op2.valor;
+
         switch (op1.tipo)
         {
         case INT:
@@ -593,11 +598,12 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MAYOROIGUAL:
     {
-        qDebug() << "comparando mayor que igual con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando mayor que igual con: " << op1.valor << " y " << op2.valor;
+
         switch (op1.tipo)
         {
         case INT:
