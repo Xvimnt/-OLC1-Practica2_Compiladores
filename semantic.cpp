@@ -715,7 +715,7 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            QString val = op1.valor;
+            QString val = "-" + op1.valor;
             errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         }
@@ -1642,8 +1642,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            QString val = op1.valor + "++";
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -1681,8 +1681,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            QString val = op1.valor + "--";
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }

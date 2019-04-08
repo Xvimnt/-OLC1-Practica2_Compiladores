@@ -181,15 +181,21 @@ std::string getErrors()
     result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
     result += "</tr></thead></table></div>";
     qDebug() << "imprimiendo errores lexicos y sintacticos";
-    QList<error *>::iterator i;
-    for (i = errores.begin(); i != errores.end(); ++i)
-     qDebug() << (*i)->desc;
-     qDebug() << (*i)->value;
+    if (errores.count > 0)
+    {
+        QList<error *>::iterator i;
+        for (i = errores.begin(); i != errores.end(); ++i)
+            qDebug() << (*i)->desc;
+        qDebug() << (*i)->value;
+    }
 
-    qDebug() << "imprimiendo errores semanticos";
-    for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
-     qDebug() << (*i)->desc;
-     qDebug() << (*i)->value;
+    if (semanticErrors.count > 0)
+    {
+        qDebug() << "imprimiendo errores semanticos";
+        for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
+            qDebug() << (*i)->desc;
+        qDebug() << (*i)->value;
+    }
 
     /*
                                 <div class="table100-body js-pscroll">
@@ -214,7 +220,8 @@ void MainWindow::on_actionErrores_triggered()
         QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }
-    else if(errores.count() == 0 && semanticErrors.count() == 0){
+    else if (errores.count() == 0 && semanticErrors.count() == 0)
+    {
         QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }
