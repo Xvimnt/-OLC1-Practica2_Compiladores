@@ -24,7 +24,8 @@ static bool correcto;
 extern int linea;   // Linea del token
 extern int columna; // Columna de los tokens
 extern int yylineno;
-QList<error *> globalErrors;
+extern QList<error *> errores;
+QList<error *> *semanticErrors;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
@@ -147,6 +148,7 @@ void MainWindow::on_actionCompilar_triggered()
         }
         else
         {
+            semanticErrors = interprete->errores;
             QMessageBox::information(this, "Error", "Error en la fase de analisis semantico");
             correcto = false;
         }
@@ -178,6 +180,15 @@ std::string getErrors()
     std::string result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
     result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
     result += "</tr></thead></table></div>";
+    qDebug() << "imprimiendo errores lexicos y sintacticos"
+    QList<error *>::iterator i;
+    for (i = errores.begin(); i != errores.end(); ++i)
+     qDebug() << *i;
+
+    qDebug() << "imprimiendo errores semanticos"
+    for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
+     qDebug() << *i;
+
     /*
                                 <div class="table100-body js-pscroll">
                                     <table>
@@ -198,6 +209,10 @@ void MainWindow::on_actionErrores_triggered()
 {
     if (correcto)
     {
+        QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
+        return;
+    }
+    else if(errores->count() == 0 && semanticErrors->count() == 0){
         QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }
