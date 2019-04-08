@@ -41,16 +41,17 @@ Resultado semantic::recorrer(node *node_)
     r.columna = node_->columna;
     switch (node_->tipo_)
     {
+    case IDEN:
+    {
+        var* temp = variables[node_->valor];
+        r.tipo = temp->getType();
+        r.valor = temp->getValue();
+    }
+    break;
     case INT:
     {
         r.tipo = INT;
         r.valor = node_->valor;
-    }
-    break;
-    case IDEN:
-    {
-        //buscar el valor en el diccionario
-
     }
     break;
     case BOOL:
@@ -92,7 +93,7 @@ Resultado semantic::recorrer(node *node_)
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
         //asignando variables
-        variables[iz->valor] = new var(""+op2.valor,""+op2.tipo);
+        variables[iz->valor] = new var(op2.valor,op2.tipo);
     }
     break;
     case IGUALACION:

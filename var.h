@@ -5,12 +5,13 @@
 class var
 {
 private:
-       QString value, type;
+       QString value;
+       int type;
 public:
     var();
-    var(QString valor,QString type);
+    var(QString valor,int type);
     QString getValue();
-    QString getType();
+    int getType();
 };
 
 #endif // VAR_H
