@@ -56,7 +56,14 @@ Resultado semantic::recorrer(node *node_)
     case BOOL:
     {
         r.tipo = BOOL;
-        r.valor = node_->valor;
+        if(node_->valor == "true")
+        {
+            r.valor = "1";
+        }
+        else
+        {
+            r.valor = "0";
+        }
     }
     break;
     case DOUBLE:
@@ -81,12 +88,11 @@ Resultado semantic::recorrer(node *node_)
     {
         //Este es un identificador
         node *iz = node_->hijos.at(0);
-        Resultado op1 = recorrer(iz);
         //Este es un E u otro id
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
         //asignando variables
-        variables[iz->valor] = new var(der->valor, der->tipo);
+        variables[iz->valor] = new var(""+op2.valor,""+op2.tipo);
     }
     break;
     case IGUALACION:
@@ -1220,8 +1226,10 @@ Resultado semantic::recorrer(node *node_)
             break;
             case CHAR:
             {
+                qDebug() << "convirtiendo " << op1.valor << " con " << op2.valor << "\n";
+                QByteArray ba = op2.valor.toLocal8Bit();
                 r.tipo = DOUBLE;
-                double result = op1.valor.toInt() / op2.valor.toInt();
+                int result = op1.valor.toInt() / ba[1];
                 r.valor = QString::number(result);
             }
             break;
@@ -1230,7 +1238,6 @@ Resultado semantic::recorrer(node *node_)
                 r.tipo = INT;
                 qDebug() << "dividiendo " << op1.valor << " con " << op2.valor << "\n";
                 int result = op1.valor.toInt() / op2.valor.toInt();
-                int response = (int) result;
                 r.valor = QString::number(result);
             }
             break;
