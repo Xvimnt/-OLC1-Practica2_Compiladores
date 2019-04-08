@@ -25,7 +25,7 @@ extern int linea;   // Linea del token
 extern int columna; // Columna de los tokens
 extern int yylineno;
 extern QList<error *> errores;
-QList<error *> *semanticErrors;
+QList<error *> semanticErrors;
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
                                           ui(new Ui::MainWindow)
@@ -180,12 +180,12 @@ std::string getErrors()
     std::string result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
     result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
     result += "</tr></thead></table></div>";
-    qDebug() << "imprimiendo errores lexicos y sintacticos"
+    qDebug() << "imprimiendo errores lexicos y sintacticos";
     QList<error *>::iterator i;
     for (i = errores.begin(); i != errores.end(); ++i)
      qDebug() << *i;
 
-    qDebug() << "imprimiendo errores semanticos"
+    qDebug() << "imprimiendo errores semanticos";
     for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
      qDebug() << *i;
 
