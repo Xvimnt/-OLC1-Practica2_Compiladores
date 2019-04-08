@@ -44,9 +44,16 @@ Resultado semantic::recorrer(node *node_)
     {
     case IDEN:
     {
-        var *temp = variables[node_->valor];
-        r.tipo = temp->getType();
-        r.valor = temp->getValue();
+        if (variables.find(node_->valor) == m.end())
+        {
+                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "Variable no inicializada"));
+        }
+        else
+        {
+            var *temp = variables[node_->valor];
+            r.tipo = temp->getType();
+            r.valor = temp->getValue();
+        }
     }
     break;
     case INT:
@@ -99,6 +106,7 @@ Resultado semantic::recorrer(node *node_)
     break;
     case IGUALACION:
     {
+        qDebug() << "comparando igualacion que con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
@@ -204,6 +212,7 @@ Resultado semantic::recorrer(node *node_)
     break;
     case DIFERENCIACION:
     {
+        qDebug() << "comparando diff que con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
@@ -309,6 +318,7 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MENORQUE:
     {
+        qDebug() << "comparando menor que con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
@@ -380,6 +390,7 @@ Resultado semantic::recorrer(node *node_)
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando and con: " << op1.valor << " y " << op2.valor;
         switch (op1.tipo)
         {
         case BOOL:
@@ -448,6 +459,7 @@ Resultado semantic::recorrer(node *node_)
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
+        qDebug() << "comparando mayor que con: " << op1.valor << " y " << op2.valor;
         switch (op1.tipo)
         {
         case INT:
@@ -511,6 +523,7 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MENOROIGUAL:
     {
+        qDebug() << "comparando menor que igual con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
@@ -578,6 +591,7 @@ Resultado semantic::recorrer(node *node_)
     break;
     case MAYOROIGUAL:
     {
+        qDebug() << "comparando mayor que igual con: " << op1.valor << " y " << op2.valor;
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
         node *der = node_->hijos.at(1);
