@@ -183,11 +183,13 @@ std::string getErrors()
     qDebug() << "imprimiendo errores lexicos y sintacticos";
     QList<error *>::iterator i;
     for (i = errores.begin(); i != errores.end(); ++i)
-     qDebug() << *i;
+     qDebug() << (*i)->desc;
+     qDebug() << (*i)->value;
 
     qDebug() << "imprimiendo errores semanticos";
     for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
-     qDebug() << *i;
+     qDebug() << (*i)->desc;
+     qDebug() << (*i)->value;
 
     /*
                                 <div class="table100-body js-pscroll">
@@ -212,7 +214,7 @@ void MainWindow::on_actionErrores_triggered()
         QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }
-    else if(errores->count() == 0 && semanticErrors->count() == 0){
+    else if(errores.count() == 0 && semanticErrors.count() == 0){
         QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }

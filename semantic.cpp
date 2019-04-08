@@ -128,7 +128,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -146,7 +147,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -165,7 +167,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -184,7 +187,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -203,7 +207,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -235,7 +240,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -253,7 +259,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -272,7 +279,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -291,7 +299,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -310,7 +319,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -349,7 +359,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -374,7 +385,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -382,7 +394,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -410,14 +423,16 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -448,14 +463,16 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -490,7 +507,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -515,7 +533,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -523,7 +542,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -559,7 +579,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -584,7 +605,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -592,7 +614,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -628,7 +651,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -653,7 +677,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -661,7 +686,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -689,7 +715,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor;
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         }
     }
@@ -742,7 +769,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -789,7 +817,8 @@ Resultado semantic::recorrer(node *node_)
 
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -825,7 +854,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -871,7 +901,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -913,7 +944,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -964,7 +996,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -1003,7 +1036,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1012,7 +1046,8 @@ Resultado semantic::recorrer(node *node_)
         case STRING:
         {
 
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1042,7 +1077,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1068,7 +1104,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1119,7 +1156,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -1158,7 +1196,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1167,7 +1206,8 @@ Resultado semantic::recorrer(node *node_)
         case STRING:
         {
 
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1204,7 +1244,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1244,7 +1285,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1298,7 +1340,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -1337,7 +1380,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1346,7 +1390,8 @@ Resultado semantic::recorrer(node *node_)
         case STRING:
         {
 
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1383,7 +1428,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1416,7 +1462,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1467,7 +1514,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             }
         }
@@ -1506,7 +1554,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1514,7 +1563,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         case STRING:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1530,7 +1580,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1549,7 +1600,8 @@ Resultado semantic::recorrer(node *node_)
             break;
             default:
             {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+                QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
             }
             break;
             }
@@ -1590,7 +1642,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -1628,7 +1681,8 @@ Resultado semantic::recorrer(node *node_)
         break;
         default:
         {
-            errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "operacion invaida"));
+            QString val = op1.valor + " " + op2.valor;
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
