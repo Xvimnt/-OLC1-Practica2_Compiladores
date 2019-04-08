@@ -60,7 +60,7 @@ Resultado semantic::recorrer(node *node_)
     break;
     case PRINT:
     {
-        node *son = node_->hijos.at(1);
+        node *son = node_->hijos.at(0);
         Resultado op1 = recorrer(son);
 
         console += op1.valor + "\n";
