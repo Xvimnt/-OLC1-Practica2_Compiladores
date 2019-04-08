@@ -6,11 +6,11 @@
 #include <qstring.h>
 #include <qmessagebox.h>
 #include <qtextstream.h>
-#include <semantic.h>  // Nuestro parser
-#include <parser.h>  // Nuestro parser
+#include <semantic.h> // Nuestro parser
+#include <parser.h>   // Nuestro parser
 #include <scanner.h>  // Nuestro scanner
-#include <plotter.h> // Graficador
-#include <node.h> //Nuestra clase nodo
+#include <plotter.h>  // Graficador
+#include <node.h>     //Nuestra clase nodo
 #include <QDesktopServices>
 #include <QFile>
 #include <QFileInfo>
@@ -21,14 +21,13 @@
 static QString path;
 extern node *root;
 static bool correcto;
-extern int linea; // Linea del token
+extern int linea;   // Linea del token
 extern int columna; // Columna de los tokens
 extern int yylineno;
-extern QList<error*> errores;
+QList<error *> globalErrors;
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent),
+                                          ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 }
@@ -41,10 +40,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionAbrir_triggered()
 {
     path = QFileDialog::getOpenFileName(this,
-        tr("OLC1 Interpreter"), "/home/", tr("OLC1 Interpreter (*.fi)"));
+                                        tr("OLC1 Interpreter"), "/home/", tr("OLC1 Interpreter (*.fi)"));
 
     QFile file(path);
-    if(!file.open(QIODevice::ReadOnly)) {
+    if (!file.open(QIODevice::ReadOnly))
+    {
         QMessageBox::information(this, "error", file.errorString());
     }
 
@@ -56,16 +56,16 @@ void MainWindow::on_actionAbrir_triggered()
 
 void MainWindow::on_actionGuardar_triggered()
 {
-    if(path.isEmpty())
+    if (path.isEmpty())
     {
         saveAs();
     }
     else
     {
         QFile file(path);
-        if(!file.open(QIODevice::WriteOnly))
+        if (!file.open(QIODevice::WriteOnly))
         {
-            QMessageBox::information(this,"error",file.errorString());
+            QMessageBox::information(this, "error", file.errorString());
         }
         QTextStream out(&file);
         out << ui->txtInput->toPlainText() << endl;
@@ -77,12 +77,12 @@ void MainWindow::on_actionGuardar_triggered()
 void MainWindow::saveAs()
 {
     path = QFileDialog::getSaveFileName(this,
-        tr("OLC1 Interpreter"), "/home/", tr("OLC1 Interpreter (*.fi)"));
+                                        tr("OLC1 Interpreter"), "/home/", tr("OLC1 Interpreter (*.fi)"));
 
     QFile file(path + ".fi");
-    if(!file.open(QIODevice::WriteOnly))
+    if (!file.open(QIODevice::WriteOnly))
     {
-        QMessageBox::information(this,"error",file.errorString());
+        QMessageBox::information(this, "error", file.errorString());
     }
 
     QTextStream out(&file);
@@ -96,47 +96,50 @@ void MainWindow::on_actionGuardar_Como_triggered()
     saveAs();
 }
 
-void MainWindow::showVariables(std::map<QString, var*> variables){
+void MainWindow::showVariables(std::map<QString, var *> variables)
+{
 
-    std::map<QString, var*>::iterator it;
+    std::map<QString, var *>::iterator it;
 
     ui->tbVar->setRowCount(variables.size());
 
     int row = 0;
-    for ( it = variables.begin(); it != variables.end(); it++ )
+    for (it = variables.begin(); it != variables.end(); it++)
     {
-        QTableWidgetItem* name = new QTableWidgetItem();
+        QTableWidgetItem *name = new QTableWidgetItem();
         name->setText(it->first);
-        ui->tbVar->setItem(row,0,name);
-        QTableWidgetItem* value = new QTableWidgetItem();
+        ui->tbVar->setItem(row, 0, name);
+        QTableWidgetItem *value = new QTableWidgetItem();
         value->setText(it->second->getValue());
-        ui->tbVar->setItem(row,1,value);
-        QTableWidgetItem* type = new QTableWidgetItem();
+        ui->tbVar->setItem(row, 1, value);
+        QTableWidgetItem *type = new QTableWidgetItem();
         type->setText(it->second->getTypeName());
-        ui->tbVar->setItem(row,2,type);
+        ui->tbVar->setItem(row, 2, type);
         row++;
     }
 }
 
 void MainWindow::on_actionCompilar_triggered()
 {
-        QString programa = ui->txtInput->toPlainText();
-        YY_BUFFER_STATE buffer = yy_scan_string(programa.toUtf8().constData());
+    QString programa = ui->txtInput->toPlainText();
+    YY_BUFFER_STATE buffer = yy_scan_string(programa.toUtf8().constData());
 
-        /*Limpiamos los contadores
+    /*Limpiamos los contadores
             ya que son variables globales*/
-            errores.clear();
-            linea = 0;
-            columna = 0;
-            yylineno = 0;
+    errores.clear();
+    linea = 0;
+    columna = 0;
+    yylineno = 0;
 
-        if(yyparse()==0 && errores.count() == 0) // Si nos da un número negativo, signifca error.
+    if (yyparse() == 0 && errores.count() == 0) // Si nos da un número negativo, signifca error.
+    {
+
+        //Iniciando el analiziz semantico
+        semantic *interprete = new semantic();
+        interprete->recorrer(root);
+
+        if (interprete->errores.count() == 0)
         {
-
-            //Iniciando el analiziz semantico
-            semantic * interprete = new semantic();
-            interprete->recorrer(root);
-            
             showVariables(interprete->variables);
 
             QMessageBox::information(this, "Exito", "Entrada Correcta");
@@ -144,14 +147,20 @@ void MainWindow::on_actionCompilar_triggered()
         }
         else
         {
-            QMessageBox::information(this,"Error","Error en la fase de analisis");
+            QMessageBox::information(this, "Error", "Error en la fase de analisis semantico");
             correcto = false;
         }
+    }
+    else
+    {
+        QMessageBox::information(this, "Error", "Error en la fase de analisis");
+        correcto = false;
+    }
 }
 
 void MainWindow::on_actionAST_triggered()
 {
-    if(correcto)
+    if (correcto)
     {
         /*Instanciamos un graficador y graficamos*/
         graficador *graf = new graficador(root);
@@ -160,11 +169,12 @@ void MainWindow::on_actionAST_triggered()
     }
     else
     {
-        QMessageBox::information(this,"Error","Su entrada ha sido incorrecta, o no se ha analizado");
+        QMessageBox::information(this, "Error", "Su entrada ha sido incorrecta, o no se ha analizado");
     }
 }
 
-std::string getErrors(){
+std::string getErrors()
+{
     std::string result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
     result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
     result += "</tr></thead></table></div>";
@@ -186,9 +196,9 @@ std::string getErrors(){
 
 void MainWindow::on_actionErrores_triggered()
 {
-    if(correcto)
+    if (correcto)
     {
-        QMessageBox::information(this,"Error","Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
+        QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }
     std::string index;
@@ -204,7 +214,7 @@ void MainWindow::on_actionErrores_triggered()
     index += "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\">";
     index += "</head>\n<body>\n<div class=\"limiter\">\n<div class=\"container-table100\">\n<div class=\"wrap-table100\">";
     index += "<div class=\"table100 ver3 m-b-110\">\n<div class=\"table100-head\">";
-    index += getErrors();                             
+    index += getErrors();
     index += "\n</div>\n</div>\n</div>\n</div>\n</div>";
     index += "<script src=\"vendor/jquery/jquery-3.2.1.min.js\"></script>";
     index += "<script src=\"vendor/bootstrap/js/popper.js\"></script>";
@@ -215,6 +225,6 @@ void MainWindow::on_actionErrores_triggered()
     index += "ps.update();})});</script><script src=\"js/main.js\"></script></body></html>";
 
     QFileInfo fi("temp");
-    QString path = fi.absolutePath() +"/";
+    QString path = fi.absolutePath() + "/";
     //QDesktopServices::openUrl(QUrl::fromLocalFile(path+"index.html"));
 }
