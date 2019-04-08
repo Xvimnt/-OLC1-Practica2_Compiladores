@@ -442,8 +442,8 @@ Resultado semantic::recorrer(node *node_)
                 r.tipo = BOOL;
                 int result = op1.valor.toInt() + op2.valor.toInt();
                 if(result > 0){
-                 r.valor = QString::number("1");
-                }else r.valor = QString::number("0");
+                 r.valor = "1";
+                }else r.valor = "0";
             }
             break;
             default:
@@ -900,8 +900,8 @@ Resultado semantic::recorrer(node *node_)
                 r.tipo = BOOL;
                 int result = op1.valor.toInt() + op2.valor.toInt();
                 if(result > 0){
-                 r.valor = QString::number("1");
-                }else r.valor = QString::number("0");
+                 r.valor = "1";
+                }else r.valor = "0";
             }
             break;
             case DOUBLE:
