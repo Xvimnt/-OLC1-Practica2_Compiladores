@@ -197,7 +197,7 @@ Resultado semantic::recorrer(node *node_)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == op2.valor.compare("true", Qt::CaseInsensitive));
+                int result = op1.valor == op2.valor;
                 r.valor = QString::number(result);
             }
             break;
@@ -304,7 +304,7 @@ Resultado semantic::recorrer(node *node_)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) != op2.valor.compare("true", Qt::CaseInsensitive));
+                int result = op1.valor != op2.valor;
                 r.valor = QString::number(result);
             }
             break;
@@ -404,7 +404,7 @@ Resultado semantic::recorrer(node *node_)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 && op2.valor.compare("true", Qt::CaseInsensitive) == 0);
+                int result = op1.valor.toInt() * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
@@ -440,8 +440,10 @@ Resultado semantic::recorrer(node *node_)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 || op2.valor.compare("true", Qt::CaseInsensitive) == 0);
-                r.valor = QString::number(result);
+                int result = op1.valor.toInt() + op2.valor.toInt();
+                if(result > 0){
+                 r.valor = QString::number("1");
+                }else r.valor = QString::number("0");
             }
             break;
             default:
@@ -896,8 +898,10 @@ Resultado semantic::recorrer(node *node_)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 || op2.valor.compare("true", Qt::CaseInsensitive) == 0);
-                r.valor = QString::number(result);
+                int result = op1.valor.toInt() + op2.valor.toInt();
+                if(result > 0){
+                 r.valor = QString::number("1");
+                }else r.valor = QString::number("0");
             }
             break;
             case DOUBLE:
@@ -1234,7 +1238,7 @@ Resultado semantic::recorrer(node *node_)
             case BOOL:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.compare("true", Qt::CaseInsensitive) == 0 && op2.valor.compare("true", Qt::CaseInsensitive) == 0);
+                int result = op1.valor.toInt() * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
