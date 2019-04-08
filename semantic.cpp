@@ -24,7 +24,7 @@ enum Choice
     AND = 18,
     INCREASE = 19,
     DECREASE = 20,
-    RESERVED = 21,
+    PRINT = 21,
     ASIGNACION = 22,
     IDEN = 25,
     MINUS = 26
@@ -33,6 +33,7 @@ enum Choice
 semantic::semantic()
 {
     resultado = "";
+    console = "";
 }
 
 Resultado semantic::recorrer(node *node_)
@@ -55,6 +56,14 @@ Resultado semantic::recorrer(node *node_)
             r.tipo = temp->getType();
             r.valor = temp->getValue();
         }
+    }
+    break;
+    case PRINT:
+    {
+        node *son = node_->hijos.at(1);
+        Resultado op1 = recorrer(son);
+
+        console += op1.valor + "\n";
     }
     break;
     case INT:

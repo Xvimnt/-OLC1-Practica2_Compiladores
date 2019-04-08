@@ -18,6 +18,7 @@ public:
     semantic();
     Resultado recorrer( node *raiz);
     QString resultado;
+    QString console;
 };
 
 #endif //SEMANTIC_H

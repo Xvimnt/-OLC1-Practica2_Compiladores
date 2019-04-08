@@ -142,7 +142,7 @@ void MainWindow::on_actionCompilar_triggered()
         if (interprete->errores.count() == 0)
         {
             showVariables(interprete->variables);
-
+            
             QMessageBox::information(this, "Exito", "Entrada Correcta");
             correcto = true;
         }
