@@ -51,6 +51,7 @@ Resultado semantic::recorrer(node *node_)
         else
         {
             var *temp = variables[node_->valor];
+            qDebug() << "regresando e valor de " << node_->valor << " es " << temp->getValue(); 
             r.tipo = temp->getType();
             r.valor = temp->getValue();
         }
@@ -101,6 +102,7 @@ Resultado semantic::recorrer(node *node_)
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
         //asignando variables
+        qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor; 
         variables[iz->valor] = new var(op2.valor, op2.tipo);
     }
     break;

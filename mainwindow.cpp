@@ -112,7 +112,7 @@ void MainWindow::showVariables(std::map<QString, var*> variables){
         value->setText(it->second->getValue());
         ui->tbVar->setItem(row,1,value);
         QTableWidgetItem* type = new QTableWidgetItem();
-        type->setText(it->second->getType());
+        type->setText(it->second->getTypeName());
         ui->tbVar->setItem(row,2,type);
         row++;
     }
