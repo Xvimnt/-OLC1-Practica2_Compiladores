@@ -46,7 +46,7 @@ Resultado semantic::recorrer(node *node_)
     {
         if (variables.find(node_->valor) == variables.end())
         {
-                errores.append(new error(r.valor, "Error Semantico", r.linea, r.columna, "Variable no inicializada"));
+                errores.append(new error(node_->valor, "Error Semantico", r.linea, r.columna, "Variable no inicializada"));
         }
         else
         {

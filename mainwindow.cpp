@@ -180,16 +180,16 @@ std::string getErrors()
     std::string result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
     result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
     result += "</tr></thead></table></div>";
-    qDebug() << "imprimiendo errores lexicos y sintacticos";
-    if (errores.count > 0)
+    QList<error *>::iterator i;
+    if (errores.count() > 0)
     {
-        QList<error *>::iterator i;
+        qDebug() << "imprimiendo errores lexicos y sintacticos";
         for (i = errores.begin(); i != errores.end(); ++i)
             qDebug() << (*i)->desc;
         qDebug() << (*i)->value;
     }
 
-    if (semanticErrors.count > 0)
+    if (semanticErrors.count() > 0)
     {
         qDebug() << "imprimiendo errores semanticos";
         for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
