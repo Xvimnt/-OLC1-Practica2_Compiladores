@@ -136,9 +136,7 @@ void MainWindow::on_actionCompilar_triggered()
             //Iniciando el analiziz semantico
             semantic * interprete = new semantic();
             interprete->recorrer(root);
-
-            //prueba para imprimir variables
-            std::cout << "-----imprimiendo todas las variables-----" << std::endl;
+            
             showVariables(interprete->variables);
 
             QMessageBox::information(this, "Exito", "Entrada Correcta");

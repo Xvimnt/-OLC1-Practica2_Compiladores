@@ -11,6 +11,7 @@ public:
     var();
     var(QString valor,int type);
     QString getValue();
+    QString getTypeName();
     int getType();
 };
 
