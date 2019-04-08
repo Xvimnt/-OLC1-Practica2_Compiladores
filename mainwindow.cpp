@@ -15,6 +15,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include "error.h"
+#include <QDebug>
+#include <QTableWidgetItem>
 
 static QString path;
 extern node *root;
@@ -98,12 +100,21 @@ void MainWindow::showVariables(std::map<QString, var*> variables){
 
     std::map<QString, var*>::iterator it;
 
+    ui->tbVar->setRowCount(variables.size());
+
+    int row = 0;
     for ( it = variables.begin(); it != variables.end(); it++ )
     {
-        std::cout << it->first.toStdString()  // string (key)
-                  << ':'
-                  << it->second->getValue().toStdString()   // string's value
-                  << std::endl ;
+        QTableWidgetItem* name = new QTableWidgetItem();
+        name->setText(it->first);
+        ui->tbVar->setItem(row,0,name);
+        QTableWidgetItem* value = new QTableWidgetItem();
+        value->setText(it->second->getValue());
+        ui->tbVar->setItem(row,1,value);
+        QTableWidgetItem* type = new QTableWidgetItem();
+        type->setText(it->second->getType());
+        ui->tbVar->setItem(row,2,type);
+        row++;
     }
 }
 
@@ -114,12 +125,14 @@ void MainWindow::on_actionCompilar_triggered()
 
         /*Limpiamos los contadores
             ya que son variables globales*/
+            errores.clear();
             linea = 0;
             columna = 0;
             yylineno = 0;
 
-        if(yyparse()==0 || errores.count() == 0) // Si nos da un número negativo, signifca error.
+        if(yyparse()==0 && errores.count() == 0) // Si nos da un número negativo, signifca error.
         {
+
             //Iniciando el analiziz semantico
             semantic * interprete = new semantic();
             interprete->recorrer(root);
@@ -205,5 +218,5 @@ void MainWindow::on_actionErrores_triggered()
 
     QFileInfo fi("temp");
     QString path = fi.absolutePath() +"/";
-    QDesktopServices::openUrl(QUrl::fromLocalFile(path+"index.html"));
+    //QDesktopServices::openUrl(QUrl::fromLocalFile(path+"index.html"));
 }

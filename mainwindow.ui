@@ -67,12 +67,23 @@
           </rect>
          </property>
          <property name="columnCount">
-          <number>4</number>
+          <number>3</number>
          </property>
-         <column/>
-         <column/>
-         <column/>
-         <column/>
+         <column>
+          <property name="text">
+           <string>Nombre</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Valor</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Tipo</string>
+          </property>
+         </column>
         </widget>
        </widget>
       </widget>
@@ -86,7 +97,7 @@
      <x>0</x>
      <y>0</y>
      <width>680</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArchivo">

@@ -37,7 +37,7 @@ void graficador::recorrerAST(QString padre, node *hijo)
         grafo += nombreHijo + "[label=\"" + escapar("[" +node->tipo +"," + QString::number(node->tipo_)+ "("+ QString::number(node->linea)+","+ QString::number(node->columna)+")" + "," + node->valor + "]") + "\"];\n";
         grafo += padre + "->" + nombreHijo + ";\n";
         contador++;
-        recorrerAST(nombreHijo, &node);
+        recorrerAST(nombreHijo, node);
     }
 }
 

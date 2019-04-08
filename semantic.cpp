@@ -1,5 +1,6 @@
 #include "semantic.h"
 #include <iostream>
+#include <QDebug>
 
 enum Choice
 {
@@ -46,6 +47,12 @@ Resultado semantic::recorrer(node *node_)
         r.valor = node_->valor;
     }
     break;
+    case IDEN:
+    {
+        //buscar el valor en el diccionario
+
+    }
+    break;
     case BOOL:
     {
         r.tipo = BOOL;
@@ -79,7 +86,7 @@ Resultado semantic::recorrer(node *node_)
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
         //asignando variables
-        variables[iz.valor] = new var(der.valor, der.tipo);
+        variables[iz->valor] = new var(der->valor, der->tipo);
     }
     break;
     case IGUALACION:
@@ -1214,14 +1221,16 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() / op2.valor.toDouble();
+                double result = op1.valor.toInt() / op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case BOOL:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() / op2.valor.toInt();
+                qDebug() << "dividiendo " << op1.valor << " con " << op2.valor << "\n";
+                int result = op1.valor.toInt() / op2.valor.toInt();
+                int response = (int) result;
                 r.valor = QString::number(result);
             }
             break;

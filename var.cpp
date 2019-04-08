@@ -14,3 +14,7 @@ var::var(QString valor,QString type)
 QString var::getValue(){
     return value;
 }
+
+QString var::getType(){
+    return type;
+}

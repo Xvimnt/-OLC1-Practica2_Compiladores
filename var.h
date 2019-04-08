@@ -10,6 +10,7 @@ public:
     var();
     var(QString valor,QString type);
     QString getValue();
+    QString getType();
 };
 
 #endif // VAR_H
