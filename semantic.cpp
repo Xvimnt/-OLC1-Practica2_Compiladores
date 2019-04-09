@@ -33,10 +33,9 @@ enum Choice
     ARRAY = 28,
     DIMENSION = 29,
     LIST = 30,
-    DLIST = 31,
-    TLIST = 32,
-    IDINDEX = 33,
-    DIMS = 34
+    MLIST = 31,
+    IDINDEX = 32,
+    DIMS = 33
 };
 
 semantic::semantic()
@@ -73,7 +72,7 @@ Resultado semantic::recorrer(node *node_)
             //Quiere decir que hay mas dimensiones o esta decarada con una lista
             if (length.valor.toInt() < node_->hijos.at(1)->hijos.count())
             {
-                //Si el numero de elementos del array sobrepasa el tamaño entonces es error sintactico
+                //Si el numero de elementos del array sobrepasa el tamaño entonces es error semantico
                 QString val = length.valor + " inferior a " + node_->hijos.at(1)->hijos.count();
                 errores.append(new error(val, "Error Semantico", r.linea, r.columna, "Sobrepasada la cantidad de elementos"));
             }
@@ -93,53 +92,50 @@ Resultado semantic::recorrer(node *node_)
         r.valor = "";
         for (int x = 0; x < node_->hijos.size(); x++)
         {
-            node *nodo = node_->hijos.at(x);
+            node *element = node_->hijos.at(x);
             //id + [x] ASIGNAR AL DICCIONARIO index.valor
-            Resultado index = recorrer(nodo);
+            Resultado index = recorrer(element);
             variables[currentArrayId + "[" + x + "]"] = new var(index.valor, index.tipo);
         }
     }
     break;
-    case DLIST:
+    case MLIST:
     {
         //Como aquí hay una lista de operaciones, hacemos un for
         r.tipo = node_->tipo_;
         r.valor = "";
+
         for (int x = 0; x < node_->hijos.size(); x++)
         {
-            node *nodo = node_->hijos.at(x);
-            for (int y = 0; y < nodo->hijos.size(); y++)
+            node *lista = node_->hijos.at(x);
+            if (lista->tipo_ == MLIST)
             {
-                node *nodo2 = node_->hijos.at(y);
-                //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
-                Resultado index = recorrer(nodo2);
-                variables[currentArrayId + "[" + x + "]" + "[" + y + "]"] = new var(index.valor, index.tipo);
-            }
-        }
-    }
-    break;
-    case TLIST:
-    {
-        //Como aquí hay una lista de operaciones, hacemos un for
-        r.tipo = node_->tipo_;
-        r.valor = "";
-        for (int x = 0; x < node_->hijos.size(); x++)
-        {
-            node *nodo = node_->hijos.at(x);
-            for (int y = 0; y < nodo->hijos.size(); y++)
-            {
-                node *nodo2 = nodo->hijos.at(y);
-                for (int z = 0; z < nodo2->hijos.size(); z++)
+                //es de 3 dimensiones
+                for (int y = 0; y < lista->hijos.size(); y++)
                 {
-                    node *nodo3 = nodo2->hijos.at(z);
+                    node *list = node_->hijos.at(y);
+                    for (int z = 0; z < list->hijos.size(); z++)
+                    {
+                        node *element2 = node_->hijos.at(z);
+                        //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
+                        Resultado index2 = recorrer(element2);
+                        variables[currentArrayId + "[" + x + "]" + "[" + y + "]" + "[" + z + "]"] = new var(index2.valor, index2.tipo);
+                    }
+                }
+            }
+            else
+            {
+                //es de 2 dimensiones
+                for (int y = 0; y < lista->hijos.size(); y++)
+                {
+                    node *element = node_->hijos.at(y);
                     //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
-                    Resultado index = recorrer(nodo3);
-                    variables[currentArrayId + "[" + x + "]" + "[" + y + "]" + "[" + z + "]"] = new var(index.valor, index.tipo);
+                    Resultado index = recorrer(element);
+                    variables[currentArrayId + "[" + x + "]" + "[" + y + "]"] = new var(index.valor, index.tipo);
                 }
             }
         }
     }
-    break;
     case FOR:
     {
 
@@ -224,21 +220,22 @@ Resultado semantic::recorrer(node *node_)
         //Como aquí hay una lista de operaciones, hacemos un for
         r.tipo = node_->tipo_;
         Resultado index, index2, index3;
+        //si nos piden array de mas dimensiones en vez de un switch hacemos un for
         switch (node_->hijos.size())
         {
         case 1:
-             index = recorrer(node_->hijos.at(0));
+            index = recorrer(node_->hijos.at(0));
             r.valor = "[" + index.valor + "]";
             break;
         case 2:
-             index = recorrer(node_->hijos.at(0));
-             index2 = recorrer(node_->hijos.at(1));
+            index = recorrer(node_->hijos.at(0));
+            index2 = recorrer(node_->hijos.at(1));
             r.valor = "[" + index.valor + "]" + "[" + index2.valor + "]";
             break;
         case 3:
-             index = recorrer(node_->hijos.at(0));
-             index2 = recorrer(node_->hijos.at(1));
-             index3 = recorrer(node_->hijos.at(2));
+            index = recorrer(node_->hijos.at(0));
+            index2 = recorrer(node_->hijos.at(1));
+            index3 = recorrer(node_->hijos.at(2));
             r.valor = "[" + index.valor + "]" + "[" + index2.valor + "]" + "[" + index3.valor + "]";
             break;
         }

@@ -165,7 +165,7 @@ DECLARATION2: OBJECTS semicolon
               {
                 $$ = $1;
               }
-              | tarreglo ID ARRAY
+              | tarreglo ID ARRAY semicolon
               {
                 $$ = new node(yylineno, columna,"arreglo","arreglo");
                 $$->add($2);
@@ -217,11 +217,11 @@ OBJECTS: OBJECTS comma ID ASSIGN
 ;
 
 ASSIGN: equal E { $$ = $2; }
-      | ARRAY { $$ = $1; }
       | { $$ = nullptr; }
 ;
 
-ARRAY: openB E closeB ARRAY2 semicolon
+
+ARRAY: openB E closeB ARRAY2
     {
       $$ = new node(yylineno, columna,"newDimension","newDimension");;
       $$->add($2);
@@ -230,38 +230,46 @@ ARRAY: openB E closeB ARRAY2 semicolon
     }
 ;
 
-ARRAY2: openB E closeB ARRAY3
+ARRAY2: openB E closeB ARRAY
       {
-        $$ = new node(yylineno, columna,"newDimension","newDimension");;
+        $$ = new node(yylineno, columna,"newDimension","newDimension");
         $$->add($2);
         if($4 != nullptr)
           $$->add($4);
       }
-      | ARRAYASIGN {$$ = $1;}
+      | equal ARRAYASIGN 
+        {
+          $$ = $2;
+        }
+      | {$$ = nullptr;} 
 ;
 
-ARRAY3:openB E closeB ARRAYASIGN3
-      {
-        $$ = new node(yylineno, columna,"newDimension","newDimension");;
-        $$->add($2);
-        if($4 != nullptr)
-          $$->add($4);
-      }
-      | ARRAYASIGN2
+ARRAYASIGN: openCB ARRAYASIGN2 closeCB 
+        {
+          $$ = $2;
+        }
 ;
 
-ARRAYASIGN: equal openCB ARRAYLIST closeCB { $$ = $3; }
-            | { $$ = nullptr; }
+ARRAYASIGN2: ARRAYASIGN3
+            {
+              $$ = $1;
+            }
+            | ARRAYLIST
+            {
+              $$ = $1;
+            }
 ;
 
-ARRAYASIGN2: equal openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"doubleList","doubleList");
-            $$->add($4); $$->add($7); }
-          | { $$ = nullptr; }
-;
-
-ARRAYASIGN3: equal openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"tripleList","tripleList");
-            $$->add($4); $$->add($7); $$->add($10);}
-          | { $$ = nullptr; }
+ARRAYASIGN3: ARRAYASIGN
+            {
+              $$ = new node(yylineno, columna,"mList","mList");
+              $$->add($1);
+            }
+            | ARRAYASIGN3 comma ARRAYASIGN
+            {
+              $$ = $1;
+              $$->add($3);
+            }
 ;
 
 ARRAYLIST: ARRAYLIST comma E 
