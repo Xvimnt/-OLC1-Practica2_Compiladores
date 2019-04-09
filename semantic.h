@@ -15,6 +15,7 @@ private:
     QString currentArrayId;
 public:
     QList<error*> errores;
+    QList<QString> msgs;
     std::map<QString, var*> variables;
     semantic();
     Resultado recorrer( node *raiz);

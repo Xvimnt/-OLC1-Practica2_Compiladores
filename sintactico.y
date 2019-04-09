@@ -294,7 +294,12 @@ NATIVE: integer { $$ = new node(yylineno, columna,"int",yytext);}
 PRINT: timprimir openPar E closePar semicolon  {node *nod = new node(yylineno, columna,"print",$1); nod->add($3); $$=nod;}
 ;
 
-SHOW: tshow openPar E comma E closePar semicolon {node *nod = new node(yylineno, columna,"show",$1); nod->add($3); nod->add($5); $$=nod;}
+SHOW: tshow openPar E comma E closePar semicolon 
+  {
+    $$ = new node(yylineno, columna,"show","show"); 
+    $$->add($3); 
+    $$->add($5); 
+  }
 ;
 
 IF: tsi openPar E closePar openCB START2 closeCB ELSE
@@ -324,9 +329,8 @@ FOR: tpara openPar VARMANAGMENT E semicolon UPDATE closePar openCB START2 closeC
 ;
 
 WHILE: trepetir openPar E closePar openCB START2 closeCB{
-  node *nod = new node(yylineno, columna,"while","while"); 
-  nod->add($3); nod->add($6);
-  $$=nod;
+  $$ = new node(yylineno, columna,"repeat","repeat"); 
+  $$->add($3); $$->add($6);
 }
 ;
 

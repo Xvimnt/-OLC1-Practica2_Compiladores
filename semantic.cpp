@@ -26,6 +26,7 @@ enum Choice
     DECREASE = 20,
     PRINT = 21,
     ASIGNACION = 22,
+    SHOW = 23,
     IF = 24,
     IDEN = 25,
     MINUS = 26,
@@ -36,7 +37,8 @@ enum Choice
     MLIST = 31,
     IDINDEX = 32,
     DIMS = 33,
-    DECLARATION = 34
+    DECLARATION = 34,
+    REPEAT = 35
 };
 
 semantic::semantic()
@@ -55,6 +57,13 @@ Resultado semantic::recorrer(node *node_)
     r.columna = node_->columna;
     switch (node_->tipo_)
     {
+    case SHOW:
+    {
+        Resultado title = recorrer(node_->hijos.at(0));
+        Resultado msg = recorrer(node_->hijos.at(1));
+        msgs->append(title + "@@" + msg);
+    }
+    break;
     case DECLARATION:
     {
         variables[node_->hijos.at(0)->valor] = new var("null", 0);
@@ -125,7 +134,7 @@ Resultado semantic::recorrer(node *node_)
                     for (int z = 0; z < list->hijos.size(); z++)
                     {
                         node *element2 = node_->hijos.at(z);
-                        //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
+                        //id + [x][y][z] ASIGNAR AL DICCIONARIO index.valor
                         Resultado index2 = recorrer(element2);
                         variables[currentArrayId + "[" + x + "]" + "[" + y + "]" + "[" + z + "]"] = new var(index2.valor, index2.tipo);
                     }
@@ -145,9 +154,28 @@ Resultado semantic::recorrer(node *node_)
         }
     }
     break;
+    case REPEAT:
+    {
+        Resultado times = recorrer(node_->hijos.at(0));
+        if (times.type != INT)
+        {
+            //Si el numero de veces no es entero entonces es error semantico
+            QString val = times.valor + " no es un entero";
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+        }
+        else
+        {
+            int end = times.valor.toInt();
+            for (int i = 0; i < end; i++)
+            {
+                //Recorriendo el ciclo
+                recorrer(node_->hijos.at(1));
+            }
+        }
+    }
+    break;
     case FOR:
     {
-
         Resultado assign = recorrer(node_->hijos.at(0));
         Resultado boolean = recorrer(node_->hijos.at(1));
 

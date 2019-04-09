@@ -61,5 +61,6 @@ int node::getTipo()
     if(this->tipo=="arregloIndex"){return 32;}
     if(this->tipo=="dimensions"){return 33;}
     if(this->tipo=="declaracion"){return 34;}
+    if(this->tipo=="repeat"){return 35;}
     return 0;
 }
