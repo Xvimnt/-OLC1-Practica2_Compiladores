@@ -83,7 +83,7 @@ int yyerror(const char* msj)
 %type <Node> DATATYPE
 %type <Node> OBJECTS
 %type <Node> ASSIGN  
-%type <Node> ARRAY ARRAY2 ARRAY3
+%type <Node> ARRAY ARRAY2
 %type <Node> ARRAYASIGN  
 %type <Node> ARRAYASIGN2   
 %type <Node> ARRAYASIGN3   
@@ -353,17 +353,10 @@ ESINGLE:NATIVE { $$ = $1; }
   }
 ;
 
-INDEX: INDEX openB E closeB
+INDEX: openB E closeB 
        {
-          $$=$1;
-          $$->add($3);
+          $$=$2;
        }
-       | openB E closeB 
-        {
-          $$=new node(yylineno, columna,"dimensions","dimensions");
-          $$->add($2);
-        }
-        | {$$=nullptr;}
 ;
 
 ID: iden {
