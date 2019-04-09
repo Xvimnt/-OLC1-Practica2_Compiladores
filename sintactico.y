@@ -174,11 +174,11 @@ DECLARATION2: OBJECTS semicolon
               }
 ;
 
-DATATYPE: tint { $$ = new node(yylineno, columna,"reservada",$1);}
-        | tbool { $$ = new node(yylineno, columna,"reservada",$1);}
-        | tstring { $$ = new node(yylineno, columna,"reservada",$1);}
-        | tdouble { $$ = new node(yylineno, columna,"reservada",$1); }
-        | tchar{ $$ = new node(yylineno, columna,"reservada",$1);}
+DATATYPE: tint { $$ = new node(yylineno, columna,"reservada",yytext);}
+        | tbool { $$ = new node(yylineno, columna,"reservada",yytext);}
+        | tstring { $$ = new node(yylineno, columna,"reservada",yytext);}
+        | tdouble { $$ = new node(yylineno, columna,"reservada",yytext); }
+        | tchar{ $$ = new node(yylineno, columna,"reservada",yytext);}
 ;
 
 OBJECTS: OBJECTS comma ID ASSIGN 
@@ -222,88 +222,47 @@ ASSIGN: equal E { $$ = $2; }
       | { $$ = nullptr; }
 ;
 
-ARRAY: openB E closeB ARRAY2 ARRAYASIGN
+ARRAY: openB E closeB ARRAY2
     {
-      if($4 == nullptr)
-      {
-          $$ = new node(yylineno, columna,"dimensiones","dimensiones");
-          node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
-          nod->add($2);
-          $$->add(nod);
-      }
-      else
-      {
-          $$ = $4;
-          node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
-          nod->add($2);
-          $$->add(nod);
-      }
-      if($5 == nullptr)
-      {
-          node *nod = $$;
-          $$ = new node(yylineno, columna,"Declaracion de Arreglo","Declaracion de Arreglo");
-          $$->add(nod);
-      }
-      else
-      {
-          node *nod = $$;
-          $$ = new node(yylineno, columna,"Asignacion de Arreglo","Asignacion de Arreglo");
-          $$->add(nod);
-          $$->add($5);
-      }
+      $$ = new node(yylineno, columna,"newDimension","newDimension");;
+      $$->add($2);
+      if($4 != nulllptr)
+        $$->add($4);
     }
 ;
 
 ARRAY2: openB E closeB ARRAY3
       {
-        if($4 == nullptr)
-        {
-            $$ = new node(yylineno, columna,"dimensiones","dimensiones");
-            node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
-            nod->add($2);
-            $$->add(nod);
-        }
-        else
-        {
-            $$ = $4;
-            node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
-            nod->add($2);
-            $$->add(nod);
-        }
+        $$ = new node(yylineno, columna,"newDimension","newDimension");;
+        $$->add($2);
+        if($4 != nulllptr)
+          $$->add($4);
       }
-      | {$$ = nullptr;}
+      | ARRAYASIGN {$$ = $1;}
 ;
 
-ARRAY3:openB E closeB
+ARRAY3:openB E closeB ARRAYASIGN3
       {
-        $$ = new node(yylineno, columna,"dimensiones","dimensiones");
-        node *nod = new node(yylineno, columna,"nueva dimension","nueva dimension");
-        nod->add($2);
-        $$->add(nod);
+        $$ = new node(yylineno, columna,"newDimension","newDimension");;
+        $$->add($2);
+        if($4 != nulllptr)
+          $$->add($4);
       }
-      | {$$ = nullptr;}
+      | ARRAYASIGN2
 ;
 
-ARRAYASIGN: openCB ARRAYASIGN2 closeCB { $$ = $2; }
+ARRAYASIGN: openCB ARRAYLIST closeCB { $$ = $2; }
             | { $$ = nullptr; }
 ;
 
-ARRAYASIGN2: ARRAYASIGN3 { $$ = $1; }
-          |  ARRAYLIST  { $$ = $1; }
+ARRAYASIGN2: openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"doubleList","doubleList");
+            $$->add($3); $$->add($6); }
+          | { $$ = nullptr; }
 ;
 
-ARRAYASIGN3: openCB ARRAYLIST closeCB comma openCB ARRAYLIST closeCB ARRAYASIGN4
-      { 
-            $$ = new node(yylineno, columna,"Asignaciones","Asignaciones");
-            $$->add($2);
-            $$->add($6);
-            if($8 != nullptr)
-              $$->add($8);
-      }
-;
-
-ARRAYASIGN4: comma openCB ARRAYLIST closeCB {$$ = $3;}
-            | {$$ = nullptr;}
+ARRAYASIGN3: openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"tripleList","tripleList");
+            $$->add($3); $$->add($6); $$->add($9);}
+          | { $$ = nullptr; }
 ;
 
 ARRAYLIST: ARRAYLIST comma E 

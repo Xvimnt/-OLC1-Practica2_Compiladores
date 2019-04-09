@@ -57,7 +57,6 @@ Resultado semantic::recorrer(node *node_)
 
         while (boolean.valor == "1")
         {
-            qDebug() << "recorriendo ciclo for para booleano " << boolean.valor;
             recorrer(node_->hijos.at(3));
             boolean = recorrer(node_->hijos.at(1));
             update = recorrer(node_->hijos.at(2));
