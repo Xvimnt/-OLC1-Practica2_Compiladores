@@ -29,6 +29,7 @@ QString graficador::graficar()
 
 void graficador::recorrerAST(QString padre, node *hijo)
 {
+    if(hijo == nullptr) return;
     int x = 0;
     for (x = 0 ; x < hijo->hijos.count() ; x++)
     {

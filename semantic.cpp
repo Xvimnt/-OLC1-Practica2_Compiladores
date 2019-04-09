@@ -41,6 +41,7 @@ semantic::semantic()
 Resultado semantic::recorrer(node *node_)
 {
     Resultado r = Resultado();
+    if(node_ == nullptr) return r;
     r.linea = node_->linea; // Nos servirán para una posible reporte de error de tipos.
     r.columna = node_->columna;
     switch (node_->tipo_)
@@ -52,13 +53,14 @@ Resultado semantic::recorrer(node *node_)
         Resultado boolean = recorrer(node_->hijos.at(1));
         Resultado update = recorrer(node_->hijos.at(2));
 
+        /*
         while (boolean.valor == "1")
         {
             qDebug() << "recorriendo ciclo for para booleano " << boolean.valor;
             recorrer(node_->hijos.at(3));
             boolean = recorrer(node_->hijos.at(1));
             update = recorrer(node_->hijos.at(2));
-        }
+        }*/
     }
     break;
     case IF:
@@ -72,8 +74,10 @@ Resultado semantic::recorrer(node *node_)
         }
         else if (op1.valor == "0")
         {
+            qDebug() << "if negativo";
             if ((node_->hijos.count() > 1) && (node_->hijos.at(1) != nullptr))
             {
+                qDebug() << "recorriendo " << node_->hijos.at(1)->valor;
                 op2 = recorrer(node_->hijos.at(1));
             }
         }
@@ -1672,7 +1676,7 @@ Resultado semantic::recorrer(node *node_)
         Resultado op1 = recorrer(iz);
         if (iz->getTipo() == IDEN)
         {
-            qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
+            qDebug() << "asignando e valor de " << iz->valor << " es " << op1.valor;
             variables[iz->valor] = new var(op1.valor, op1.tipo);
         }
         else
@@ -1719,7 +1723,7 @@ Resultado semantic::recorrer(node *node_)
         Resultado op1 = recorrer(iz);
         if (iz->getTipo() == IDEN)
         {
-            qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
+            qDebug() << "asignando e valor de " << iz->valor << " es " << op1.valor;
             variables[iz->valor] = new var(op1.valor, op1.tipo);
         }
         else

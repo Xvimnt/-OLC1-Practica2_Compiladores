@@ -344,8 +344,8 @@ IF: tsi openPar E closePar openCB START2 closeCB ELSE
 
 ELSE: tsino IF {$$ = $2;}
     | tsino openCB START2 closeCB {
-       node *block = new node(yylineno, columna,"defaultSent","defaultSent");
-       block->add($3);
+       $$ = new node(yylineno, columna,"defaultSentence","defaultSentence");
+       $$->add($3);
       }
     | {$$ = nullptr;}
 ;

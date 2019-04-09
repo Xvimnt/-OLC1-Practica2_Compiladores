@@ -514,10 +514,10 @@ static const yytype_uint16 yyrline[] =
      178,   179,   180,   181,   184,   201,   220,   221,   222,   225,
      257,   274,   277,   284,   287,   288,   291,   292,   295,   305,
      306,   309,   314,   321,   322,   323,   324,   325,   328,   331,
-     334,   350,   351,   352,   355,   362,   369,   370,   373,   374,
-     377,   378,   392,   396,   399,   404,   405,   406,   407,   408,
-     409,   410,   411,   412,   413,   414,   415,   416,   417,   418,
-     419,   420
+     334,   345,   346,   350,   353,   360,   367,   368,   371,   372,
+     375,   376,   390,   394,   397,   402,   403,   404,   405,   406,
+     407,   408,   409,   410,   411,   412,   413,   414,   415,   416,
+     417,   418
 };
 #endif
 
@@ -1976,91 +1976,89 @@ yyreduce:
   case 50:
 #line 335 "sintactico.y" /* yacc.c:1646  */
     {
-  node *nod = new node(yylineno, columna,"if",(yyvsp[-5].Node)->valor);
-  if((yyvsp[-5].Node)->valor == "true")
-  {
-    nod->add((yyvsp[-2].Node));
-  }
-  else
-  {
-    if((yyvsp[0].Node) != nullptr)
-      nod->add((yyvsp[0].Node));
-  }
-  (yyval.Node) = nod;
+  (yyval.Node) = new node(yylineno, columna,"if","if");
+  node *block = new node(yylineno, columna,"sentencia","sentencia");
+  block->add((yyvsp[-5].Node));
+  block->add((yyvsp[-2].Node));
+  (yyval.Node)->add(block);
+  (yyval.Node)->add((yyvsp[0].Node));
 }
-#line 1992 "parser.cpp" /* yacc.c:1646  */
+#line 1987 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 350 "sintactico.y" /* yacc.c:1646  */
+#line 345 "sintactico.y" /* yacc.c:1646  */
     {(yyval.Node) = (yyvsp[0].Node);}
-#line 1998 "parser.cpp" /* yacc.c:1646  */
+#line 1993 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 351 "sintactico.y" /* yacc.c:1646  */
-    {(yyval.Node) = (yyvsp[-1].Node);}
-#line 2004 "parser.cpp" /* yacc.c:1646  */
+#line 346 "sintactico.y" /* yacc.c:1646  */
+    {
+       (yyval.Node) = new node(yylineno, columna,"defaultSentence","defaultSentence");
+       (yyval.Node)->add((yyvsp[-1].Node));
+      }
+#line 2002 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 352 "sintactico.y" /* yacc.c:1646  */
+#line 350 "sintactico.y" /* yacc.c:1646  */
     {(yyval.Node) = nullptr;}
-#line 2010 "parser.cpp" /* yacc.c:1646  */
+#line 2008 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 355 "sintactico.y" /* yacc.c:1646  */
+#line 353 "sintactico.y" /* yacc.c:1646  */
     {
   node *nod = new node(yylineno, columna,"for","for");
   nod->add((yyvsp[-7].Node)); nod->add((yyvsp[-6].Node)); nod->add((yyvsp[-4].Node)); nod->add((yyvsp[-1].Node));
   (yyval.Node)=nod;
 }
-#line 2020 "parser.cpp" /* yacc.c:1646  */
+#line 2018 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 362 "sintactico.y" /* yacc.c:1646  */
+#line 360 "sintactico.y" /* yacc.c:1646  */
     {
   node *nod = new node(yylineno, columna,"while","while"); 
   nod->add((yyvsp[-4].Node)); nod->add((yyvsp[-1].Node));
   (yyval.Node)=nod;
 }
-#line 2030 "parser.cpp" /* yacc.c:1646  */
+#line 2028 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 369 "sintactico.y" /* yacc.c:1646  */
+#line 367 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = (yyvsp[0].Node); }
-#line 2036 "parser.cpp" /* yacc.c:1646  */
+#line 2034 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 370 "sintactico.y" /* yacc.c:1646  */
+#line 368 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = (yyvsp[0].Node); }
-#line 2042 "parser.cpp" /* yacc.c:1646  */
+#line 2040 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 373 "sintactico.y" /* yacc.c:1646  */
+#line 371 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = new node(yylineno, columna,"increase",(yyvsp[0].TEXT)); (yyval.Node)->add((yyvsp[-1].Node));}
-#line 2048 "parser.cpp" /* yacc.c:1646  */
+#line 2046 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 374 "sintactico.y" /* yacc.c:1646  */
+#line 372 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = new node(yylineno, columna,"decrease",(yyvsp[0].TEXT)); (yyval.Node)->add((yyvsp[-1].Node));}
-#line 2054 "parser.cpp" /* yacc.c:1646  */
+#line 2052 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 377 "sintactico.y" /* yacc.c:1646  */
+#line 375 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = (yyvsp[0].Node); }
-#line 2060 "parser.cpp" /* yacc.c:1646  */
+#line 2058 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 378 "sintactico.y" /* yacc.c:1646  */
+#line 376 "sintactico.y" /* yacc.c:1646  */
     {
     if((yyvsp[0].Node)==nullptr)
     {
@@ -2073,135 +2071,135 @@ yyreduce:
         (yyval.Node)->add((yyvsp[0].Node));
     }
   }
-#line 2077 "parser.cpp" /* yacc.c:1646  */
+#line 2075 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 393 "sintactico.y" /* yacc.c:1646  */
+#line 391 "sintactico.y" /* yacc.c:1646  */
     {
            (yyval.Node)=(yyvsp[-1].Node);
         }
-#line 2085 "parser.cpp" /* yacc.c:1646  */
+#line 2083 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 396 "sintactico.y" /* yacc.c:1646  */
+#line 394 "sintactico.y" /* yacc.c:1646  */
     {(yyval.Node)=nullptr;}
-#line 2091 "parser.cpp" /* yacc.c:1646  */
+#line 2089 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 399 "sintactico.y" /* yacc.c:1646  */
+#line 397 "sintactico.y" /* yacc.c:1646  */
     {
   (yyval.Node) = new node(yylineno, columna,"identificador",yytext);
 }
-#line 2099 "parser.cpp" /* yacc.c:1646  */
+#line 2097 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 404 "sintactico.y" /* yacc.c:1646  */
+#line 402 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"suma",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2105 "parser.cpp" /* yacc.c:1646  */
+#line 2103 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 405 "sintactico.y" /* yacc.c:1646  */
+#line 403 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"resta",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2111 "parser.cpp" /* yacc.c:1646  */
+#line 2109 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 406 "sintactico.y" /* yacc.c:1646  */
+#line 404 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"multi",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2117 "parser.cpp" /* yacc.c:1646  */
+#line 2115 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 407 "sintactico.y" /* yacc.c:1646  */
+#line 405 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"div",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2123 "parser.cpp" /* yacc.c:1646  */
+#line 2121 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 408 "sintactico.y" /* yacc.c:1646  */
+#line 406 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"potencia",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2129 "parser.cpp" /* yacc.c:1646  */
+#line 2127 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 409 "sintactico.y" /* yacc.c:1646  */
+#line 407 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"igualacion",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2135 "parser.cpp" /* yacc.c:1646  */
+#line 2133 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 410 "sintactico.y" /* yacc.c:1646  */
+#line 408 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"dif",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2141 "parser.cpp" /* yacc.c:1646  */
+#line 2139 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 411 "sintactico.y" /* yacc.c:1646  */
+#line 409 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"menque",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2147 "parser.cpp" /* yacc.c:1646  */
+#line 2145 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 412 "sintactico.y" /* yacc.c:1646  */
+#line 410 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"mayque",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2153 "parser.cpp" /* yacc.c:1646  */
+#line 2151 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 74:
-#line 413 "sintactico.y" /* yacc.c:1646  */
+#line 411 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"menoig",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2159 "parser.cpp" /* yacc.c:1646  */
+#line 2157 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 75:
-#line 414 "sintactico.y" /* yacc.c:1646  */
+#line 412 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"mayoig",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2165 "parser.cpp" /* yacc.c:1646  */
+#line 2163 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 76:
-#line 415 "sintactico.y" /* yacc.c:1646  */
+#line 413 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"tor",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2171 "parser.cpp" /* yacc.c:1646  */
+#line 2169 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 77:
-#line 416 "sintactico.y" /* yacc.c:1646  */
+#line 414 "sintactico.y" /* yacc.c:1646  */
     {node *nod = new node(yylineno, columna,"tand",(yyvsp[-1].TEXT));  nod->add((yyvsp[-2].Node)); nod->add((yyvsp[0].Node)); (yyval.Node)=nod;}
-#line 2177 "parser.cpp" /* yacc.c:1646  */
+#line 2175 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 78:
-#line 417 "sintactico.y" /* yacc.c:1646  */
+#line 415 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = new node(yylineno, columna,(yyvsp[-1].TEXT),(yyvsp[-1].TEXT)); (yyval.Node)->add((yyvsp[0].Node));}
-#line 2183 "parser.cpp" /* yacc.c:1646  */
+#line 2181 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 79:
-#line 418 "sintactico.y" /* yacc.c:1646  */
+#line 416 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = (yyvsp[0].Node); }
-#line 2189 "parser.cpp" /* yacc.c:1646  */
+#line 2187 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 80:
-#line 419 "sintactico.y" /* yacc.c:1646  */
+#line 417 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = (yyvsp[-1].Node); }
-#line 2195 "parser.cpp" /* yacc.c:1646  */
+#line 2193 "parser.cpp" /* yacc.c:1646  */
     break;
 
   case 81:
-#line 420 "sintactico.y" /* yacc.c:1646  */
+#line 418 "sintactico.y" /* yacc.c:1646  */
     { (yyval.Node) = new node(yylineno, columna,"minus",(yyvsp[-1].TEXT)); (yyval.Node)->add((yyvsp[0].Node));}
-#line 2201 "parser.cpp" /* yacc.c:1646  */
+#line 2199 "parser.cpp" /* yacc.c:1646  */
     break;
 
 
-#line 2205 "parser.cpp" /* yacc.c:1646  */
+#line 2203 "parser.cpp" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2436,5 +2434,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 423 "sintactico.y" /* yacc.c:1906  */
+#line 421 "sintactico.y" /* yacc.c:1906  */
 
