@@ -54,5 +54,12 @@ int node::getTipo()
     if(this->tipo=="identificador"){return 25;}
     if(this->tipo=="minus"){return 26;}
     if(this->tipo=="for"){return 27;}
+    if(this->tipo=="arreglo"){return 28;}
+    if(this->tipo=="newDimension"){return 29;}
+    if(this->tipo=="list"){return 30;}
+    if(this->tipo=="doubleList"){return 31;}
+    if(this->tipo=="tripleList"){return 32;}
+    if(this->tipo=="arregloIndex"){return 33;}
+    if(this->tipo=="arregloIndex"){return 34;}
     return 0;
 }

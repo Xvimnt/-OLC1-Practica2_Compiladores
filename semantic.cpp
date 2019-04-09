@@ -29,7 +29,14 @@ enum Choice
     IF = 24,
     IDEN = 25,
     MINUS = 26,
-    FOR = 27
+    FOR = 27,
+    ARRAY = 28,
+    DIMENSION = 29,
+    LIST = 30,
+    DLIST = 31,
+    TLIST = 32,
+    IDINDEX = 33,
+    DIMS = 34
 };
 
 semantic::semantic()
@@ -48,6 +55,91 @@ Resultado semantic::recorrer(node *node_)
     r.columna = node_->columna;
     switch (node_->tipo_)
     {
+    case ARRAY:
+    {
+        currentArrayId = node_->hijos.at(0)->valor;
+        Resultado op1 = recorrer(node_->hijos.at(1));
+        variables[currentArrayId] = new var(op1.valor, "Arreglo");
+    }
+    break;
+    case DIMENSION:
+    {
+        Resultado length = recorrer(node_->hijos.at(0));
+        r.tipo = node_->tipo_;
+        r.valor = "[" + length.valor + "]";
+
+        if (node_->hijos->count() > 1)
+        {
+            //Quiere decir que hay mas dimensiones o esta decarada con una lista
+            if (length.valor.toInt() < node_->hijos.at(1)->hijos.count())
+            {
+                //Si el numero de elementos del array sobrepasa el tamaño entonces es error sintactico
+                QString val = length.valor + " inferior a " + node_->hijos.at(1)->hijos.count();
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "Sobrepasada la cantidad de elementos"));
+            }
+            else
+            {
+                //hay mas dimensiones o esta recorriendo una lista
+                Resultado plus = recorrer(node_->hijos.at(1));
+                r.valor = r.valor + plus.valor;
+            }
+        }
+    }
+    break;
+    case LIST:
+    {
+        //Como aquí hay una lista de operaciones, hacemos un for
+        r.tipo = node_->tipo_;
+        r.valor = "";
+        for (int x = 0; x < node_->hijos.size(); x++)
+        {
+            node *nodo = node_->hijos.at(x);
+            //id + [x] ASIGNAR AL DICCIONARIO index.valor
+            Resultado index = recorrer(nodo);
+            variables[currentArrayId + "[" + x + "]"] = new var(index.valor, index.tipo_);
+        }
+    }
+    break;
+    case DLIST:
+    {
+        //Como aquí hay una lista de operaciones, hacemos un for
+        r.tipo = node_->tipo_;
+        r.valor = "";
+        for (int x = 0; x < node_->hijos.size(); x++)
+        {
+            node *nodo = node_->hijos.at(x);
+            for (int y = 0; y < nodo->hijos.size(); y++)
+            {
+                node *nodo2 = node_->hijos.at(y);
+                //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
+                Resultado index = recorrer(nodo2);
+                variables[currentArrayId + "[" + x + "]" + "[" + y + "]"] = new var(index.valor, index.tipo_);
+            }
+        }
+    }
+    break;
+    case TLIST:
+    {
+        //Como aquí hay una lista de operaciones, hacemos un for
+        r.tipo = node_->tipo_;
+        r.valor = "";
+        for (int x = 0; x < node_->hijos.size(); x++)
+        {
+            node *nodo = node_->hijos.at(x);
+            for (int y = 0; y < nodo->hijos.size(); y++)
+            {
+                node *nodo2 = nodo->hijos.at(y);
+                for (int z = 0; z < nodo2->hijos.size(); z++)
+                {
+                    node *nodo3 = nodo2->hijos.at(z);
+                    //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
+                    Resultado index = recorrer(nodo3);
+                    variables[currentArrayId + "[" + x + "]" + "[" + y + "]" + "[" + z + "]"] = new var(index.valor, index.tipo_);
+                }
+            }
+        }
+    }
+    break;
     case FOR:
     {
 
@@ -98,6 +190,56 @@ Resultado semantic::recorrer(node *node_)
             qDebug() << "regresando e valor de " << node_->valor << " es " << temp->getValue();
             r.tipo = temp->getType();
             r.valor = temp->getValue();
+        }
+    }
+    break;
+    case IDINDEX:
+    {
+        if (variables.find(node_->hijos.at(0).valor) == variables.end())
+        {
+            errores.append(new error(node_->hijos.at(0).valor, "Error Semantico", r.linea, r.columna, "Array no inicializado"));
+        }
+        else
+        {
+            //dimensions me devuelve un string de esta forma [x][y][z]
+            Resultado dimensions = recorrer(node_hijos.at(1));
+            QString variableName = node_->hijos.at(0).valor + dimensions.valor;
+
+            if (variables.find(variableName) == variables.end())
+            {
+                errores.append(new error(variableName, "Error Semantico", r.linea, r.columna, "index nulo"));
+            }
+            else
+            {
+                var *temp = variables[variableName];
+                qDebug() << "regresando e valor de " << variableName << " es " << temp->getValue();
+                r.tipo = temp->getType();
+                r.valor = temp->getValue();
+            }
+        }
+    }
+    break;
+    case DIMS:
+    {
+        //Como aquí hay una lista de operaciones, hacemos un for
+        r.tipo = node_->tipo_;
+        switch (node_->hijos.size())
+        {
+        case 1:
+            Resultado index = recorrer(node_->hijos.at(0));
+            r.valor = "[" + index.valor + "]";
+            break;
+        case 2:
+            Resultado index = recorrer(node_->hijos.at(0));
+            Resultado index2 = recorrer(node_->hijos.at(1));
+            r.valor = "[" + index.valor + "]" + "[" + index2.valor + "]";
+            break;
+        case 3:
+            Resultado index = recorrer(node_->hijos.at(0));
+            Resultado index2 = recorrer(node_->hijos.at(1));
+            Resultado index2 = recorrer(node_->hijos.at(2));
+            r.valor = "[" + index.valor + "]" + "[" + index2.valor + "]" + "[" + index3.valor + "]";
+            break;
         }
     }
     break;

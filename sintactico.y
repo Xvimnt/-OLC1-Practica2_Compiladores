@@ -338,16 +338,22 @@ ESINGLE:NATIVE { $$ = $1; }
     }
     else
     {
-        $$ = new node(yylineno, columna,"arregloIndex",yytext);
+        $$ = new node(yylineno, columna,"arregloIndex","arregloIndex");
         $$->add($1);
         $$->add($2);
     }
   }
 ;
 
-INDEX: openB E closeB
+INDEX: INDEX openB E closeB
+       {
+          $$=$1;
+          $$->add($3);
+       }
+       | openB E closeB 
         {
-           $$=$2;
+          $$=new node(yylineno, columna,"dimensions","dimensions");
+          $$->add($2);
         }
         | {$$=nullptr;}
 ;

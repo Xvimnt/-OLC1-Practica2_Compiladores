@@ -11,7 +11,8 @@
 
 class semantic
 {
-
+private:
+    QString currentArrayId;
 public:
     QList<error*> errores;
     std::map<QString, var*> variables;
