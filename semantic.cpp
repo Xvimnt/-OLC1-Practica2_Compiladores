@@ -65,7 +65,7 @@ Resultado semantic::recorrer(node *node_)
     {
         Resultado length = recorrer(node_->hijos.at(0));
         r.tipo = node_->tipo_;
-        r.valor = "[" + length.valor + "]";
+        r.valor = "<" + length.valor + ">";
 
         if (node_->hijos.count() > 1)
         {
@@ -95,7 +95,9 @@ Resultado semantic::recorrer(node *node_)
             node *element = node_->hijos.at(x);
             //id + [x] ASIGNAR AL DICCIONARIO index.valor
             Resultado index = recorrer(element);
-            variables[currentArrayId + "[" + x + "]"] = new var(index.valor, index.tipo);
+            QString varName = currentArrayId + "[" + QString::number(x) + "]";
+            qDebug() << "añadiendo " << varName << " valor: " << index.valor;
+            variables[varName] = new var(index.valor, index.tipo);
         }
     }
     break;
@@ -136,18 +138,21 @@ Resultado semantic::recorrer(node *node_)
             }
         }
     }
+    break;
     case FOR:
     {
 
         Resultado assign = recorrer(node_->hijos.at(0));
         Resultado boolean = recorrer(node_->hijos.at(1));
-        Resultado update = recorrer(node_->hijos.at(2));
 
         while (boolean.valor == "1")
         {
+            //Recorriendo el ciclo
             recorrer(node_->hijos.at(3));
+            //Actualizando el valor del iterador
+            recorrer(node_->hijos.at(2));
+            //verificando la condicion
             boolean = recorrer(node_->hijos.at(1));
-            update = recorrer(node_->hijos.at(2));
         }
     }
     break;
@@ -199,7 +204,7 @@ Resultado semantic::recorrer(node *node_)
         {
             //dimensions me devuelve un string de esta forma [x][y][z]
             Resultado dimensions = recorrer(node_->hijos.at(1));
-            QString variableName = node_->hijos.at(0)->valor + dimensions.valor;
+            QString variableName = node_->hijos.at(0)->valor + "[" + dimensions.valor + "]";
 
             if (variables.find(variableName) == variables.end())
             {

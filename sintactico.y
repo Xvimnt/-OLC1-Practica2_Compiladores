@@ -357,6 +357,7 @@ INDEX: openB E closeB
        {
           $$=$2;
        }
+       | {$$=nullptr;}
 ;
 
 ID: iden {
