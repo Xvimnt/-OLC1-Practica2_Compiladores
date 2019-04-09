@@ -87,7 +87,6 @@ int yyerror(const char* msj)
 %type <Node> ARRAYASIGN  
 %type <Node> ARRAYASIGN2   
 %type <Node> ARRAYASIGN3   
-%type <Node> ARRAYASIGN4   
 %type <Node> ARRAYLIST   
 %type <Node> NATIVE   
 %type <Node> PRINT   
@@ -222,11 +221,11 @@ ASSIGN: equal E { $$ = $2; }
       | { $$ = nullptr; }
 ;
 
-ARRAY: openB E closeB ARRAY2
+ARRAY: openB E closeB ARRAY2 semicolon
     {
       $$ = new node(yylineno, columna,"newDimension","newDimension");;
       $$->add($2);
-      if($4 != nulllptr)
+      if($4 != nullptr)
         $$->add($4);
     }
 ;
@@ -235,7 +234,7 @@ ARRAY2: openB E closeB ARRAY3
       {
         $$ = new node(yylineno, columna,"newDimension","newDimension");;
         $$->add($2);
-        if($4 != nulllptr)
+        if($4 != nullptr)
           $$->add($4);
       }
       | ARRAYASIGN {$$ = $1;}
@@ -245,23 +244,23 @@ ARRAY3:openB E closeB ARRAYASIGN3
       {
         $$ = new node(yylineno, columna,"newDimension","newDimension");;
         $$->add($2);
-        if($4 != nulllptr)
+        if($4 != nullptr)
           $$->add($4);
       }
       | ARRAYASIGN2
 ;
 
-ARRAYASIGN: openCB ARRAYLIST closeCB { $$ = $2; }
+ARRAYASIGN: equal openCB ARRAYLIST closeCB { $$ = $3; }
             | { $$ = nullptr; }
 ;
 
-ARRAYASIGN2: openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"doubleList","doubleList");
-            $$->add($3); $$->add($6); }
+ARRAYASIGN2: equal openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"doubleList","doubleList");
+            $$->add($4); $$->add($7); }
           | { $$ = nullptr; }
 ;
 
-ARRAYASIGN3: openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"tripleList","tripleList");
-            $$->add($3); $$->add($6); $$->add($9);}
+ARRAYASIGN3: equal openCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB openCB ARRAYLIST closeCB closeCB { $$= new node(yylineno, columna,"tripleList","tripleList");
+            $$->add($4); $$->add($7); $$->add($10);}
           | { $$ = nullptr; }
 ;
 
