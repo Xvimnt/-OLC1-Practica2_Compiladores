@@ -26,8 +26,10 @@ enum Choice
     DECREASE = 20,
     PRINT = 21,
     ASIGNACION = 22,
+    IF = 24,
     IDEN = 25,
-    MINUS = 26
+    MINUS = 26,
+    FOR = 27
 };
 
 semantic::semantic()
@@ -43,16 +45,55 @@ Resultado semantic::recorrer(node *node_)
     r.columna = node_->columna;
     switch (node_->tipo_)
     {
+    case FOR:
+    {
+
+        Resultado assign = recorrer(node_->hijos.at(0));
+        Resultado boolean = recorrer(node_->hijos.at(1));
+        Resultado update = recorrer(node_->hijos.at(2));
+
+        while (boolean.valor == "1")
+        {
+            qDebug() << "recorriendo ciclo for para booleano " << boolean.valor;
+            recorrer(node_->hijos.at(3));
+            boolean = recorrer(node_->hijos.at(1));
+            update = recorrer(node_->hijos.at(2));
+        }
+    }
+    break;
+    case IF:
+    {
+        node *temp = node_->hijos.at(0);
+        Resultado op1 = recorrer(temp->hijos.at(0));
+        Resultado op2;
+        if (op1.valor == "1")
+        {
+            op2 = recorrer(temp->hijos.at(1));
+        }
+        else if (op1.valor == "0")
+        {
+            if ((node_->hijos.count() > 1) && (node_->hijos.at(1) != nullptr))
+            {
+                op2 = recorrer(node_->hijos.at(1));
+            }
+        }
+        else
+        {
+            QString val = op1.valor + " no es un booleano";
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+        }
+    }
+    break;
     case IDEN:
     {
         if (variables.find(node_->valor) == variables.end())
         {
-                errores.append(new error(node_->valor, "Error Semantico", r.linea, r.columna, "Variable no inicializada"));
+            errores.append(new error(node_->valor, "Error Semantico", r.linea, r.columna, "Variable no inicializada"));
         }
         else
         {
             var *temp = variables[node_->valor];
-            qDebug() << "regresando e valor de " << node_->valor << " es " << temp->getValue(); 
+            qDebug() << "regresando e valor de " << node_->valor << " es " << temp->getValue();
             r.tipo = temp->getType();
             r.valor = temp->getValue();
         }
@@ -111,7 +152,7 @@ Resultado semantic::recorrer(node *node_)
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
         //asignando variables
-        qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor; 
+        qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
         variables[iz->valor] = new var(op2.valor, op2.tipo);
     }
     break;
@@ -404,7 +445,7 @@ Resultado semantic::recorrer(node *node_)
         default:
         {
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -441,7 +482,7 @@ Resultado semantic::recorrer(node *node_)
         default:
         {
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -465,9 +506,12 @@ Resultado semantic::recorrer(node *node_)
             {
                 r.tipo = BOOL;
                 int result = op1.valor.toInt() + op2.valor.toInt();
-                if(result > 0){
-                 r.valor = "1";
-                }else r.valor = "0";
+                if (result > 0)
+                {
+                    r.valor = "1";
+                }
+                else
+                    r.valor = "0";
             }
             break;
             default:
@@ -481,7 +525,7 @@ Resultado semantic::recorrer(node *node_)
         default:
         {
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -552,7 +596,7 @@ Resultado semantic::recorrer(node *node_)
         default:
         {
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -624,7 +668,7 @@ Resultado semantic::recorrer(node *node_)
         default:
         {
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         }
@@ -939,9 +983,12 @@ Resultado semantic::recorrer(node *node_)
             {
                 r.tipo = BOOL;
                 int result = op1.valor.toInt() + op2.valor.toInt();
-                if(result > 0){
-                 r.valor = "1";
-                }else r.valor = "0";
+                if (result > 0)
+                {
+                    r.valor = "1";
+                }
+                else
+                    r.valor = "0";
             }
             break;
             case DOUBLE:
@@ -1056,7 +1103,7 @@ Resultado semantic::recorrer(node *node_)
         {
 
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1216,7 +1263,7 @@ Resultado semantic::recorrer(node *node_)
         {
 
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1400,7 +1447,7 @@ Resultado semantic::recorrer(node *node_)
         {
 
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1573,7 +1620,7 @@ Resultado semantic::recorrer(node *node_)
         case STRING:
         {
             QString val = op1.valor + " " + op2.valor;
-                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
         }
         break;
         case CHAR:
@@ -1623,38 +1670,46 @@ Resultado semantic::recorrer(node *node_)
     {
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
-        switch (op1.tipo)
+        if (iz->getTipo() == IDEN)
         {
-        case INT:
-        {
-            r.tipo = INT;
-            int result = op1.valor.toInt();
-            result++;
-            r.valor = QString::number(result);
+            qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
+            variables[iz->valor] = new var(op1.valor, op1.tipo);
         }
-        break;
-        case CHAR:
+        else
         {
-            r.tipo = INT;
-            int result = op1.valor.toInt();
-            result++;
-            r.valor = QString::number(result);
-        }
-        break;
-        case DOUBLE:
-        {
-            r.tipo = DOUBLE;
-            double result = op1.valor.toDouble();
-            result++;
-            r.valor = QString::number(result);
-        }
-        break;
-        default:
-        {
-            QString val = op1.valor + "++";
-            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
-        }
-        break;
+            switch (op1.tipo)
+            {
+            case INT:
+            {
+                r.tipo = INT;
+                int result = op1.valor.toInt();
+                result++;
+                r.valor = QString::number(result);
+            }
+            break;
+            case CHAR:
+            {
+                r.tipo = INT;
+                int result = op1.valor.toInt();
+                result++;
+                r.valor = QString::number(result);
+            }
+            break;
+            case DOUBLE:
+            {
+                r.tipo = DOUBLE;
+                double result = op1.valor.toDouble();
+                result++;
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                QString val = op1.valor + "++";
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            }
+            break;
+            }
         }
     }
     break;
@@ -1662,38 +1717,46 @@ Resultado semantic::recorrer(node *node_)
     {
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
-        switch (op1.tipo)
+        if (iz->getTipo() == IDEN)
         {
-        case INT:
-        {
-            r.tipo = INT;
-            int result = op1.valor.toInt();
-            result--;
-            r.valor = QString::number(result);
+            qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
+            variables[iz->valor] = new var(op1.valor, op1.tipo);
         }
-        break;
-        case CHAR:
+        else
         {
-            r.tipo = INT;
-            int result = op1.valor.toInt();
-            result--;
-            r.valor = QString::number(result);
-        }
-        break;
-        case DOUBLE:
-        {
-            r.tipo = DOUBLE;
-            double result = op1.valor.toDouble();
-            result--;
-            r.valor = QString::number(result);
-        }
-        break;
-        default:
-        {
-            QString val = op1.valor + "--";
-            errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
-        }
-        break;
+            switch (op1.tipo)
+            {
+            case INT:
+            {
+                r.tipo = INT;
+                int result = op1.valor.toInt();
+                result--;
+                r.valor = QString::number(result);
+            }
+            break;
+            case CHAR:
+            {
+                r.tipo = INT;
+                int result = op1.valor.toInt();
+                result--;
+                r.valor = QString::number(result);
+            }
+            break;
+            case DOUBLE:
+            {
+                r.tipo = DOUBLE;
+                double result = op1.valor.toDouble();
+                result--;
+                r.valor = QString::number(result);
+            }
+            break;
+            default:
+            {
+                QString val = op1.valor + "--";
+                errores.append(new error(val, "Error Semantico", r.linea, r.columna, "operacion invalida"));
+            }
+            break;
+            }
         }
     }
     break;

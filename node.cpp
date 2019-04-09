@@ -53,5 +53,6 @@ int node::getTipo()
     if(this->tipo=="if"){return 24;}
     if(this->tipo=="identificador"){return 25;}
     if(this->tipo=="minus"){return 26;}
+    if(this->tipo=="for"){return 27;}
     return 0;
 }

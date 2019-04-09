@@ -333,22 +333,20 @@ SHOW: tshow openPar E comma E closePar semicolon {node *nod = new node(yylineno,
 
 IF: tsi openPar E closePar openCB START2 closeCB ELSE
 {
-  node *nod = new node(yylineno, columna,"if",$3->valor);
-  if($3->valor == "true")
-  {
-    nod->add($6);
-  }
-  else
-  {
-    if($8 != nullptr)
-      nod->add($8);
-  }
-  $$ = nod;
+  $$ = new node(yylineno, columna,"if","if");
+  node *block = new node(yylineno, columna,"sentencia","sentencia");
+  block->add($3);
+  block->add($6);
+  $$->add(block);
+  $$->add($8);
 }
 ;
 
 ELSE: tsino IF {$$ = $2;}
-    | tsino openCB START2 closeCB {$$ = $3;}
+    | tsino openCB START2 closeCB {
+       node *block = new node(yylineno, columna,"defaultSent","defaultSent");
+       block->add($3);
+      }
     | {$$ = nullptr;}
 ;
 
