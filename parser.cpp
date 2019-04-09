@@ -1660,7 +1660,7 @@ yyreduce:
   case 16:
 #line 157 "sintactico.y" /* yacc.c:1646  */
     {
-          (yyval.Node) = new node(yylineno, columna,"declaracion","declaracion");
+          (yyval.Node) = new node(yylineno, columna,"declaraciones","declaraciones");
           (yyval.Node)->add((yyvsp[-1].Node));
           (yyval.Node)->add((yyvsp[0].Node));
         }

@@ -35,7 +35,8 @@ enum Choice
     LIST = 30,
     MLIST = 31,
     IDINDEX = 32,
-    DIMS = 33
+    DIMS = 33,
+    DECLARATION = 34
 };
 
 semantic::semantic()
@@ -54,6 +55,11 @@ Resultado semantic::recorrer(node *node_)
     r.columna = node_->columna;
     switch (node_->tipo_)
     {
+    case DECLARATION:
+    {
+        variables[node_->hijos.at(0)->valor] = new var("null", 0);
+    }
+    break;
     case ARRAY:
     {
         currentArrayId = node_->hijos.at(0)->valor;

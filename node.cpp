@@ -60,5 +60,6 @@ int node::getTipo()
     if(this->tipo=="multiList"){return 31;}
     if(this->tipo=="arregloIndex"){return 32;}
     if(this->tipo=="dimensions"){return 33;}
+    if(this->tipo=="declaracion"){return 34;}
     return 0;
 }

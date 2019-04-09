@@ -155,7 +155,7 @@ ASSIGN2: equal E
 
 DECLARATION: DATATYPE DECLARATION2
         {
-          $$ = new node(yylineno, columna,"declaracion","declaracion");
+          $$ = new node(yylineno, columna,"declaraciones","declaraciones");
           $$->add($1);
           $$->add($2);
         }
