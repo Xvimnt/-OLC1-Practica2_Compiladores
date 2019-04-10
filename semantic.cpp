@@ -437,7 +437,11 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.toInt() == op2.valor.toInt());
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                bool result = (a == c);
                 r.valor = QString::number(result);
             }
             break;
@@ -548,7 +552,11 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = BOOL;
-                bool result = (op1.valor.toInt() != op2.valor.toInt());
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                bool result = (a != c);
                 r.valor = QString::number(result);
             }
             break;
@@ -1006,7 +1014,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() + op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toInt() + c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1060,7 +1070,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() + op2.valor.toDouble();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toDouble() + c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1099,7 +1111,8 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = STRING;
-                r.valor = op1.valor + op2.valor;
+                QByteArray ba = op2.valor.toLocal8Bit();
+                r.valor = op1.valor + ba[1];
             }
             break;
             default:
@@ -1118,35 +1131,46 @@ Resultado semantic::recorrer(node *node_)
             case INT:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() + op2.valor.toInt();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c + op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() + op2.valor.toInt();
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = a + c;
                 r.valor = QString::number(result);
             }
             break;
             case BOOL:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() + op2.valor.toInt();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c + op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case DOUBLE:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() + op2.valor.toDouble();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c + op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
             break;
             case STRING:
             {
                 r.tipo = STRING;
-                r.valor = op1.valor + op2.valor;
+                QByteArray ba = op1.valor.toLocal8Bit();
+                r.valor = ba[1] + op2.valor;
             }
             break;
             default:
@@ -1172,7 +1196,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() + op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toInt() + c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1236,7 +1262,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() - op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toInt() - c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1283,7 +1311,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() - op2.valor.toDouble();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toDouble() - c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1310,21 +1340,29 @@ Resultado semantic::recorrer(node *node_)
             case INT:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() - op2.valor.toInt();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c - op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() - op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                double result = a - c;
                 r.valor = QString::number(result);
             }
             break;
             case DOUBLE:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() - op2.valor.toDouble();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c - op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
             break;
@@ -1396,7 +1434,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() * op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toInt() * c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1443,7 +1483,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() * op2.valor.toDouble();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toDouble() * c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1470,28 +1512,38 @@ Resultado semantic::recorrer(node *node_)
             case INT:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() * op2.valor.toInt();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() * op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                double result = a * c;
                 r.valor = QString::number(result);
             }
             break;
             case BOOL:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() * op2.valor.toInt();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c * op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case DOUBLE:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() * op2.valor.toDouble();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c * op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
             break;
@@ -1518,7 +1570,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() * op2.valor.toInt();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                int result = op1.valor.toInt() * c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1576,17 +1630,15 @@ Resultado semantic::recorrer(node *node_)
             break;
             case CHAR:
             {
-                qDebug() << "convirtiendo " << op1.valor << " con " << op2.valor << "\n";
-                QByteArray ba = op2.valor.toLocal8Bit();
                 r.tipo = DOUBLE;
-                int result = op1.valor.toInt() / ba[1];
+                QByteArray ba = op2.valor.toLocal8Bit();
+                double result = op1.valor.toDouble() / (int)ba[1];
                 r.valor = QString::number(result);
             }
             break;
             case BOOL:
             {
                 r.tipo = INT;
-                qDebug() << "dividiendo " << op1.valor << " con " << op2.valor << "\n";
                 int result = op1.valor.toInt() / op2.valor.toInt();
                 r.valor = QString::number(result);
             }
@@ -1627,7 +1679,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() / op2.valor.toDouble();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toDouble() / c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1654,28 +1708,38 @@ Resultado semantic::recorrer(node *node_)
             case INT:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() / op2.valor.toDouble();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
             break;
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() / op2.valor.toDouble();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                double result = a / c;
                 r.valor = QString::number(result);
             }
             break;
             case BOOL:
             {
                 r.tipo = INT;
-                double result = op1.valor.toInt() / op2.valor.toInt();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c / op2.valor.toInt();
                 r.valor = QString::number(result);
             }
             break;
             case DOUBLE:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() / op2.valor.toDouble();
+                QByteArray ba = op1.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = c / op2.valor.toDouble();
                 r.valor = QString::number(result);
             }
             break;
@@ -1702,7 +1766,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = op1.valor.toDouble() / op2.valor.toDouble();
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = op1.valor.toDouble() / c;
                 r.valor = QString::number(result);
             }
             break;
@@ -1754,7 +1820,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                int result = pow(op1.valor.toInt(), c);
                 r.valor = QString::number(result);
             }
             break;
@@ -1801,7 +1869,9 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = DOUBLE;
-                double result = pow(op1.valor.toDouble(), op2.valor.toDouble());
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                double result = pow(op1.valor.toDouble(), c);
                 r.valor = QString::number(result);
             }
             break;
@@ -1827,7 +1897,11 @@ Resultado semantic::recorrer(node *node_)
             case CHAR:
             {
                 r.tipo = INT;
-                int result = pow(op1.valor.toInt(), op2.valor.toInt());
+                QByteArray ba = op2.valor.toLocal8Bit();
+                int c = (int)ba[1];
+                QByteArray ba2 = op1.valor.toLocal8Bit();
+                int a = (int)ba2[1];
+                int result = pow(a, c);
                 r.valor = QString::number(result);
             }
             break;
@@ -1881,7 +1955,8 @@ Resultado semantic::recorrer(node *node_)
         case CHAR:
         {
             r.tipo = INT;
-            int result = op1.valor.toInt();
+            QByteArray ba = op1.valor.toLocal8Bit();
+            int result = (int)ba[1];
             result++;
             r.valor = QString::number(result);
         }
@@ -1925,7 +2000,8 @@ Resultado semantic::recorrer(node *node_)
         case CHAR:
         {
             r.tipo = INT;
-            int result = op1.valor.toInt();
+            QByteArray ba = op1.valor.toLocal8Bit();
+            int result = (int)ba[1];
             result--;
             r.valor = QString::number(result);
         }
