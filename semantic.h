@@ -13,6 +13,7 @@ class semantic
 {
 private:
     QString currentArrayId;
+    var *currentArrayNewValue;
 public:
     QList<error*> errores;
     QList<QString> msgs;

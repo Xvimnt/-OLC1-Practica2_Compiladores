@@ -148,7 +148,8 @@ ASSIGN2: equal E
         }
        | openB E closeB ASSIGN2
         { 
-          $$ = new node(yylineno, columna,"indice",$2->valor);
+          $$ = new node(yylineno, columna,"indice","indice");
+          $$->add($2);
           $$->add($4);
         }
 ;

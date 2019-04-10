@@ -38,7 +38,8 @@ enum Choice
     IDINDEX = 32,
     DIMS = 33,
     DECLARATION = 34,
-    REPEAT = 35
+    REPEAT = 35,
+    ARRAS //Asignacion a array[]
 };
 
 semantic::semantic()
@@ -57,11 +58,27 @@ Resultado semantic::recorrer(node *node_)
     r.columna = node_->columna;
     switch (node_->tipo_)
     {
+    case ARRAS:
+    {
+        Resultado index = recorrer(node_->hijos.at(0));
+        r.tipo = ARRAS;
+        r.valor = "[" + index.valor + "]";
+        Resultado op2 = recorrer(node_->hijos.at(1));
+        if (op2.tipo != ARRAS)
+        {
+            currentArrayNewValue = new var(op2.valor, op2.tipo);
+        }
+        else
+        {
+            r.valor = r.valor + op2.valor;
+        }
+    }
+    break;
     case SHOW:
     {
         Resultado title = recorrer(node_->hijos.at(0));
         Resultado msg = recorrer(node_->hijos.at(1));
-        msgs->append(title + "@@" + msg);
+        msgs.append(title.valor + "@@" + msg.valor);
     }
     break;
     case DECLARATION:
@@ -157,7 +174,7 @@ Resultado semantic::recorrer(node *node_)
     case REPEAT:
     {
         Resultado times = recorrer(node_->hijos.at(0));
-        if (times.type != INT)
+        if (times.tipo != INT)
         {
             //Si el numero de veces no es entero entonces es error semantico
             QString val = times.valor + " no es un entero";
@@ -166,8 +183,10 @@ Resultado semantic::recorrer(node *node_)
         else
         {
             int end = times.valor.toInt();
+            qDebug() << "-------se procedera a repetir " << end << " veces-------";
             for (int i = 0; i < end; i++)
             {
+                qDebug() << "iterando= " << i;
                 //Recorriendo el ciclo
                 recorrer(node_->hijos.at(1));
             }
@@ -329,12 +348,22 @@ Resultado semantic::recorrer(node *node_)
     {
         //Este es un identificador
         node *iz = node_->hijos.at(0);
+        currentArrayId = iz->valor;
         //Este es un E u otro id
         node *der = node_->hijos.at(1);
         Resultado op2 = recorrer(der);
         //asignando variables
-        qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
-        variables[iz->valor] = new var(op2.valor, op2.tipo);
+
+        if (op2.tipo != ARRAS)
+        {
+            qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
+            variables[iz->valor] = new var(op2.valor, op2.tipo);
+        }else
+        {
+            QString varName = iz->valor + op2.valor;
+            qDebug() << "asignando e valor de " << varName << " es " << op2.valor;
+            variables[varName] = currentArrayNewValue;
+        }
     }
     break;
     case IGUALACION:
