@@ -78,7 +78,7 @@ Resultado semantic::recorrer(node *node_)
     {
         Resultado title = recorrer(node_->hijos.at(0));
         Resultado msg = recorrer(node_->hijos.at(1));
-        msgs.append(title.valor + "@@" + msg.valor);
+        msgs.append(title.valor.replace("\"","") + "@@" + msg.valor.replace("\"",""));
     }
     break;
     case DECLARATION:
@@ -184,10 +184,8 @@ Resultado semantic::recorrer(node *node_)
         else
         {
             int end = times.valor.toInt();
-            qDebug() << "-------se procedera a repetir " << end << " veces-------";
             for (int i = 0; i < end; i++)
             {
-                qDebug() << "iterando= " << i;
                 //Recorriendo el ciclo
                 recorrer(node_->hijos.at(1));
             }

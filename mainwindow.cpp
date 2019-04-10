@@ -145,6 +145,12 @@ void MainWindow::on_actionCompilar_triggered()
             ui->txtOutput->setText(interprete->console);
             QMessageBox::information(this, "Exito", "Entrada Correcta");
             correcto = true;
+             QList<QString>::iterator i;
+              for (i = interprete->msgs.begin(); i != interprete->msgs.end(); i++)
+              {
+                  QStringList array = (*i).split("@@");
+                  QMessageBox::information(this, array[0], array[1]);
+              }
         }
         else
         {
