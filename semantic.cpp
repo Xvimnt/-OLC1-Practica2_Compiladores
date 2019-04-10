@@ -361,8 +361,8 @@ Resultado semantic::recorrer(node *node_)
         }else
         {
             QString varName = iz->valor + op2.valor;
-            qDebug() << "asignando e valor de " << varName << " es " << op2.valor;
             variables[varName] = currentArrayNewValue;
+            qDebug() << "asignando e valor de " << varName << " es " << variables[varName]->getValue();
         }
     }
     break;
