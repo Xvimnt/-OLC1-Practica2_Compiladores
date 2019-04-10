@@ -147,13 +147,15 @@ Resultado semantic::recorrer(node *node_)
                 //es de 3 dimensiones
                 for (int y = 0; y < lista->hijos.size(); y++)
                 {
-                    node *list = node_->hijos.at(y);
+                    node *list = lista->hijos.at(y);
                     for (int z = 0; z < list->hijos.size(); z++)
                     {
-                        node *element2 = node_->hijos.at(z);
+                        node *element2 = list->hijos.at(z);
                         //id + [x][y][z] ASIGNAR AL DICCIONARIO index.valor
                         Resultado index2 = recorrer(element2);
-                        variables[currentArrayId + "[" + x + "]" + "[" + y + "]" + "[" + z + "]"] = new var(index2.valor, index2.tipo);
+                        QString name2 = currentArrayId + "[" + QString::number(x) + "]" + "[" + QString::number(y) + "]" + "[" + QString::number(z) + "]";
+                        qDebug() << "añadiendo a " << name2 << index2.valor;
+                        variables[name2] = new var(index2.valor, index2.tipo);
                     }
                 }
             }
@@ -162,10 +164,12 @@ Resultado semantic::recorrer(node *node_)
                 //es de 2 dimensiones
                 for (int y = 0; y < lista->hijos.size(); y++)
                 {
-                    node *element = node_->hijos.at(y);
+                    node *element = lista->hijos.at(y);
                     //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
                     Resultado index = recorrer(element);
-                    variables[currentArrayId + "[" + x + "]" + "[" + y + "]"] = new var(index.valor, index.tipo);
+                    QString name = currentArrayId + "[" + QString::number(x) + "]" + "[" + QString::number(y) + "]";
+                    qDebug() << "añadiendo a " << name << index.valor;
+                    variables[name] = new var(index.valor, index.tipo);
                 }
             }
         }
@@ -283,18 +287,18 @@ Resultado semantic::recorrer(node *node_)
         {
         case 1:
             index = recorrer(node_->hijos.at(0));
-            r.valor = "[" + index.valor + "]";
+            r.valor = index.valor ;
             break;
         case 2:
             index = recorrer(node_->hijos.at(0));
             index2 = recorrer(node_->hijos.at(1));
-            r.valor = "[" + index.valor + "]" + "[" + index2.valor + "]";
+            r.valor = index.valor  + "]" + "[" + index2.valor ;
             break;
         case 3:
             index = recorrer(node_->hijos.at(0));
             index2 = recorrer(node_->hijos.at(1));
             index3 = recorrer(node_->hijos.at(2));
-            r.valor = "[" + index.valor + "]" + "[" + index2.valor + "]" + "[" + index3.valor + "]";
+            r.valor =  index.valor + index2.valor + index3.valor;
             break;
         }
     }
@@ -304,7 +308,7 @@ Resultado semantic::recorrer(node *node_)
         node *son = node_->hijos.at(0);
         Resultado op1 = recorrer(son);
 
-        console += op1.valor + "\n";
+        console += op1.valor.replace("\""," ") + "\n";
     }
     break;
     case INT:

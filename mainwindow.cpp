@@ -150,7 +150,7 @@ void MainWindow::on_actionCompilar_triggered()
         {
             semanticErrors = interprete->errores;
             QMessageBox::information(this, "Error", "Error en la fase de analisis semantico");
-            correcto = true;
+            correcto = false;
         }
     }
     else

@@ -231,7 +231,7 @@ ARRAY: openB E closeB ARRAY2
     }
 ;
 
-ARRAY2: openB E closeB ARRAY
+ARRAY2: openB E closeB ARRAY2
       {
         $$ = new node(yylineno, columna,"newDimension","newDimension");
         $$->add($2);
@@ -358,9 +358,16 @@ ESINGLE:NATIVE { $$ = $1; }
   }
 ;
 
-INDEX: openB E closeB 
+INDEX: openB E closeB INDEX
        {
-          $$=$2;
+         if($4 == nullptr)
+            $$=$2;
+          else
+          {
+            $$ = new node(yylineno, columna,"dimensions","dimensions");
+            $$->add($2);
+            $$->add($4);
+          }
        }
        | {$$=nullptr;}
 ;
