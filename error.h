@@ -7,8 +7,8 @@ class error
 
 public:
     error();
-    error(QString value,QString type, int row,int col);
-    error(QString value,QString type, int row,int col, QString description);
+    error(QString valor,QString tipo, int fila,int columna);
+    error(QString valor,QString tipo, int fila,int columna, QString description);
     QString value, type, desc;
     int row, col;
 };

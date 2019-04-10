@@ -175,41 +175,40 @@ void MainWindow::on_actionAST_triggered()
     }
 }
 
-std::string getErrors()
+QString getErrors()
 {
-    std::string result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
-    result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th>";
+    QString result = "<table>\n<thead><tr class=\"row100 head\"><th class=\"cell100 column1\">Fila</th>";
+    result += "<th class=\"cell100 column2\">Columna</th><th class=\"cell100 column3\">Token</th><th class=\"cell100 column4\">Tipo</th><th class=\"cell100 column4\">Descripcion</th>";
     result += "</tr></thead></table></div>";
     QList<error *>::iterator i;
+
     if (errores.count() > 0)
     {
-        qDebug() << "imprimiendo errores lexicos y sintacticos";
-        for (i = errores.begin(); i != errores.end(); ++i)
-            qDebug() << (*i)->desc;
-        qDebug() << (*i)->value;
+        for (i = errores.begin(); i != errores.end(); i++){
+            QString row = "<div class=\"table100-body js-pscroll\"><table><tbody><tr class=\"row100 body\">";
+            row += "<td class=\"cell100 column1\">" + QString::number((*i)->row) + "</td>";
+            row += "<td class=\"cell100 column2\">" + QString::number((*i)->col) + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->value + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->type + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->type + "</td>";
+            row += "</tr></tbody></table>";
+            result += row;
+        }
     }
 
     if (semanticErrors.count() > 0)
     {
-        qDebug() << "imprimiendo errores semanticos";
-        for (i = semanticErrors.begin(); i != semanticErrors.end(); ++i)
-            qDebug() << (*i)->desc;
-        qDebug() << (*i)->value;
+        for (i = semanticErrors.begin(); i != semanticErrors.end(); i++){
+            QString row = "<div class=\"table100-body js-pscroll\"><table><tbody><tr class=\"row100 body\">";
+            row += "<td class=\"cell100 column1\">" + QString::number((*i)->row) + "</td>";
+            row += "<td class=\"cell100 column2\">" + QString::number((*i)->col) + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->value + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->type + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->desc + "</td>";
+            row += "</tr></tbody></table>";
+            result += row;
+        }
     }
-
-    /*
-                                <div class="table100-body js-pscroll">
-                                    <table>
-                                        <tbody>
-                                            <tr class="row100 body">
-                                                <td class="cell100 column1">Virtual Cycle</td>
-                                                <td class="cell100 column2">Gym</td>
-                                                <td class="cell100 column3">8:00 AM - 9:00 AM</td>
-                                                <td class="cell100 column4">Randy Porter</td>
-                                                <td class="cell100 column5">20</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>*/
     return result;
 }
 
@@ -225,7 +224,7 @@ void MainWindow::on_actionErrores_triggered()
         QMessageBox::information(this, "Error", "Su entrada ha sido correcta, no hay errores que mostrar o no se ha analizado");
         return;
     }
-    std::string index;
+    QString index;
     index = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<title>Table V04</title>\n<meta charset=\"UTF-8\">";
     index += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">";
     index += "<link rel=\"icon\" type=\"image/png\" href=\"images/icons/favicon.ico\"/>";
@@ -250,5 +249,13 @@ void MainWindow::on_actionErrores_triggered()
 
     QFileInfo fi("temp");
     QString path = fi.absolutePath() + "/";
-    //QDesktopServices::openUrl(QUrl::fromLocalFile(path+"index.html"));
+    QFile file(path + "index.html");
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        QMessageBox::information(this, "error", file.errorString());
+    }
+    QTextStream out(&file);
+    out << index << endl;
+    file.close();
+    QDesktopServices::openUrl(QUrl::fromLocalFile(path+"index.html"));
 }

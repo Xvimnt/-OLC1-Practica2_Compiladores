@@ -5,21 +5,19 @@ error::error()
 
 }
 
-error::error(QString value,QString type, int row,int col)
+error::error(QString valor,QString tipo, int fila,int columna)
 {
-    qDebug() << "nuevo error " << value << " tipo " << type;
-    this->value = value;
-    this->type = type;
-    this->row = row;
-    this->col = col;
+    this->value = valor;
+    this->type = tipo;
+    this->row = fila;
+    this->col = columna;
 }
 
-error::error(QString value,QString type, int row,int col, QString description)
+error::error(QString valor,QString tipo, int fila,int columna, QString description)
 {
-    qDebug() << "nuevo error " << value << " tipo " << type << " description " << description;
-    this->value = value;
-    this->type = type;
-    this->row = row;
-    this->col = col;
+    this->value = valor;
+    this->type = tipo;
+    this->row = fila;
+    this->col = columna;
     this->desc = description;
 }

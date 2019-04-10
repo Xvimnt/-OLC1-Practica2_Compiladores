@@ -128,7 +128,6 @@ Resultado semantic::recorrer(node *node_)
             //id + [x] ASIGNAR AL DICCIONARIO index.valor
             Resultado index = recorrer(element);
             QString varName = currentArrayId + "[" + QString::number(x) + "]";
-            qDebug() << "añadiendo " << varName << " valor: " << index.valor;
             variables[varName] = new var(index.valor, index.tipo);
         }
     }
@@ -154,7 +153,6 @@ Resultado semantic::recorrer(node *node_)
                         //id + [x][y][z] ASIGNAR AL DICCIONARIO index.valor
                         Resultado index2 = recorrer(element2);
                         QString name2 = currentArrayId + "[" + QString::number(x) + "]" + "[" + QString::number(y) + "]" + "[" + QString::number(z) + "]";
-                        qDebug() << "añadiendo a " << name2 << index2.valor;
                         variables[name2] = new var(index2.valor, index2.tipo);
                     }
                 }
@@ -168,7 +166,6 @@ Resultado semantic::recorrer(node *node_)
                     //id + [x][y] ASIGNAR AL DICCIONARIO index.valor
                     Resultado index = recorrer(element);
                     QString name = currentArrayId + "[" + QString::number(x) + "]" + "[" + QString::number(y) + "]";
-                    qDebug() << "añadiendo a " << name << index.valor;
                     variables[name] = new var(index.valor, index.tipo);
                 }
             }
@@ -245,7 +242,6 @@ Resultado semantic::recorrer(node *node_)
         else
         {
             var *temp = variables[node_->valor];
-            qDebug() << "regresando e valor de " << node_->valor << " es " << temp->getValue();
             r.tipo = temp->getType();
             r.valor = temp->getValue();
         }
@@ -270,7 +266,6 @@ Resultado semantic::recorrer(node *node_)
             else
             {
                 var *temp = variables[variableName];
-                qDebug() << "regresando e valor de " << variableName << " es " << temp->getValue();
                 r.tipo = temp->getType();
                 r.valor = temp->getValue();
             }
@@ -360,13 +355,11 @@ Resultado semantic::recorrer(node *node_)
 
         if (op2.tipo != ARRAS)
         {
-            qDebug() << "asignando e valor de " << iz->valor << " es " << op2.valor;
             variables[iz->valor] = new var(op2.valor, op2.tipo);
         }else
         {
             QString varName = iz->valor + op2.valor;
             variables[varName] = currentArrayNewValue;
-            qDebug() << "asignando e valor de " << varName << " es " << variables[varName]->getValue();
         }
     }
     break;
