@@ -132,7 +132,7 @@ void MainWindow::on_actionCompilar_triggered()
     linea = 0;
     columna = 0;
     yylineno = 0;
-    ui->txtInput->clear();
+    ui->txtOutput->clear();
 
     if (yyparse() == 0 && errores.count() == 0) // Si nos da un número negativo, signifca error.
     {
