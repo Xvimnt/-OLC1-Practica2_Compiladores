@@ -174,6 +174,10 @@ void MainWindow::on_actionAST_triggered()
         graficador *graf = new graficador(root);
         graf->generarImagen();
         QMessageBox::information(this, "Exito", "Arbol Generado Correctamente");
+        QImage *image = new QImage();
+        QFileInfo fi("temp");
+        QString path = fi.absolutePath() +"/grafo.jpg";
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
     }
     else
     {
@@ -196,7 +200,7 @@ QString getErrors()
             row += "<td class=\"cell100 column2\">" + QString::number((*i)->col) + "</td>";
             row += "<td class=\"cell100 column3\">" + (*i)->value + "</td>";
             row += "<td class=\"cell100 column3\">" + (*i)->type + "</td>";
-            row += "<td class=\"cell100 column3\">" + (*i)->type + "</td>";
+            row += "<td class=\"cell100 column3\">" + (*i)->desc + "</td>";
             row += "</tr></tbody></table>";
             result += row;
         }

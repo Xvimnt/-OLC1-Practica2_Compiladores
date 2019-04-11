@@ -1177,7 +1177,7 @@ YY_RULE_SETUP
 #line 93 "lexico.l"
 {
             columna=columna+ anterior;  anterior = strlen(yytext);strcpy(yylval.TEXT, yytext);
-            errores.append(new error(yytext,"Error Lexico", yylineno, columna) );
+            errores.append(new error(yytext,"Error Lexico", yylineno, columna, "simbolo no reconocido") );
             std::cout <<yytext <<" Error Lexico en la linea "<< linea << " Columna:"<< columna<<  std::endl;
         }
 	YY_BREAK
