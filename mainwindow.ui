@@ -107,6 +107,7 @@
     <addaction name="actionAbrir"/>
     <addaction name="actionGuardar"/>
     <addaction name="actionGuardar_Como"/>
+    <addaction name="actionNuevo"/>
    </widget>
    <widget class="QMenu" name="menuReportes">
     <property name="title">
@@ -162,6 +163,11 @@
   <action name="actionCompilar">
    <property name="text">
     <string>Compilar</string>
+   </property>
+  </action>
+  <action name="actionNuevo">
+   <property name="text">
+    <string>Nuevo</string>
    </property>
   </action>
  </widget>

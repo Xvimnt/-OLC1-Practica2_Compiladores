@@ -32,6 +32,9 @@ QString var::getTypeName(){
         case 5:
         return "double";
         break;
+        case 28:
+        return "array";
+        break;
         default:
         return "undefined";
         break;

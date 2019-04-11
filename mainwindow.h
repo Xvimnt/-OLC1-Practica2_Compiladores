@@ -29,6 +29,8 @@ private slots:
 
     void on_actionErrores_triggered();
 
+    void on_actionNuevo_triggered();
+
 private:
     Ui::MainWindow *ui;
     void saveAs();

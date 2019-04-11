@@ -265,3 +265,8 @@ void MainWindow::on_actionErrores_triggered()
     file.close();
     QDesktopServices::openUrl(QUrl::fromLocalFile(path+"index.html"));
 }
+
+void MainWindow::on_actionNuevo_triggered()
+{
+    ui->txtInput->clear();
+}
