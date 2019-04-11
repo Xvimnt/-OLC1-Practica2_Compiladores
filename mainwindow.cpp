@@ -17,6 +17,7 @@
 #include "error.h"
 #include <QDebug>
 #include <QTableWidgetItem>
+#include <mainwindow.h>
 
 static QString path;
 extern node *root;
@@ -131,6 +132,7 @@ void MainWindow::on_actionCompilar_triggered()
     linea = 0;
     columna = 0;
     yylineno = 0;
+    ui->txtInput->clear();
 
     if (yyparse() == 0 && errores.count() == 0) // Si nos da un número negativo, signifca error.
     {
@@ -174,7 +176,6 @@ void MainWindow::on_actionAST_triggered()
         graficador *graf = new graficador(root);
         graf->generarImagen();
         QMessageBox::information(this, "Exito", "Arbol Generado Correctamente");
-        QImage *image = new QImage();
         QFileInfo fi("temp");
         QString path = fi.absolutePath() +"/grafo.jpg";
         QDesktopServices::openUrl(QUrl::fromLocalFile(path));
@@ -272,5 +273,7 @@ void MainWindow::on_actionErrores_triggered()
 
 void MainWindow::on_actionNuevo_triggered()
 {
-    ui->txtInput->clear();
+    auto win = new MainWindow;
+      win->setAttribute( Qt::WA_DeleteOnClose );
+      win->show();
 }

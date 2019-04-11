@@ -204,7 +204,9 @@ Resultado semantic::recorrer(node *node_)
             //Actualizando el valor del iterador
             recorrer(node_->hijos.at(2));
             //verificando la condicion
+            correciones = false;
             boolean = recorrer(node_->hijos.at(1));
+            correciones = true;
         }
     }
     break;
@@ -259,7 +261,7 @@ Resultado semantic::recorrer(node *node_)
 
             if (variables.find(variableName) == variables.end())
             {
-                errores.append(new error(variableName, "Error Semantico", r.linea, r.columna, "index nulo"));
+                if(correciones) errores.append(new error(variableName, "Error Semantico", r.linea, r.columna, "index nulo"));
             }
             else
             {
@@ -1939,7 +1941,6 @@ Resultado semantic::recorrer(node *node_)
     {
         node *iz = node_->hijos.at(0);
         Resultado op1 = recorrer(iz);
-
         switch (op1.tipo)
         {
         case INT:

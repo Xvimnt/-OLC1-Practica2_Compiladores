@@ -14,6 +14,7 @@ class semantic
 private:
     QString currentArrayId;
     var *currentArrayNewValue;
+    bool correciones = true;
 public:
     QList<error*> errores;
     QList<QString> msgs;
